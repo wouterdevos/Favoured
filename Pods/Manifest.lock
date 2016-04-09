@@ -1,0 +1,29 @@
+PODS:
+  - AWSAutoScaling (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSCognito (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSCore (2.3.6)
+  - AWSDynamoDB (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSS3 (2.3.6):
+    - AWSCore (= 2.3.6)
+  - Firebase (2.5.1)
+
+DEPENDENCIES:
+  - AWSAutoScaling
+  - AWSCognito
+  - AWSCore
+  - AWSDynamoDB
+  - AWSS3
+  - Firebase (>= 2.5.0)
+
+SPEC CHECKSUMS:
+  AWSAutoScaling: 49d9f49984a82852511be4caa2a510f522cd8de1
+  AWSCognito: af54fe65171c7c994c134e5d29b1ee60ee234825
+  AWSCore: 917d84b32974136194a905b98c0ae25c9f3350b8
+  AWSDynamoDB: 0bfd95eb10363090d8570a48d5feb4e3d7ec5264
+  AWSS3: 1caaf6b45100503fecf3d418c394519a89409a74
+  Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
+
+COCOAPODS: 0.39.0
