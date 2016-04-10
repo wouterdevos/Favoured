@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		01D40E0C55D8B3257748C99F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C057C04E6DB387ACC4177588 /* libPods.a */; };
+		104A01DD1CBA65780051D332 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104A01DC1CBA65780051D332 /* RegisterViewController.swift */; };
+		104A01E41CBA99340051D332 /* ValidationTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 104A01E31CBA99340051D332 /* ValidationTextField.xib */; };
+		104A01E61CBA9D070051D332 /* ValidationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104A01E51CBA9D070051D332 /* ValidationTextField.swift */; };
 		105E61D21CAFE3C5009D9851 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105E61D11CAFE3C5009D9851 /* AppDelegate.swift */; };
 		105E61D41CAFE3C5009D9851 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105E61D31CAFE3C5009D9851 /* LoginViewController.swift */; };
 		105E61D71CAFE3C5009D9851 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 105E61D51CAFE3C5009D9851 /* Main.storyboard */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		104A01DC1CBA65780051D332 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		104A01E31CBA99340051D332 /* ValidationTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValidationTextField.xib; sourceTree = "<group>"; };
+		104A01E51CBA9D070051D332 /* ValidationTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationTextField.swift; sourceTree = "<group>"; };
 		105E61CE1CAFE3C5009D9851 /* Favoured.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Favoured.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		105E61D11CAFE3C5009D9851 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		105E61D31CAFE3C5009D9851 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +55,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		104A01E01CBA870B0051D332 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				105E61D11CAFE3C5009D9851 /* AppDelegate.swift */,
+				105E61D51CAFE3C5009D9851 /* Main.storyboard */,
+				105E61DB1CAFE3C5009D9851 /* Assets.xcassets */,
+				105E61DD1CAFE3C5009D9851 /* LaunchScreen.storyboard */,
+				105E61E01CAFE3C5009D9851 /* Info.plist */,
+				109814791CB30C080042E06E /* BridgingHeader.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		104A01E11CBA87250051D332 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				105E61D81CAFE3C5009D9851 /* Favoured.xcdatamodeld */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		104A01E21CBA874A0051D332 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				104A01E31CBA99340051D332 /* ValidationTextField.xib */,
+				104A01E51CBA9D070051D332 /* ValidationTextField.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		105E61C51CAFE3C5009D9851 = {
 			isa = PBXGroup;
 			children = (
@@ -70,15 +106,11 @@
 		105E61D01CAFE3C5009D9851 /* Favoured */ = {
 			isa = PBXGroup;
 			children = (
+				104A01E21CBA874A0051D332 /* Views */,
+				104A01E11CBA87250051D332 /* Core Data */,
+				104A01E01CBA870B0051D332 /* Supporting Files */,
 				109814741CB306E20042E06E /* Utils */,
 				109814731CB2DA560042E06E /* ViewControllers */,
-				105E61D11CAFE3C5009D9851 /* AppDelegate.swift */,
-				105E61D51CAFE3C5009D9851 /* Main.storyboard */,
-				105E61DB1CAFE3C5009D9851 /* Assets.xcassets */,
-				105E61DD1CAFE3C5009D9851 /* LaunchScreen.storyboard */,
-				105E61E01CAFE3C5009D9851 /* Info.plist */,
-				105E61D81CAFE3C5009D9851 /* Favoured.xcdatamodeld */,
-				109814791CB30C080042E06E /* BridgingHeader.h */,
 			);
 			path = Favoured;
 			sourceTree = "<group>";
@@ -87,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				105E61D31CAFE3C5009D9851 /* LoginViewController.swift */,
+				104A01DC1CBA65780051D332 /* RegisterViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -179,6 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				104A01E41CBA99340051D332 /* ValidationTextField.xib in Resources */,
 				105E61DF1CAFE3C5009D9851 /* LaunchScreen.storyboard in Resources */,
 				105E61DC1CAFE3C5009D9851 /* Assets.xcassets in Resources */,
 				105E61D71CAFE3C5009D9851 /* Main.storyboard in Resources */,
@@ -242,9 +276,11 @@
 			files = (
 				109814761CB306FF0042E06E /* ActivityIndicatorUtils.swift in Sources */,
 				109814781CB309FA0042E06E /* Constants.swift in Sources */,
+				104A01DD1CBA65780051D332 /* RegisterViewController.swift in Sources */,
 				105E61DA1CAFE3C5009D9851 /* Favoured.xcdatamodeld in Sources */,
 				105E61D41CAFE3C5009D9851 /* LoginViewController.swift in Sources */,
 				105E61D21CAFE3C5009D9851 /* AppDelegate.swift in Sources */,
+				104A01E61CBA9D070051D332 /* ValidationTextField.swift in Sources */,
 				10A222131CB6E87000D3BD1D /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

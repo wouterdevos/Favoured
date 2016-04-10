@@ -24,7 +24,9 @@ struct Constants {
         static let EnterEmailAndPassword = "Please enter your username and password"
         static let ErrorResettingPassword = "There was an error resetting your password"
         static let CheckEmailForPassword = "Please check your email to get your temporary password"
-        
+        static let EnterUserName = "Please enter a username"
+        static let EnterConfirmPassword = "Please confirm your password"
+        static let CompleteAllFields = "Please complete all fields"
     }
     
     struct Button {

@@ -32,13 +32,13 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func login(sender: AnyObject) {
-        let isValidUsername = Utils.isValid(emailTextField)
+        let isValidEmail = Utils.isValid(emailTextField)
         let isValidPassword = Utils.isValid(passwordTextField)
         var message : String?
         
-        if !(isValidUsername || isValidPassword) {
+        if !(isValidEmail || isValidPassword) {
             message = Constants.Message.EnterEmailAndPassword
-        } else if !isValidUsername {
+        } else if !isValidEmail {
             message = Constants.Message.EnterEmail
         } else if !isValidPassword {
             message = Constants.Message.EnterPassword
