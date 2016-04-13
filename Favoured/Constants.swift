@@ -19,11 +19,16 @@ struct Constants {
     }
     
     struct Message {
-        static let EnterEmail = "Please enter your email address"
-        static let EnterPassword = "Please enter your password"
+        static let EmailEnter = "Please enter your email"
+        static let CheckEmailForPassword = "Please check your email to get your temporary password"
+    }
+    
+    struct Error {
+        static let EmailInvalid = "Invalid email address"
+        static let EmailRequired = "Email is required"
+        static let PasswordRequired = "Password is required"
         static let EnterEmailAndPassword = "Please enter your username and password"
         static let ErrorResettingPassword = "There was an error resetting your password"
-        static let CheckEmailForPassword = "Please check your email to get your temporary password"
         static let EnterUserName = "Please enter a username"
         static let EnterConfirmPassword = "Please confirm your password"
         static let CompleteAllFields = "Please complete all fields"

@@ -82,3 +82,22 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods/AWSAutoScaling.framework"
+  install_framework "Pods/AWSCognito.framework"
+  install_framework "Pods/AWSCore.framework"
+  install_framework "Pods/AWSDynamoDB.framework"
+  install_framework "Pods/AWSS3.framework"
+  install_framework "Pods/Firebase.framework"
+  install_framework "Pods/SwiftValidator.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods/AWSAutoScaling.framework"
+  install_framework "Pods/AWSCognito.framework"
+  install_framework "Pods/AWSCore.framework"
+  install_framework "Pods/AWSDynamoDB.framework"
+  install_framework "Pods/AWSS3.framework"
+  install_framework "Pods/Firebase.framework"
+  install_framework "Pods/SwiftValidator.framework"
+fi

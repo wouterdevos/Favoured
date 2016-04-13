@@ -9,6 +9,7 @@ PODS:
   - AWSS3 (2.3.6):
     - AWSCore (= 2.3.6)
   - Firebase (2.5.1)
+  - SwiftValidator (3.0.3)
 
 DEPENDENCIES:
   - AWSAutoScaling
@@ -17,6 +18,7 @@ DEPENDENCIES:
   - AWSDynamoDB
   - AWSS3
   - Firebase (>= 2.5.0)
+  - SwiftValidator (= 3.0.3)
 
 SPEC CHECKSUMS:
   AWSAutoScaling: 49d9f49984a82852511be4caa2a510f522cd8de1
@@ -25,5 +27,6 @@ SPEC CHECKSUMS:
   AWSDynamoDB: 0bfd95eb10363090d8570a48d5feb4e3d7ec5264
   AWSS3: 1caaf6b45100503fecf3d418c394519a89409a74
   Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
+  SwiftValidator: 0b6a48bf10364411b0d64c97f78665ff87ca9f8b
 
 COCOAPODS: 0.39.0

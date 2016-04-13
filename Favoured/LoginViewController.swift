@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Firebase
+import Validator
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var emailValidationView: ValidationView!
+    @IBOutlet weak var passwordValidationView: ValidationView!
+    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var resetPasswordButton: UIButton!
@@ -22,8 +26,15 @@ class LoginViewController: UIViewController {
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     var alertController: UIAlertController?
     
+    var isValid = false
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        emailValidationView.inputTextField.delegate = self
+        passwordValidationView.inputTextField.delegate = self
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -31,26 +42,20 @@ class LoginViewController: UIViewController {
         alertController?.dismissViewControllerAnimated(false, completion: nil)
     }
 
+    func textFieldDidEndEditing(textField: UITextField) {
+        if emailValidationView.inputTextField == textField {
+
+        } else if passwordValidationView.inputTextField == textField {
+            
+        }
+    }
+    
     @IBAction func login(sender: AnyObject) {
-        let isValidEmail = Utils.isValid(emailTextField)
-        let isValidPassword = Utils.isValid(passwordTextField)
-        var message : String?
-        
-        if !(isValidEmail || isValidPassword) {
-            message = Constants.Message.EnterEmailAndPassword
-        } else if !isValidEmail {
-            message = Constants.Message.EnterEmail
-        } else if !isValidPassword {
-            message = Constants.Message.EnterPassword
-        }
-        
-        guard message == nil else {
-            createAuthenticationAlertController(message!)
-            return
-        }
-        
+
+        let email = emailValidationView.inputTextField.text!
+        let password = passwordValidationView.inputTextField.text!
         activityIndicatorUtils.showProgressView(view)
-        firebase.authUser(emailTextField.text!, password: passwordTextField.text!) { error, authData in
+        firebase.authUser(email, password: password) { error, authData in
             self.handleAuthUser(error, authData: authData)
         }
     }
@@ -59,7 +64,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func resetPassword(sender: AnyObject) {
-        alertController = Utils.createAlertController(Constants.Title.ResetPassword, message: Constants.Message.EnterEmail, positiveButtonName: Constants.Button.Reset, negativeButtonName: Constants.Button.Cancel, positiveButtonAction: forgotPasswordHandler, negativeButtonAction: nil, textFieldHandler: emailTextFieldConfiguration)
+        alertController = Utils.createAlertController(Constants.Title.ResetPassword, message: Constants.Message.EmailEnter, positiveButtonName: Constants.Button.Reset, negativeButtonName: Constants.Button.Cancel, positiveButtonAction: forgotPasswordHandler, negativeButtonAction: nil, textFieldHandler: emailTextFieldConfiguration)
         presentViewController(alertController!, animated: true, completion: nil)
     }
     
@@ -91,7 +96,7 @@ class LoginViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), {
             self.activityIndicatorUtils.hideProgressView()
             if error != nil {
-                self.createAuthenticationAlertController(Constants.Message.ErrorResettingPassword)
+                self.createAuthenticationAlertController(Constants.Error.ErrorResettingPassword)
             } else {
                 self.createAuthenticationAlertController(Constants.Message.CheckEmailForPassword)
             }
