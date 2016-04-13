@@ -8,12 +8,13 @@
 
 import UIKit
 
-@IBDesignable
 class ValidationTextField: UIView {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var input: UITextField!
     @IBOutlet weak var validationError: UILabel!
+    
+    let nibName = "ValidationTextField"
     var view: UIView!
     
     override init(frame: CGRect) {
@@ -50,7 +51,7 @@ class ValidationTextField: UIView {
     func loadViewFromNib() -> UIView {
         
         let bundle = NSBundle(forClass: self.dynamicType)
-        let nib = UINib(nibName: "ValidationTextField", bundle: bundle)
+        let nib = UINib(nibName: nibName, bundle: bundle)
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         
         return view

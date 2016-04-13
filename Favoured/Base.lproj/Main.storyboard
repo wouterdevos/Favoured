@@ -65,8 +65,7 @@
                                         <exclude reference="vFO-gm-hf0"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="266" width="360" height="40"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="vFO-gm-hf0"/>
                                     </mask>
@@ -80,11 +79,11 @@
                                     <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iK5-aE-cjf"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMW-1m-bYn" customClass="ValidationTextField" customModule="Favoured" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXM-Gx-kXu" customClass="ValidationTextField" customModule="Favoured" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="85" width="360" height="128"/>
+                                    <rect key="frame" x="20" y="68" width="360" height="118"/>
                                 </variation>
                             </view>
                         </subviews>
@@ -124,7 +123,7 @@
                                 <exclude reference="LtT-LD-nWT"/>
                                 <exclude reference="feK-7T-Rfl"/>
                                 <exclude reference="WIl-JA-apm"/>
-                                <exclude reference="fMW-1m-bYn"/>
+                                <exclude reference="HXM-Gx-kXu"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="51u-hc-MuN"/>
@@ -154,7 +153,7 @@
                                 <include reference="LtT-LD-nWT"/>
                                 <include reference="feK-7T-Rfl"/>
                                 <include reference="WIl-JA-apm"/>
-                                <include reference="fMW-1m-bYn"/>
+                                <include reference="HXM-Gx-kXu"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="51u-hc-MuN"/>
