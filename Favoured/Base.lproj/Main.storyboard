@@ -73,6 +73,10 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="title" value="Email"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="someTitle" value="Email"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -167,9 +171,9 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="emailTextField" destination="HXM-Gx-kXu" id="aqr-lK-ke5"/>
+                        <outlet property="emailValidationView" destination="HXM-Gx-kXu" id="KfO-0j-3W2"/>
                         <outlet property="loginButton" destination="WIl-JA-apm" id="1qJ-hg-pPb"/>
-                        <outlet property="passwordTextField" destination="oc7-Gf-jjw" id="6A5-hi-rCP"/>
+                        <outlet property="passwordValidationView" destination="oc7-Gf-jjw" id="HLf-JG-YiK"/>
                         <outlet property="registerButton" destination="LtT-LD-nWT" id="YL7-67-4j3"/>
                         <outlet property="resetPasswordButton" destination="EBj-QJ-UI5" id="PWx-3q-ROT"/>
                     </connections>

@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class ValidationView: UIView {
 
-    let nibName = "ValidationTextField"
+    let nibName = "ValidationView"
     var view: UIView!
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,7 +19,6 @@ class ValidationView: UIView {
     @IBOutlet weak var errorLabel: UILabel!
     
     @IBInspectable var title: String?
-    
     @IBInspectable var placeholder: String? 
     
     required init?(coder aDecoder: NSCoder) {

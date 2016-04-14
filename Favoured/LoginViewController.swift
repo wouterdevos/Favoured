@@ -8,9 +8,9 @@
 
 import UIKit
 import Firebase
-import Validator
+import SwiftValidator
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
 
     
     @IBOutlet weak var emailValidationView: ValidationView!
@@ -26,15 +26,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     var alertController: UIAlertController?
     
-    var isValid = false
-
+    var isValid = true
+    var validator = Validator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        emailValidationView.inputTextField.delegate = self
-        passwordValidationView.inputTextField.delegate = self
+        initValidationViews()
+        initValidationRules()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -42,12 +41,73 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         alertController?.dismissViewControllerAnimated(false, completion: nil)
     }
 
+    func textFieldDidBeginEditing(textField: UITextField) {
+        isValid = true
+    }
+    
     func textFieldDidEndEditing(textField: UITextField) {
-        if emailValidationView.inputTextField == textField {
-
-        } else if passwordValidationView.inputTextField == textField {
-            
+        switch textField {
+        case emailValidationView.inputTextField:
+            emailValidationView.errorLabel.hidden = true
+            handleValidation(emailValidationView.inputTextField)
+            break
+        case passwordValidationView.inputTextField:
+            passwordValidationView.errorLabel.hidden = true
+            handleValidation(passwordValidationView.inputTextField)
+            break;
+        default:
+            break
         }
+    }
+    
+    func validationSuccessful() {
+        
+    }
+    
+    func validationFailed(errors: [UITextField : ValidationError]) {
+        
+    }
+    
+    func handleValidation(textField: UITextField) {
+        validator.validateField(textField) { error in
+            if let validationError = error {
+                self.isValid = false
+                validationError.errorLabel!.hidden = false
+                validationError.errorLabel!.text = validationError.errorMessage
+            }
+        }
+    }
+    
+    func initValidationViews() {
+        let emailInputTextField = emailValidationView.inputTextField
+        let emailErrorLabel = emailValidationView.errorLabel
+        emailInputTextField.delegate = self
+        emailInputTextField.keyboardType = UIKeyboardType.EmailAddress
+        emailInputTextField.returnKeyType = UIReturnKeyType.Next
+        emailErrorLabel.hidden = true
+        
+        let passwordInputTextField = passwordValidationView.inputTextField
+        let passwordErrorLabel = passwordValidationView.errorLabel
+        passwordInputTextField.delegate = self
+        passwordInputTextField.secureTextEntry = true
+        passwordInputTextField.keyboardType = UIKeyboardType.Default
+        passwordInputTextField.returnKeyType = UIReturnKeyType.Done
+        passwordErrorLabel.hidden = true
+    }
+    
+    func initValidationRules() {
+        // Register the email text field and validation rules.
+        let emailInputTextField = emailValidationView.inputTextField
+        let emailErrorLabel = emailValidationView.errorLabel
+        let emailRequiredRule = RequiredRule(message: Constants.Error.EmailRequired)
+        let emailRule = EmailRule(message: Constants.Error.EmailInvalid)
+        validator.registerField(emailInputTextField, errorLabel: emailErrorLabel, rules: [emailRequiredRule, emailRule])
+        
+        // Register the password text field and validation rules
+        let passwordInputTextField = passwordValidationView.inputTextField
+        let passwordErrorLabel = passwordValidationView.errorLabel
+        let passwordRequiredRule = RequiredRule(message: Constants.Error.PasswordRequired)
+        validator.registerField(passwordInputTextField, errorLabel: passwordErrorLabel, rules: [passwordRequiredRule])
     }
     
     @IBAction func login(sender: AnyObject) {
