@@ -166,7 +166,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         dispatch_async(dispatch_get_main_queue(), {
             self.activityIndicatorUtils.hideProgressView()
             if error != nil {
-                self.createAuthenticationAlertController(Constants.Title.Error, message: error.localizedDescription)
+                let message = self.getAuthUserError(error)
+                self.createAuthenticationAlertController(Constants.Title.Error, message: message)
             } else {
                 let uid = authData.uid
                 print("Successfully logged in with uid: \(uid)")
@@ -183,6 +184,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
                 self.createAuthenticationAlertController(Constants.Title.PasswordReset, message: Constants.Message.CheckEmailForPassword)
             }
         })
+    }
+    
+    func getAuthUserError(error: NSError) -> String {
+        if let errorCode = FAuthenticationError(rawValue: error.code) {
+            switch errorCode {
+            case .UserDoesNotExist:
+                return Constants.Error.UserDoesNotExist
+            case .InvalidEmail:
+                return Constants.Error.EmailInvalidTryAgain
+            case .InvalidPassword:
+                return Constants.Error.PasswordIncorrectTryAgain
+            default:
+                return Constants.Error.UnexpectedError
+            }
+        }
+        
+        return Constants.Error.UnexpectedError
     }
     
     // MARK: - Convenience methods.
