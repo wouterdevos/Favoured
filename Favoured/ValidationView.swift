@@ -21,6 +21,15 @@ class ValidationView: UIView {
     @IBInspectable var title: String?
     @IBInspectable var placeholder: String? 
     
+    var enabled: Bool {
+        get {
+            return inputTextField.enabled
+        }
+        set(enabled) {
+            inputTextField.enabled = enabled
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         // 1. setup any properties here
         
@@ -44,6 +53,7 @@ class ValidationView: UIView {
     override func layoutSubviews() {
         titleLabel.text = title
         inputTextField.placeholder = placeholder
+        errorLabel.hidden = true
     }
     
     func setup() {
@@ -66,4 +76,11 @@ class ValidationView: UIView {
         return view
     }
 
+    func initInputTextField(keyboardType: UIKeyboardType, returnKeyType: UIReturnKeyType, spellCheckingType: UITextSpellCheckingType, delegate: UITextFieldDelegate, secureTextEntry: Bool) {
+        inputTextField.keyboardType = keyboardType
+        inputTextField.returnKeyType = returnKeyType
+        inputTextField.spellCheckingType = spellCheckingType
+        inputTextField.delegate = delegate
+        inputTextField.secureTextEntry = secureTextEntry
+    }
 }

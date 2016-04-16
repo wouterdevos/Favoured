@@ -27,14 +27,6 @@
                                     <action selector="resetPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o7e-9p-Cja"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LtT-LD-nWT">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="Register"/>
-                                <connections>
-                                    <action selector="register:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lUv-aH-LJw"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oc7-Gf-jjw" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
@@ -73,10 +65,6 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="title" value="Email"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="someTitle" value="Email"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
-                                        <integer key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -89,6 +77,14 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LtT-LD-nWT">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Register"/>
+                                <connections>
+                                    <segue destination="4fn-z7-tm3" kind="show" id="zkb-n3-I67"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -118,10 +114,10 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="EBj-QJ-UI5"/>
-                                <exclude reference="LtT-LD-nWT"/>
                                 <exclude reference="oc7-Gf-jjw"/>
                                 <exclude reference="WIl-JA-apm"/>
                                 <exclude reference="HXM-Gx-kXu"/>
+                                <exclude reference="LtT-LD-nWT"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="51u-hc-MuN"/>
@@ -145,10 +141,10 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="EBj-QJ-UI5"/>
-                                <include reference="LtT-LD-nWT"/>
                                 <include reference="oc7-Gf-jjw"/>
                                 <include reference="WIl-JA-apm"/>
                                 <include reference="HXM-Gx-kXu"/>
+                                <include reference="LtT-LD-nWT"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="51u-hc-MuN"/>
@@ -248,14 +244,6 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMQ-JU-VVR">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Register"/>
-                                <connections>
-                                    <action selector="register:" destination="4fn-z7-tm3" eventType="touchUpInside" id="MHN-eL-FCo"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hhV-U6-wxN">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <constraints>
@@ -274,6 +262,14 @@
                                     </mask>
                                 </variation>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMQ-JU-VVR">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Register"/>
+                                <connections>
+                                    <action selector="register:" destination="4fn-z7-tm3" eventType="touchUpInside" id="kVM-8c-2j5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -307,8 +303,8 @@
                                 <exclude reference="Uei-LD-4sT"/>
                                 <exclude reference="DDU-V6-KQr"/>
                                 <exclude reference="Ang-VY-Viv"/>
-                                <exclude reference="xMQ-JU-VVR"/>
                                 <exclude reference="hhV-U6-wxN"/>
+                                <exclude reference="xMQ-JU-VVR"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="ALS-Tz-7Z5"/>
@@ -336,8 +332,8 @@
                                 <include reference="Uei-LD-4sT"/>
                                 <include reference="DDU-V6-KQr"/>
                                 <include reference="Ang-VY-Viv"/>
-                                <include reference="xMQ-JU-VVR"/>
                                 <include reference="hhV-U6-wxN"/>
+                                <include reference="xMQ-JU-VVR"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="ALS-Tz-7Z5"/>
@@ -362,10 +358,10 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="confirmPassword" destination="hhV-U6-wxN" id="URr-eJ-mL4"/>
+                        <outlet property="confirmPasswordTextField" destination="hhV-U6-wxN" id="k4B-Sh-hLd"/>
                         <outlet property="emailTextField" destination="DDU-V6-KQr" id="NTM-zt-KAu"/>
                         <outlet property="passwordTextField" destination="Uei-LD-4sT" id="0kt-fC-dcc"/>
-                        <outlet property="registerButton" destination="xMQ-JU-VVR" id="CfA-On-ucP"/>
+                        <outlet property="registerButton" destination="xMQ-JU-VVR" id="fY3-n2-gyh"/>
                         <outlet property="usernameTextField" destination="Ang-VY-Viv" id="wXI-yz-atL"/>
                     </connections>
                 </viewController>

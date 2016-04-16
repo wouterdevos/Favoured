@@ -16,6 +16,8 @@ struct Constants {
     
     struct Title {
         static let ResetPassword = "Reset Password"
+        static let PasswordReset = "Password Reset"
+        static let Error = "Error"
     }
     
     struct Message {

@@ -12,6 +12,14 @@ import SwiftValidator
 
 class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
 
+    var firebase = Firebase(url: Constants.Firebase.URL)
+    var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
+    var alertController: UIAlertController?
+    var validator = Validator()
+    
+    var emailResetPasswordTextField: UITextField?
+    
+    // MARK: - Interface builder outlets and actions.
     
     @IBOutlet weak var emailValidationView: ValidationView!
     @IBOutlet weak var passwordValidationView: ValidationView!
@@ -20,18 +28,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var resetPasswordButton: UIButton!
     
-    var emailResetPasswordTextField: UITextField?
+    @IBAction func login(sender: AnyObject) {
+        validator.validate(self)
+    }
     
-    var firebase = Firebase(url: Constants.Firebase.URL)
-    var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
-    var alertController: UIAlertController?
+    @IBAction func resetPassword(sender: AnyObject) {
+        alertController = Utils.createAlertController(Constants.Title.ResetPassword, message: Constants.Message.EmailEnter, positiveButtonName: Constants.Button.Reset, negativeButtonName: Constants.Button.Cancel, positiveButtonAction: resetPasswordHandler, negativeButtonAction: nil, textFieldHandler: emailTextFieldConfiguration)
+        presentViewController(alertController!, animated: true, completion: nil)
+    }
     
-    var isValid = true
-    var validator = Validator()
+    // MARK: - Lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dismissKeyboardOnTap()
         initValidationViews()
         initValidationRules()
     }
@@ -40,10 +51,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         super.viewDidDisappear(animated)
         alertController?.dismissViewControllerAnimated(false, completion: nil)
     }
-
-    func textFieldDidBeginEditing(textField: UITextField) {
-        isValid = true
-    }
+    
+    // MARK: - UITextFieldDelegate methods.
     
     func textFieldDidEndEditing(textField: UITextField) {
         switch textField {
@@ -60,39 +69,54 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         }
     }
     
-    func validationSuccessful() {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        switch textField {
+        case emailValidationView.inputTextField:
+            passwordValidationView.inputTextField.becomeFirstResponder()
+            break
+        case passwordValidationView.inputTextField:
+            dismissKeyboard()
+            validator.validate(self)
+            break
+        default:
+            break
+        }
         
+        return true
+    }
+    
+    // MARK: - ValidationDelegate methods.
+    
+    func validationSuccessful() {
+        let email = emailValidationView.inputTextField.text!
+        let password = passwordValidationView.inputTextField.text!
+        authUser(email, password: password)
     }
     
     func validationFailed(errors: [UITextField : ValidationError]) {
-        
+        for (_, error) in errors {
+//            field.layer.borderColor = UIColor.redColor().CGColor
+//            field.layer.borderWidth = 1.0
+            error.errorLabel?.text = error.errorMessage
+            error.errorLabel?.hidden = false
+        }
     }
     
     func handleValidation(textField: UITextField) {
         validator.validateField(textField) { error in
             if let validationError = error {
-                self.isValid = false
                 validationError.errorLabel!.hidden = false
                 validationError.errorLabel!.text = validationError.errorMessage
             }
         }
     }
     
+    // MARK: - Initialisation methods.
+    
     func initValidationViews() {
-        let emailInputTextField = emailValidationView.inputTextField
-        let emailErrorLabel = emailValidationView.errorLabel
-        emailInputTextField.delegate = self
-        emailInputTextField.keyboardType = UIKeyboardType.EmailAddress
-        emailInputTextField.returnKeyType = UIReturnKeyType.Next
-        emailErrorLabel.hidden = true
-        
-        let passwordInputTextField = passwordValidationView.inputTextField
-        let passwordErrorLabel = passwordValidationView.errorLabel
-        passwordInputTextField.delegate = self
-        passwordInputTextField.secureTextEntry = true
-        passwordInputTextField.keyboardType = UIKeyboardType.Default
-        passwordInputTextField.returnKeyType = UIReturnKeyType.Done
-        passwordErrorLabel.hidden = true
+        emailValidationView.initInputTextField(.EmailAddress, returnKeyType: .Next, spellCheckingType: .No, delegate: self, secureTextEntry: false)
+        passwordValidationView.initInputTextField(.Default, returnKeyType: .Done, spellCheckingType: .No, delegate: self, secureTextEntry: true)
     }
     
     func initValidationRules() {
@@ -103,36 +127,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         let emailRule = EmailRule(message: Constants.Error.EmailInvalid)
         validator.registerField(emailInputTextField, errorLabel: emailErrorLabel, rules: [emailRequiredRule, emailRule])
         
-        // Register the password text field and validation rules
+        // Register the password text field and validation rules.
         let passwordInputTextField = passwordValidationView.inputTextField
         let passwordErrorLabel = passwordValidationView.errorLabel
         let passwordRequiredRule = RequiredRule(message: Constants.Error.PasswordRequired)
         validator.registerField(passwordInputTextField, errorLabel: passwordErrorLabel, rules: [passwordRequiredRule])
     }
     
-    @IBAction func login(sender: AnyObject) {
-
-        let email = emailValidationView.inputTextField.text!
-        let password = passwordValidationView.inputTextField.text!
-        activityIndicatorUtils.showProgressView(view)
-        firebase.authUser(email, password: password) { error, authData in
-            self.handleAuthUser(error, authData: authData)
-        }
-    }
-
-    @IBAction func register(sender: AnyObject) {
-    }
+    // MARK: - Reset password configuration and handler.
     
-    @IBAction func resetPassword(sender: AnyObject) {
-        alertController = Utils.createAlertController(Constants.Title.ResetPassword, message: Constants.Message.EmailEnter, positiveButtonName: Constants.Button.Reset, negativeButtonName: Constants.Button.Cancel, positiveButtonAction: forgotPasswordHandler, negativeButtonAction: nil, textFieldHandler: emailTextFieldConfiguration)
-        presentViewController(alertController!, animated: true, completion: nil)
-    }
-    
-    func forgotPasswordHandler(alertAction: UIAlertAction) {
-        activityIndicatorUtils.showProgressView(view)
-        firebase.resetPasswordForUser(emailResetPasswordTextField?.text) { error in
-            self.handleResetPasswordForUser(error)
-        }
+    func resetPasswordHandler(alertAction: UIAlertAction) {
+        let email = emailResetPasswordTextField!.text!
+        resetPasswordForUser(email)
     }
     
     func emailTextFieldConfiguration(textField: UITextField) {
@@ -140,11 +146,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         emailResetPasswordTextField!.placeholder = Constants.Placeholder.Email
     }
     
+    // MARK: - REST calls and response handler methods.
+    
+    func authUser(email: String, password: String) {
+        activityIndicatorUtils.showProgressView(view)
+        firebase.authUser(email, password: password) { error, authData in
+            self.handleAuthUser(error, authData: authData)
+        }
+    }
+    
+    func resetPasswordForUser(email: String) {
+        activityIndicatorUtils.showProgressView(view)
+        firebase.resetPasswordForUser(email) { error in
+            self.handleResetPasswordForUser(error)
+        }
+    }
+    
     func handleAuthUser(error: NSError!, authData: FAuthData!) {
         dispatch_async(dispatch_get_main_queue(), {
             self.activityIndicatorUtils.hideProgressView()
             if error != nil {
-                self.createAuthenticationAlertController(error.localizedDescription)
+                self.createAuthenticationAlertController(Constants.Title.Error, message: error.localizedDescription)
             } else {
                 let uid = authData.uid
                 print("Successfully logged in with uid: \(uid)")
@@ -156,16 +178,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         dispatch_async(dispatch_get_main_queue(), {
             self.activityIndicatorUtils.hideProgressView()
             if error != nil {
-                self.createAuthenticationAlertController(Constants.Error.ErrorResettingPassword)
+                self.createAuthenticationAlertController(Constants.Title.Error, message: Constants.Error.ErrorResettingPassword)
             } else {
-                self.createAuthenticationAlertController(Constants.Message.CheckEmailForPassword)
+                self.createAuthenticationAlertController(Constants.Title.PasswordReset, message: Constants.Message.CheckEmailForPassword)
             }
         })
     }
     
-    func createAuthenticationAlertController(message: String) {
-        alertController = Utils.createAlertController(nil, message: message)
+    // MARK: - Convenience methods.
+    
+    func createAuthenticationAlertController(title: String, message: String) {
+        alertController = Utils.createAlertController(title, message: message)
         presentViewController(alertController!, animated: true, completion: nil)
+    }
+    
+    func enableViews(enabled: Bool) {
+        emailValidationView.enabled = enabled
+        passwordValidationView.enabled = enabled
+        loginButton.enabled = enabled
+        registerButton.enabled = enabled
+        resetPasswordButton.enabled = enabled
     }
 }
 

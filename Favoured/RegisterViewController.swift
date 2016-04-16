@@ -15,6 +15,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
+    @IBOutlet weak var registerButton: UIButton!
     
     var firebase = Firebase(url: Constants.Firebase.URL)
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()

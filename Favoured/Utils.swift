@@ -19,15 +19,6 @@ class Utils {
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
     
-    // Check if a given text field has a value enterred in it
-    static func isValid(textField: UITextField) -> Bool {
-        guard let text = textField.text where !text.isEmpty else {
-            return false
-        }
-        
-        return true
-    }
-    
     // Create an alert controller to display to the screen
     static func createAlertController(title: String?, message: String?) -> UIAlertController {
         
