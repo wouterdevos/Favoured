@@ -11,11 +11,11 @@ import Firebase
 import SwiftValidator
 
 class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
-
+    
     var firebase = Firebase(url: Constants.Firebase.URL)
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
-    var alertController: UIAlertController?
     var validator = Validator()
+    var alertController: UIAlertController?
     
     var emailResetPasswordTextField: UITextField?
     
@@ -24,8 +24,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     @IBOutlet weak var emailValidationView: ValidationView!
     @IBOutlet weak var passwordValidationView: ValidationView!
     
+    @IBOutlet weak var registerBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var resetPasswordButton: UIButton!
     
     @IBAction func login(sender: AnyObject) {
@@ -150,6 +150,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     
     func authUser(email: String, password: String) {
         activityIndicatorUtils.showProgressView(view)
+        enableViews(false)
         firebase.authUser(email, password: password) { error, authData in
             self.handleAuthUser(error, authData: authData)
         }
@@ -157,6 +158,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     
     func resetPasswordForUser(email: String) {
         activityIndicatorUtils.showProgressView(view)
+        enableViews(false)
         firebase.resetPasswordForUser(email) { error in
             self.handleResetPasswordForUser(error)
         }
@@ -165,6 +167,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     func handleAuthUser(error: NSError!, authData: FAuthData!) {
         dispatch_async(dispatch_get_main_queue(), {
             self.activityIndicatorUtils.hideProgressView()
+            self.enableViews(true)
             if error != nil {
                 let message = self.getAuthUserError(error)
                 self.createAuthenticationAlertController(Constants.Title.Error, message: message)
@@ -178,6 +181,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     func handleResetPasswordForUser(error: NSError!) {
         dispatch_async(dispatch_get_main_queue(), {
             self.activityIndicatorUtils.hideProgressView()
+            self.enableViews(true)
             if error != nil {
                 self.createAuthenticationAlertController(Constants.Title.Error, message: Constants.Error.ErrorResettingPassword)
             } else {
@@ -213,8 +217,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     func enableViews(enabled: Bool) {
         emailValidationView.enabled = enabled
         passwordValidationView.enabled = enabled
+        registerBarButtonItem.enabled = enabled
         loginButton.enabled = enabled
-        registerButton.enabled = enabled
         resetPasswordButton.enabled = enabled
     }
 }

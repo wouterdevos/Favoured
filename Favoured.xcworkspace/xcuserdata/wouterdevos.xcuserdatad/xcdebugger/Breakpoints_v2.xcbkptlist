@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/LoginViewController.swift"
-            timestampString = "482536511.454174"
+            timestampString = "482596549.976966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
             landmarkName = "getAuthUserError(_:)"
             landmarkType = "5">
          </BreakpointContent>
