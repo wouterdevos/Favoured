@@ -18,6 +18,8 @@ struct Constants {
         static let ResetPassword = "Reset Password"
         static let PasswordReset = "Password Reset"
         static let Error = "Error"
+        static let SelectProfilePicture = "Select Profile Picture"
+        static let SelectPicture = "Select Picture"
     }
     
     struct Message {
@@ -43,6 +45,8 @@ struct Constants {
         static let Ok = "Ok"
         static let Cancel = "Cancel"
         static let Reset = "Reset"
+        static let Camera = "Camera"
+        static let PhotoLibrary = "Photo Library"
     }
     
     struct Placeholder {

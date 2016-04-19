@@ -53,4 +53,39 @@ class Utils {
         
         return alertController
     }
+    
+    // Create an image picker alert controller to display to the screen
+    static func createImagePickerAlertController(title: String, viewController: UIViewController, delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>) -> UIAlertController {
+        
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .ActionSheet)
+        
+        let isCamera = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        if isCamera {
+            let cameraAction = UIAlertAction(title: Constants.Button.Camera, style: .Default) { alertAction in
+                let imagePickerController = getImagePickerController(.Camera, delegate: delegate)
+                viewController.presentViewController(imagePickerController, animated: true, completion: nil)
+            }
+            alertController.addAction(cameraAction)
+        }
+        
+        let photoLibraryAction = UIAlertAction(title: Constants.Button.PhotoLibrary, style: .Default) { alertAction in
+            let imagePickerController = getImagePickerController(.PhotoLibrary, delegate: delegate)
+            viewController.presentViewController(imagePickerController, animated: true, completion: nil)
+        }
+        alertController.addAction(photoLibraryAction)
+        
+        let cancelAction = UIAlertAction(title: Constants.Button.Cancel, style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        return alertController
+    }
+    
+    // Get an image picker controller with the provided source type.
+    static func getImagePickerController(sourceType : UIImagePickerControllerSourceType, delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>) -> UIImagePickerController {
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = sourceType
+        imagePickerController.delegate = delegate
+        return imagePickerController
+    }
 }

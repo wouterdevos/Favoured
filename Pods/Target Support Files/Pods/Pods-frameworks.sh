@@ -91,6 +91,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/AWSS3.framework"
   install_framework "Pods/Firebase.framework"
   install_framework "Pods/SwiftValidator.framework"
+  install_framework "Pods/TOCropViewController.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/AWSAutoScaling.framework"
@@ -100,4 +101,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/AWSS3.framework"
   install_framework "Pods/Firebase.framework"
   install_framework "Pods/SwiftValidator.framework"
+  install_framework "Pods/TOCropViewController.framework"
 fi

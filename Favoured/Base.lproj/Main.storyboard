@@ -49,11 +49,11 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="d3R-jx-UQN">
-                                <rect key="frame" x="0.0" y="204" width="400" height="160"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="d3R-jx-UQN">
+                                <rect key="frame" x="0.0" y="204" width="728" height="60"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXM-Gx-kXu" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="20" width="360" height="60"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HXM-Gx-kXu" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="360" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="nPz-Ud-hlh"/>
                                         </constraints>
@@ -71,8 +71,8 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oc7-Gf-jjw" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="80" width="360" height="60"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oc7-Gf-jjw" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="368" y="0.0" width="360" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="28W-Xs-P7S"/>
                                         </constraints>
@@ -93,7 +93,7 @@
                                 </subviews>
                                 <variation key="widthClass=compact" axis="vertical"/>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBj-QJ-UI5">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBj-QJ-UI5">
                                 <rect key="frame" x="20" y="344" width="115" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="Reset password">
@@ -130,6 +130,9 @@
                                 <exclude reference="fHh-wg-mNL"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="UZV-No-czJ"/>
+                                <exclude reference="WSq-y4-gYY"/>
+                                <exclude reference="yR8-k2-yz1"/>
                                 <exclude reference="Jl3-IB-C9U"/>
                                 <exclude reference="qvS-ho-gGZ"/>
                                 <exclude reference="vZH-pd-hQf"/>
@@ -139,9 +142,6 @@
                                 <exclude reference="yR6-nF-crT"/>
                                 <exclude reference="b8G-xR-U5P"/>
                                 <exclude reference="fbs-u5-Wtt"/>
-                                <exclude reference="UZV-No-czJ"/>
-                                <exclude reference="WSq-y4-gYY"/>
-                                <exclude reference="yR8-k2-yz1"/>
                                 <exclude reference="DKQ-ZP-rgR"/>
                             </mask>
                         </variation>
@@ -151,6 +151,9 @@
                                 <include reference="fHh-wg-mNL"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="UZV-No-czJ"/>
+                                <include reference="WSq-y4-gYY"/>
+                                <include reference="yR8-k2-yz1"/>
                                 <include reference="Jl3-IB-C9U"/>
                                 <include reference="qvS-ho-gGZ"/>
                                 <include reference="vZH-pd-hQf"/>
@@ -160,9 +163,6 @@
                                 <include reference="yR6-nF-crT"/>
                                 <include reference="b8G-xR-U5P"/>
                                 <include reference="fbs-u5-Wtt"/>
-                                <include reference="UZV-No-czJ"/>
-                                <include reference="WSq-y4-gYY"/>
-                                <include reference="yR8-k2-yz1"/>
                                 <include reference="DKQ-ZP-rgR"/>
                             </mask>
                         </variation>
@@ -198,11 +198,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aGf-H5-fnb">
-                                <rect key="frame" x="0.0" y="173" width="400" height="220"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aGf-H5-fnb">
+                                <rect key="frame" x="0.0" y="173" width="1096" height="60"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRa-QI-y58" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="20" width="360" height="60"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRa-QI-y58" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="360" height="60"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="I7z-sL-3Ad"/>
@@ -221,8 +221,8 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPf-RQ-xhp" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="80" width="360" height="60"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sPf-RQ-xhp" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="368" y="0.0" width="360" height="60"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="K85-g8-LEz"/>
@@ -241,8 +241,8 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyS-aI-Vch" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="140" width="360" height="60"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyS-aI-Vch" customClass="ValidationView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="736" y="0.0" width="360" height="60"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="D2X-Tx-1jI"/>
@@ -264,7 +264,7 @@
                                 </subviews>
                                 <variation key="widthClass=compact" axis="vertical"/>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMQ-JU-VVR">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMQ-JU-VVR">
                                 <rect key="frame" x="20" y="373" width="360" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="Register"/>
@@ -272,37 +272,39 @@
                                     <action selector="register:" destination="4fn-z7-tm3" eventType="touchUpInside" id="rvh-4x-MGU"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePicture" translatesAutoresizingMaskIntoConstraints="NO" id="TFK-Lm-wzB">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZu-vL-ULU">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="NZE-t1-Afw"/>
-                                    <constraint firstAttribute="width" constant="100" id="t7a-ly-OZz"/>
+                                    <constraint firstAttribute="height" constant="100" id="Z3b-5q-tbD"/>
+                                    <constraint firstAttribute="width" constant="100" id="z0P-5s-fkD"/>
                                 </constraints>
+                                <state key="normal" image="ProfilePicture"/>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="NZE-t1-Afw"/>
-                                        <exclude reference="t7a-ly-OZz"/>
+                                        <exclude reference="Z3b-5q-tbD"/>
+                                        <exclude reference="z0P-5s-fkD"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="NZE-t1-Afw"/>
-                                        <include reference="t7a-ly-OZz"/>
+                                        <include reference="Z3b-5q-tbD"/>
+                                        <include reference="z0P-5s-fkD"/>
                                     </mask>
                                 </variation>
-                            </imageView>
+                                <connections>
+                                    <action selector="selectProfilePicture:" destination="4fn-z7-tm3" eventType="touchUpInside" id="Xx3-1z-L3C"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="TFK-Lm-wzB" firstAttribute="centerX" secondItem="0Kb-tM-P2O" secondAttribute="centerX" id="64J-dj-qtK"/>
                             <constraint firstItem="aGf-H5-fnb" firstAttribute="centerX" secondItem="0Kb-tM-P2O" secondAttribute="centerX" id="69U-kR-OAs"/>
                             <constraint firstAttribute="leadingMargin" secondItem="xMQ-JU-VVR" secondAttribute="leading" id="6kf-Gu-XIZ"/>
-                            <constraint firstItem="TFK-Lm-wzB" firstAttribute="top" secondItem="OcA-kd-qiz" secondAttribute="bottom" constant="8" id="Fzq-Vp-mLK">
-                                <variation key="widthClass=compact" constant="28"/>
-                            </constraint>
                             <constraint firstItem="xMQ-JU-VVR" firstAttribute="centerX" secondItem="0Kb-tM-P2O" secondAttribute="centerX" id="NkI-Fa-sxH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xMQ-JU-VVR" secondAttribute="trailing" id="R7D-RS-8Yh"/>
+                            <constraint firstItem="aGf-H5-fnb" firstAttribute="top" secondItem="rZu-vL-ULU" secondAttribute="bottom" constant="20" id="UiG-cg-ZrS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aGf-H5-fnb" secondAttribute="trailing" id="bNc-6g-7TE"/>
+                            <constraint firstItem="rZu-vL-ULU" firstAttribute="centerX" secondItem="0Kb-tM-P2O" secondAttribute="centerX" id="dfs-1Z-AM6"/>
                             <constraint firstItem="AdR-TJ-aF9" firstAttribute="top" secondItem="xMQ-JU-VVR" secondAttribute="bottom" constant="20" id="n8D-lV-xav"/>
                             <constraint firstAttribute="leadingMargin" secondItem="aGf-H5-fnb" secondAttribute="leading" id="qfl-9d-Cuh"/>
                             <constraint firstItem="aGf-H5-fnb" firstAttribute="centerY" secondItem="0Kb-tM-P2O" secondAttribute="centerY" id="xc6-tI-Gka">
@@ -311,12 +313,12 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="TFK-Lm-wzB"/>
+                                <exclude reference="rZu-vL-ULU"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="64J-dj-qtK"/>
-                                <exclude reference="Fzq-Vp-mLK"/>
+                                <exclude reference="dfs-1Z-AM6"/>
                                 <exclude reference="69U-kR-OAs"/>
+                                <exclude reference="UiG-cg-ZrS"/>
                                 <exclude reference="bNc-6g-7TE"/>
                                 <exclude reference="qfl-9d-Cuh"/>
                                 <exclude reference="xc6-tI-Gka"/>
@@ -328,12 +330,12 @@
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="TFK-Lm-wzB"/>
+                                <include reference="rZu-vL-ULU"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="64J-dj-qtK"/>
-                                <include reference="Fzq-Vp-mLK"/>
+                                <include reference="dfs-1Z-AM6"/>
                                 <include reference="69U-kR-OAs"/>
+                                <include reference="UiG-cg-ZrS"/>
                                 <include reference="bNc-6g-7TE"/>
                                 <include reference="qfl-9d-Cuh"/>
                                 <include reference="xc6-tI-Gka"/>

@@ -9,8 +9,9 @@
 import UIKit
 import Firebase
 import SwiftValidator
+import TOCropViewController
 
-class RegisterViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
+class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ValidationDelegate {
 
     var firebase = Firebase(url: Constants.Firebase.URL)
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
@@ -25,7 +26,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, ValidationD
     
     @IBOutlet weak var registerButton: UIButton!
     
+    @IBAction func selectProfilePicture(sender: AnyObject) {
+        Utils.createImagePickerAlertController(Constants.Title.SelectProfilePicture, viewController: self, delegate: self)
+    }
+    
     @IBAction func register(sender: AnyObject) {
+        validator.validate(self)
     }
     
     // MARK: - Lifecycle methods.
@@ -108,6 +114,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, ValidationD
                 validationError.errorLabel!.text = validationError.errorMessage
             }
         }
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate and UINavigationControllerDelegate methods.
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        if let pickedImage = editingInfo![UIImagePickerControllerOriginalImage] as? UIImage {
+            
+        }
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Initialisation methods.

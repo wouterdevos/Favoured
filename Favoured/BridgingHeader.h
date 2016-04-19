@@ -6,4 +6,8 @@
 //  Copyright © 2016 Wouter. All rights reserved.
 //
 
+#import <AWSCore/AWSCore.h>
+#import <AWSS3/AWSS3.h>
+#import <AWSCognito/AWSCognito.h>
 #import <Firebase/Firebase.h>
+#import <TOCropViewController/TOCropViewController.h>
