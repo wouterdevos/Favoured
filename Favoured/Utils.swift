@@ -22,7 +22,7 @@ class Utils {
     // Create an alert controller to display to the screen
     static func createAlertController(title: String?, message: String?) -> UIAlertController {
         
-        let positiveButtonName = Constants.Button.Ok
+        let positiveButtonName = Button.Ok
         return createAlertController(title, message: message, positiveButtonName: positiveButtonName, negativeButtonName: nil, positiveButtonAction: nil, negativeButtonAction: nil, textFieldHandler: nil)
     }
     
@@ -55,26 +55,17 @@ class Utils {
     }
     
     // Create an image picker alert controller to display to the screen
-    static func createImagePickerAlertController(title: String, viewController: UIViewController, delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>) -> UIAlertController {
+    static func createImagePickerAlertController(title: String, cameraHandler: ((UIAlertAction) -> Void), photoLibraryHandler: ((UIAlertAction) -> Void)) -> UIAlertController {
         
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .ActionSheet)
         
-        let isCamera = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        if isCamera {
-            let cameraAction = UIAlertAction(title: Constants.Button.Camera, style: .Default) { alertAction in
-                let imagePickerController = getImagePickerController(.Camera, delegate: delegate)
-                viewController.presentViewController(imagePickerController, animated: true, completion: nil)
-            }
-            alertController.addAction(cameraAction)
-        }
+        let cameraAction = UIAlertAction(title: Button.Camera, style: .Default, handler: cameraHandler)
+        alertController.addAction(cameraAction)
         
-        let photoLibraryAction = UIAlertAction(title: Constants.Button.PhotoLibrary, style: .Default) { alertAction in
-            let imagePickerController = getImagePickerController(.PhotoLibrary, delegate: delegate)
-            viewController.presentViewController(imagePickerController, animated: true, completion: nil)
-        }
+        let photoLibraryAction = UIAlertAction(title: Button.PhotoLibrary, style: .Default, handler: photoLibraryHandler)
         alertController.addAction(photoLibraryAction)
         
-        let cancelAction = UIAlertAction(title: Constants.Button.Cancel, style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: Button.Cancel, style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         return alertController
@@ -84,6 +75,7 @@ class Utils {
     static func getImagePickerController(sourceType : UIImagePickerControllerSourceType, delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>) -> UIImagePickerController {
         
         let imagePickerController = UIImagePickerController()
+        imagePickerController.allowsEditing = true
         imagePickerController.sourceType = sourceType
         imagePickerController.delegate = delegate
         return imagePickerController

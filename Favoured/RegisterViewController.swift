@@ -9,17 +9,18 @@
 import UIKit
 import Firebase
 import SwiftValidator
-import TOCropViewController
+import AWSS3
 
 class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ValidationDelegate {
 
-    var firebase = Firebase(url: Constants.Firebase.URL)
+    var firebase = Firebase(url: FirebaseConstants.URL)
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     var validator = Validator()
     var alertController: UIAlertController?
     
     // MARK: - Interface builder outlets and actions.
     
+    @IBOutlet weak var profilePictureButton: UIButton!
     @IBOutlet weak var usernameValidationView: ValidationView!
     @IBOutlet weak var emailValidationView: ValidationView!
     @IBOutlet weak var passwordValidationView: ValidationView!
@@ -27,7 +28,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     @IBOutlet weak var registerButton: UIButton!
     
     @IBAction func selectProfilePicture(sender: AnyObject) {
-        Utils.createImagePickerAlertController(Constants.Title.SelectProfilePicture, viewController: self, delegate: self)
+        let isCamera = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        if isCamera {
+            alertController = Utils.createImagePickerAlertController(Title.AddProfilePicture, cameraHandler: cameraHandler, photoLibraryHandler: photoLibraryHandler)
+            presentViewController(alertController!, animated: true, completion: nil)
+        } else {
+            let imagePickerController = Utils.getImagePickerController(.PhotoLibrary, delegate: self)
+            presentViewController(imagePickerController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func register(sender: AnyObject) {
@@ -100,8 +108,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     
     func validationFailed(errors: [UITextField : ValidationError]) {
         for (_, error) in errors {
-            //            field.layer.borderColor = UIColor.redColor().CGColor
-            //            field.layer.borderWidth = 1.0
             error.errorLabel?.text = error.errorMessage
             error.errorLabel?.hidden = false
         }
@@ -118,11 +124,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     
     // MARK: - UIImagePickerControllerDelegate and UINavigationControllerDelegate methods.
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        if let pickedImage = editingInfo![UIImagePickerControllerOriginalImage] as? UIImage {
-            
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            profilePictureButton.setImage(pickedImage, forState: .Normal)
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Initialisation methods.
@@ -137,21 +143,21 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
         // Register the username text field and validation rules.
         let usernameInputTextField = usernameValidationView.inputTextField
         let usernameErrorLabel = usernameValidationView.errorLabel
-        let usernameRequiredRule = RequiredRule(message: Constants.Error.UsernameRequired)
+        let usernameRequiredRule = RequiredRule(message: Error.UsernameRequired)
         validator.registerField(usernameInputTextField, errorLabel: usernameErrorLabel, rules: [usernameRequiredRule])
         
         // Register the email text field and validation rules.
         let emailInputTextField = emailValidationView.inputTextField
         let emailErrorLabel = emailValidationView.errorLabel
-        let emailRequiredRule = RequiredRule(message: Constants.Error.EmailRequired)
-        let emailRule = EmailRule(message: Constants.Error.EmailInvalid)
+        let emailRequiredRule = RequiredRule(message: Error.EmailRequired)
+        let emailRule = EmailRule(message: Error.EmailInvalid)
         validator.registerField(emailInputTextField, errorLabel: emailErrorLabel, rules: [emailRequiredRule, emailRule])
         
         // Register the password text field and validation rules.
         let passwordInputTextField = passwordValidationView.inputTextField
         let passwordErrorLabel = passwordValidationView.errorLabel
-        let passwordRequiredRule = RequiredRule(message: Constants.Error.PasswordRequired)
-        let passwordRule = MinLengthRule(length: 8, message: Constants.Error.PasswordRule)
+        let passwordRequiredRule = RequiredRule(message: Error.PasswordRequired)
+        let passwordRule = MinLengthRule(length: 8, message: Error.PasswordRule)
         validator.registerField(passwordInputTextField, errorLabel: passwordErrorLabel, rules: [passwordRequiredRule, passwordRule])
     }
     
@@ -171,7 +177,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
             self.enableViews(true)
             if error != nil {
                 let message = self.getCreateUserError(error)
-                self.createAuthenticationAlertController(Constants.Title.Error, message: message)
+                self.createAuthenticationAlertController(Title.Error, message: message)
             } else {
                 let uid = result["uid"] as? String
                 print("Successfully logged in with uid: \(uid)")
@@ -183,13 +189,48 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
         if let errorCode = FAuthenticationError(rawValue: error.code) {
             switch errorCode {
             case .EmailTaken:
-                return Constants.Error.EmailTaken
+                return Error.EmailTaken
             default:
-                return Constants.Error.UnexpectedError
+                return Error.UnexpectedError
             }
         }
         
-        return Constants.Error.UnexpectedError
+        return Error.UnexpectedError
+    }
+    
+    func createUser(username: String, profilePictureUrl: String?) {
+        let users = firebase.childByAppendingPath(FirebaseConstants.Users)
+        //        users.setValue
+    }
+    
+    func uploadProfilePicture() {
+        guard let profilePicture = profilePictureButton.backgroundImageForState(.Normal) else {
+            
+            return
+        }
+        
+        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".png")
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+        let filePath = fileURL.path!
+        let imageData = UIImagePNGRepresentation(profilePicture)
+        imageData!.writeToFile(filePath, atomically: true)
+        
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = fileURL
+        uploadRequest.key = fileName
+        uploadRequest.bucket = ""
+    }
+    
+    // MARK: - Handler methods for alert controller.
+    
+    func cameraHandler(alertAction: UIAlertAction) {
+        let imagePickerController = Utils.getImagePickerController(.Camera, delegate: self)
+        presentViewController(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func photoLibraryHandler(alertAction: UIAlertAction) {
+        let imagePickerController = Utils.getImagePickerController(.PhotoLibrary, delegate: self)
+        presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
     // MARK: - Convenience methods.

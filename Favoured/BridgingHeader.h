@@ -10,4 +10,3 @@
 #import <AWSS3/AWSS3.h>
 #import <AWSCognito/AWSCognito.h>
 #import <Firebase/Firebase.h>
-#import <TOCropViewController/TOCropViewController.h>

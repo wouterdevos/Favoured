@@ -12,7 +12,7 @@ import SwiftValidator
 
 class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
     
-    var firebase = Firebase(url: Constants.Firebase.URL)
+    var firebase = Firebase(url: FirebaseConstants.URL)
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     var validator = Validator()
     var alertController: UIAlertController?
@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     }
     
     @IBAction func resetPassword(sender: AnyObject) {
-        alertController = Utils.createAlertController(Constants.Title.ResetPassword, message: Constants.Message.EmailEnter, positiveButtonName: Constants.Button.Reset, negativeButtonName: Constants.Button.Cancel, positiveButtonAction: resetPasswordHandler, negativeButtonAction: nil, textFieldHandler: emailTextFieldConfiguration)
+        alertController = Utils.createAlertController(Title.ResetPassword, message: Message.EmailEnter, positiveButtonName: Button.Reset, negativeButtonName: Button.Cancel, positiveButtonAction: resetPasswordHandler, negativeButtonAction: nil, textFieldHandler: emailTextFieldConfiguration)
         presentViewController(alertController!, animated: true, completion: nil)
     }
     
@@ -123,14 +123,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         // Register the email text field and validation rules.
         let emailInputTextField = emailValidationView.inputTextField
         let emailErrorLabel = emailValidationView.errorLabel
-        let emailRequiredRule = RequiredRule(message: Constants.Error.EmailRequired)
-        let emailRule = EmailRule(message: Constants.Error.EmailInvalid)
+        let emailRequiredRule = RequiredRule(message: Error.EmailRequired)
+        let emailRule = EmailRule(message: Error.EmailInvalid)
         validator.registerField(emailInputTextField, errorLabel: emailErrorLabel, rules: [emailRequiredRule, emailRule])
         
         // Register the password text field and validation rules.
         let passwordInputTextField = passwordValidationView.inputTextField
         let passwordErrorLabel = passwordValidationView.errorLabel
-        let passwordRequiredRule = RequiredRule(message: Constants.Error.PasswordRequired)
+        let passwordRequiredRule = RequiredRule(message: Error.PasswordRequired)
         validator.registerField(passwordInputTextField, errorLabel: passwordErrorLabel, rules: [passwordRequiredRule])
     }
     
@@ -143,7 +143,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     
     func emailTextFieldConfiguration(textField: UITextField) {
         emailResetPasswordTextField = textField
-        emailResetPasswordTextField!.placeholder = Constants.Placeholder.Email
+        emailResetPasswordTextField!.placeholder = Placeholder.Email
     }
     
     // MARK: - REST calls and response handler methods.
@@ -170,7 +170,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
             self.enableViews(true)
             if error != nil {
                 let message = self.getAuthUserError(error)
-                self.createAuthenticationAlertController(Constants.Title.Error, message: message)
+                self.createAuthenticationAlertController(Title.Error, message: message)
             } else {
                 let uid = authData.uid
                 print("Successfully logged in with uid: \(uid)")
@@ -183,9 +183,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
             self.activityIndicatorUtils.hideProgressView()
             self.enableViews(true)
             if error != nil {
-                self.createAuthenticationAlertController(Constants.Title.Error, message: Constants.Error.ErrorResettingPassword)
+                self.createAuthenticationAlertController(Title.Error, message: Error.ErrorResettingPassword)
             } else {
-                self.createAuthenticationAlertController(Constants.Title.PasswordReset, message: Constants.Message.CheckEmailForPassword)
+                self.createAuthenticationAlertController(Title.PasswordReset, message: Message.CheckEmailForPassword)
             }
         })
     }
@@ -194,17 +194,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         if let errorCode = FAuthenticationError(rawValue: error.code) {
             switch errorCode {
             case .UserDoesNotExist:
-                return Constants.Error.UserDoesNotExist
+                return Error.UserDoesNotExist
             case .InvalidEmail:
-                return Constants.Error.EmailInvalidTryAgain
+                return Error.EmailInvalidTryAgain
             case .InvalidPassword:
-                return Constants.Error.PasswordIncorrectTryAgain
+                return Error.PasswordIncorrectTryAgain
             default:
-                return Constants.Error.UnexpectedError
+                return Error.UnexpectedError
             }
         }
         
-        return Constants.Error.UnexpectedError
+        return Error.UnexpectedError
     }
     
     // MARK: - Convenience methods.
