@@ -17,6 +17,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     var validator = Validator()
     var alertController: UIAlertController?
+    var uid: String?
     
     // MARK: - Interface builder outlets and actions.
     
@@ -164,8 +165,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     // MARK: - REST calls and response handler methods.
     
     func createUser(email: String, password: String) {
-        activityIndicatorUtils.showProgressView(view)
-        enableViews(false)
+        requestStarted()
         firebase.createUser(email, password: password) { error, result in
             self.handleCreateUser(error, result: result)
         }
@@ -173,14 +173,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     
     func handleCreateUser(error: NSError!, result: [NSObject:AnyObject]!) {
         dispatch_async(dispatch_get_main_queue(), {
-            self.activityIndicatorUtils.hideProgressView()
-            self.enableViews(true)
             if error != nil {
+                self.requestFinished()
                 let message = self.getCreateUserError(error)
                 self.createAuthenticationAlertController(Title.Error, message: message)
             } else {
-                let uid = result["uid"] as? String
-                print("Successfully logged in with uid: \(uid)")
+                self.uid = result["uid"] as? String
+                print("Successfully logged in with uid: \(self.uid!)")
+                self.uploadProfilePicture()
             }
         })
     }
@@ -198,27 +198,112 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
         return Error.UnexpectedError
     }
     
-    func createUser(username: String, profilePictureUrl: String?) {
+    func setUserDetails(username: String, profilePictureUrl: String?) {
+        // Set the user details.
         let users = firebase.childByAppendingPath(FirebaseConstants.Users)
-        //        users.setValue
+        var userDetails = [FirebaseConstants.Username: username]
+        if let image = profilePictureUrl {
+            userDetails[FirebaseConstants.ProfilePicture] = image
+        }
+        let user = [uid!: userDetails]
+        users.setValue(user) { error, firebase in
+            self.handleUserDetails(error, firebase: firebase)
+        }
+    }
+    
+    func handleUserDetails(error: NSError?, firebase: Firebase?) {
+        dispatch_async(dispatch_get_main_queue(), {
+            if error != nil {
+                self.requestFinished()
+                self.createAuthenticationAlertController(Title.Error, message: "")
+            } else {
+                print("User details uploaded successfull")
+            }
+        })
     }
     
     func uploadProfilePicture() {
-        guard let profilePicture = profilePictureButton.backgroundImageForState(.Normal) else {
-            
+        guard let profilePicture = profilePictureButton.currentImage else {
+            let username = usernameValidationView.inputTextField.text!
+            setUserDetails(username, profilePictureUrl: nil)
             return
         }
         
-        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".png")
-        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+        let targetSize = CGSize(width: Image.ThumbnailWidth, height: Image.ThumbnailHeight)
+        let thumbnail = Utils.resizeImage(profilePicture, targetSize: targetSize)
+        let directoryURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("favoured", isDirectory: true)
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            // ...
+        }
+        
+        let fileName = uid! + Image.ProfilePictureJPEG
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(fileName)
         let filePath = fileURL.path!
-        let imageData = UIImagePNGRepresentation(profilePicture)
+        let imageData = UIImageJPEGRepresentation(thumbnail, 0.8)
         imageData!.writeToFile(filePath, atomically: true)
         
         let uploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.body = fileURL
         uploadRequest.key = fileName
-        uploadRequest.bucket = ""
+        uploadRequest.bucket = AWSConstants.BucketProfilePictures
+        
+        upload(uploadRequest)
+    }
+    
+    func upload(uploadRequest: AWSS3TransferManagerUploadRequest) {
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        
+        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
+            if let error = task.error {
+                if error.domain == AWSS3TransferManagerErrorDomain as String {
+                    if let errorCode = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                        switch (errorCode) {
+                        case .Cancelled, .Paused:
+                            self.requestFinished()
+                            print("upload() cancelled or paused: [\(error)]")
+                            break;
+                            
+                        default:
+                            self.requestFinished()
+                            print("upload() failed: [\(error)]")
+                            break;
+                        }
+                    } else {
+                        self.requestFinished()
+                        print("upload() failed: [\(error)]")
+                    }
+                } else {
+                    self.requestFinished()
+                    print("upload() failed: [\(error)]")
+                }
+            }
+            
+            if let exception = task.exception {
+                self.requestFinished()
+                print("upload() failed: [\(exception)]")
+            }
+            
+            if task.result != nil {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    print("upload() completed")
+                    let username = self.usernameValidationView.inputTextField.text!
+                    self.setUserDetails(username, profilePictureUrl: uploadRequest.key)
+                })
+            }
+            return nil
+        }
+    }
+    
+    func requestStarted() {
+        activityIndicatorUtils.showProgressView(view)
+        enableViews(false)
+    }
+    
+    func requestFinished() {
+        activityIndicatorUtils.hideProgressView()
+        enableViews(true)
     }
     
     // MARK: - Handler methods for alert controller.

@@ -11,10 +11,10 @@ import Foundation
 class User: AnyObject {
     
     var username: String?
-    var profilePicture: String?
+    var profilePictureUrl: String?
     
-    init(username: String?, profilePicture: String?) {
+    init(username: String?, profilePictureUrl: String?) {
         self.username = username
-        self.profilePicture = profilePicture
+        self.profilePictureUrl = profilePictureUrl
     }
 }

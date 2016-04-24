@@ -18,6 +18,7 @@ struct FirebaseConstants {
 struct AWSConstants {
     static let IdentityPoolId = "eu-west-1:6799258d-3454-45cd-bbc5-c3c37715260f"
     static let RegionType = AWSRegionType.EUWest1
+    static let BucketProfilePictures = "favoured/profile_pictures"
 }
 
 struct Title {
@@ -45,6 +46,7 @@ struct Error {
     static let PasswordIncorrectTryAgain = "Incorrect password. Please try again."
     static let UserDoesNotExist = "That user does not exist. Please try again."
     static let UnexpectedError = "An unexpected error occured. Please try again."
+    static let UnableToUploadProfilePicture = "Unable to upload profile picture. Would you like to try again?"
 }
 
 struct Button {
@@ -57,4 +59,10 @@ struct Button {
 
 struct Placeholder {
     static let Email = "Email"
+}
+
+struct Image {
+    static let ProfilePictureJPEG = "_profile_picture.jpeg"
+    static let ThumbnailWidth = 100.0
+    static let ThumbnailHeight = 100.0
 }
