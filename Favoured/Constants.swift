@@ -21,6 +21,18 @@ struct AWSConstants {
     static let BucketProfilePictures = "favoured/profile_pictures"
 }
 
+struct NotificationNames {
+    static let AuthUserCompleted = "com.wouterdevos.AuthUserCompleted"
+    static let ResetPasswordForUserCompleted = "com.wouterdevos.ResetPasswordForUserCompleted"
+    static let CreateUserCompleted = "com.wouterdevos.CreateUserCompleted"
+    static let SetUserDetailsCompleted = "com.wouterdevos.SetUserDetailsCompleted"
+}
+
+struct NotificationData {
+    static let Title = "Title"
+    static let Message = "Message"
+}
+
 struct Title {
     static let ResetPassword = "Reset Password"
     static let PasswordReset = "Password Reset"

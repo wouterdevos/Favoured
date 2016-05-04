@@ -12,9 +12,10 @@ import SwiftValidator
 
 class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
     
-    var firebase = Firebase(url: FirebaseConstants.URL)
-    var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
-    var validator = Validator()
+    let firebase = Firebase(url: FirebaseConstants.URL)
+    let activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
+    let validator = Validator()
+    let defaultCenter = NSNotificationCenter.defaultCenter()
     var alertController: UIAlertController?
     
     var emailResetPasswordTextField: UITextField?
@@ -45,6 +46,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         dismissKeyboardOnTap()
         initValidationViews()
         initValidationRules()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        addObservers()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObservers()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -134,6 +145,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         validator.registerField(passwordInputTextField, errorLabel: passwordErrorLabel, rules: [passwordRequiredRule])
     }
     
+    func addObservers() {
+        defaultCenter.addObserver(self, selector: "authUserCompleted:", name: NotificationNames.AuthUserCompleted, object: nil)
+        defaultCenter.addObserver(self, selector: "resetPasswordForUserCompleted:", name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
+    }
+    
+    func removeObservers() {
+        defaultCenter.removeObserver(self, name: NotificationNames.AuthUserCompleted, object: nil)
+        defaultCenter.removeObserver(self, name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
+    }
+    
     // MARK: - Reset password configuration and handler.
     
     func resetPasswordHandler(alertAction: UIAlertAction) {
@@ -146,65 +167,41 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         emailResetPasswordTextField!.placeholder = Placeholder.Email
     }
     
-    // MARK: - REST calls and response handler methods.
+    // MARK: - REST calls and response methods.
     
     func authUser(email: String, password: String) {
         activityIndicatorUtils.showProgressView(view)
         enableViews(false)
-        firebase.authUser(email, password: password) { error, authData in
-            self.handleAuthUser(error, authData: authData)
-        }
+        DataModel.authUser(email, password: password)
     }
     
     func resetPasswordForUser(email: String) {
         activityIndicatorUtils.showProgressView(view)
         enableViews(false)
-        firebase.resetPasswordForUser(email) { error in
-            self.handleResetPasswordForUser(error)
-        }
+        DataModel.resetPasswordForUser(email)
     }
     
-    func handleAuthUser(error: NSError!, authData: FAuthData!) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.activityIndicatorUtils.hideProgressView()
-            self.enableViews(true)
-            if error != nil {
-                let message = self.getAuthUserError(error)
-                self.createAuthenticationAlertController(Title.Error, message: message)
-            } else {
-                let uid = authData.uid
-                print("Successfully logged in with uid: \(uid)")
-            }
-        })
-    }
-    
-    func handleResetPasswordForUser(error: NSError!) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.activityIndicatorUtils.hideProgressView()
-            self.enableViews(true)
-            if error != nil {
-                self.createAuthenticationAlertController(Title.Error, message: Error.ErrorResettingPassword)
-            } else {
-                self.createAuthenticationAlertController(Title.PasswordReset, message: Message.CheckEmailForPassword)
-            }
-        })
-    }
-    
-    func getAuthUserError(error: NSError) -> String {
-        if let errorCode = FAuthenticationError(rawValue: error.code) {
-            switch errorCode {
-            case .UserDoesNotExist:
-                return Error.UserDoesNotExist
-            case .InvalidEmail:
-                return Error.EmailInvalidTryAgain
-            case .InvalidPassword:
-                return Error.PasswordIncorrectTryAgain
-            default:
-                return Error.UnexpectedError
-            }
+    func authUserCompleted(notification: NSNotification) {
+        activityIndicatorUtils.hideProgressView()
+        enableViews(true)
+        
+        if let userInfo = notification.userInfo {
+            let message = userInfo[NotificationData.Message] as! String
+            createAuthenticationAlertController(Title.Error, message: message)
+            return
         }
         
-        return Error.UnexpectedError
+        print("Successfully logged in")
+    }
+    
+    func resetPasswordForUserCompleted(notification: NSNotification) {
+        activityIndicatorUtils.hideProgressView()
+        enableViews(true)
+        
+        let title = notification.userInfo![NotificationData.Title] as! String
+        let message = notification.userInfo![NotificationData.Message] as! String
+        
+        createAuthenticationAlertController(title, message: message)
     }
     
     // MARK: - Convenience methods.
