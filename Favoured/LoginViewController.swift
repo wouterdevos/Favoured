@@ -7,12 +7,10 @@
 //
 
 import UIKit
-import Firebase
 import SwiftValidator
 
 class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
     
-    let firebase = Firebase(url: FirebaseConstants.URL)
     let activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     let validator = Validator()
     let defaultCenter = NSNotificationCenter.defaultCenter()
@@ -170,38 +168,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     // MARK: - REST calls and response methods.
     
     func authUser(email: String, password: String) {
-        activityIndicatorUtils.showProgressView(view)
-        enableViews(false)
+        toggleRequestProgress(true)
         DataModel.authUser(email, password: password)
     }
     
     func resetPasswordForUser(email: String) {
-        activityIndicatorUtils.showProgressView(view)
-        enableViews(false)
+        toggleRequestProgress(true)
         DataModel.resetPasswordForUser(email)
     }
     
     func authUserCompleted(notification: NSNotification) {
-        activityIndicatorUtils.hideProgressView()
-        enableViews(true)
-        
+        toggleRequestProgress(false)
         if let userInfo = notification.userInfo {
             let message = userInfo[NotificationData.Message] as! String
             createAuthenticationAlertController(Title.Error, message: message)
-            return
+        } else {
+            print("Successfully logged in")
         }
-        
-        print("Successfully logged in")
     }
     
     func resetPasswordForUserCompleted(notification: NSNotification) {
-        activityIndicatorUtils.hideProgressView()
-        enableViews(true)
+        toggleRequestProgress(false)
+        guard let userInfo = notification.userInfo else {
+            print(Error.UserInfoNoData)
+            return
+        }
         
-        let title = notification.userInfo![NotificationData.Title] as! String
-        let message = notification.userInfo![NotificationData.Message] as! String
+        let title = userInfo[NotificationData.Title] as! String
+        let message = userInfo[NotificationData.Message] as! String
         
         createAuthenticationAlertController(title, message: message)
+    }
+    
+    func toggleRequestProgress(inProgress: Bool) {
+        inProgress ? activityIndicatorUtils.showProgressView(view) : activityIndicatorUtils.hideProgressView()
+        emailValidationView.enabled = !inProgress
+        passwordValidationView.enabled = !inProgress
+        registerBarButtonItem.enabled = !inProgress
+        loginButton.enabled = !inProgress
+        resetPasswordButton.enabled = !inProgress
     }
     
     // MARK: - Convenience methods.
@@ -209,14 +214,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     func createAuthenticationAlertController(title: String, message: String) {
         alertController = Utils.createAlertController(title, message: message)
         presentViewController(alertController!, animated: true, completion: nil)
-    }
-    
-    func enableViews(enabled: Bool) {
-        emailValidationView.enabled = enabled
-        passwordValidationView.enabled = enabled
-        registerBarButtonItem.enabled = enabled
-        loginButton.enabled = enabled
-        resetPasswordButton.enabled = enabled
     }
 }
 

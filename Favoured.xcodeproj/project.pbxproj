@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		104213EB1CDBD0DD0085BF3C /* PollListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */; };
 		104A01DD1CBA65780051D332 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104A01DC1CBA65780051D332 /* RegisterViewController.swift */; };
 		104A01E41CBA99340051D332 /* ValidationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 104A01E31CBA99340051D332 /* ValidationView.xib */; };
 		104A01E61CBA9D070051D332 /* ValidationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104A01E51CBA9D070051D332 /* ValidationView.swift */; };
@@ -23,12 +24,13 @@
 		10B6D0241CDA132C00E5128D /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0231CDA132C00E5128D /* DataModel.swift */; };
 		10B6D0261CDA3C1600E5128D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0251CDA3C1600E5128D /* ImageCache.swift */; };
 		10B6D0281CDA3C9000E5128D /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0271CDA3C9000E5128D /* CoreDataStackManager.swift */; };
-		10B6D02A1CDA3DC000E5128D /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0291CDA3DC000E5128D /* Photo.swift */; };
+		10B6D02A1CDA3DC000E5128D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0291CDA3DC000E5128D /* Image.swift */; };
 		10D6ED3C1CC2624A00A6A0A2 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */; };
 		CF0262DEFA56E1BC9DEA2BFA /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF31D9AE86C57D49D195E1A /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollListViewController.swift; sourceTree = "<group>"; };
 		104A01DC1CBA65780051D332 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		104A01E31CBA99340051D332 /* ValidationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValidationView.xib; sourceTree = "<group>"; };
 		104A01E51CBA9D070051D332 /* ValidationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationView.swift; sourceTree = "<group>"; };
@@ -48,7 +50,7 @@
 		10B6D0231CDA132C00E5128D /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		10B6D0251CDA3C1600E5128D /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		10B6D0271CDA3C9000E5128D /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
-		10B6D0291CDA3DC000E5128D /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		10B6D0291CDA3DC000E5128D /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		1A1EA419FF6090C2B5CCFB17 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DBF31D9AE86C57D49D195E1A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,7 +88,7 @@
 				105E61D81CAFE3C5009D9851 /* Favoured.xcdatamodeld */,
 				10B6D0251CDA3C1600E5128D /* ImageCache.swift */,
 				10B6D0271CDA3C9000E5128D /* CoreDataStackManager.swift */,
-				10B6D0291CDA3DC000E5128D /* Photo.swift */,
+				10B6D0291CDA3DC000E5128D /* Image.swift */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -146,6 +148,7 @@
 				105E61D31CAFE3C5009D9851 /* LoginViewController.swift */,
 				104A01DC1CBA65780051D332 /* RegisterViewController.swift */,
 				10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */,
+				104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -307,7 +310,8 @@
 				105E61D41CAFE3C5009D9851 /* LoginViewController.swift in Sources */,
 				10B6D0241CDA132C00E5128D /* DataModel.swift in Sources */,
 				10B6D0261CDA3C1600E5128D /* ImageCache.swift in Sources */,
-				10B6D02A1CDA3DC000E5128D /* Photo.swift in Sources */,
+				10B6D02A1CDA3DC000E5128D /* Image.swift in Sources */,
+				104213EB1CDBD0DD0085BF3C /* PollListViewController.swift in Sources */,
 				105E61D21CAFE3C5009D9851 /* AppDelegate.swift in Sources */,
 				104A01E61CBA9D070051D332 /* ValidationView.swift in Sources */,
 				10B6D0281CDA3C9000E5128D /* CoreDataStackManager.swift in Sources */,

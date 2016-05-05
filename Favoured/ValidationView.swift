@@ -53,6 +53,7 @@ class ValidationView: UIView {
     override func layoutSubviews() {
         titleLabel.text = title
         inputTextField.placeholder = placeholder
+        inputTextField.autocorrectionType = .No
         errorLabel.hidden = true
     }
     

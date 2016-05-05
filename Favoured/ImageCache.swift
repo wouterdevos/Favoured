@@ -65,7 +65,7 @@ class ImageCache {
         inMemoryCache.setObject(image!, forKey: path)
         
         // And in documents directory
-        let data = UIImagePNGRepresentation(image!)!
+        let data = UIImageJPEGRepresentation(image!, 0.8)!
         data.writeToFile(path, atomically: true)
     }
     

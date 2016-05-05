@@ -7,15 +7,13 @@
 //
 
 import UIKit
-import Firebase
 import SwiftValidator
-import AWSS3
 
 class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ValidationDelegate {
 
-    var firebase = Firebase(url: FirebaseConstants.URL)
-    var activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
-    var validator = Validator()
+    let activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
+    let validator = Validator()
+    let defaultCenter = NSNotificationCenter.defaultCenter()
     var alertController: UIAlertController?
     var uid: String?
     
@@ -51,6 +49,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
         dismissKeyboardOnTap()
         initValidationViews()
         initValidationRules()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        addObservers()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObservers()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -102,9 +110,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     // MARK: - ValidationDelegate methods.
     
     func validationSuccessful() {
+        let username = usernameValidationView.inputTextField.text!
         let email = emailValidationView.inputTextField.text!
         let password = passwordValidationView.inputTextField.text!
-        createUser(email, password: password)
+        createUser(username, email: email, password: password, profilePicture: profilePictureButton.currentImage)
     }
     
     func validationFailed(errors: [UITextField : ValidationError]) {
@@ -162,148 +171,37 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
         validator.registerField(passwordInputTextField, errorLabel: passwordErrorLabel, rules: [passwordRequiredRule, passwordRule])
     }
     
+    func addObservers() {
+        defaultCenter.addObserver(self, selector: "createUserCompleted:", name: NotificationNames.CreateUserCompleted, object: nil)
+    }
+    
+    func removeObservers() {
+        defaultCenter.removeObserver(self, name: NotificationNames.CreateUserCompleted, object: nil)
+    }
+    
     // MARK: - REST calls and response handler methods.
     
-    func createUser(email: String, password: String) {
-        requestStarted()
-        firebase.createUser(email, password: password) { error, result in
-            self.handleCreateUser(error, result: result)
+    func createUser(username: String, email: String, password: String, profilePicture: UIImage?) {
+        toggleRequestProgress(true)
+        DataModel.createUser(username, email: email, password: password, profilePicture: profilePicture)
+    }
+    
+    func createUserCompleted(notification: NSNotification) {
+        toggleRequestProgress(false)
+        if let userInfo = notification.userInfo {
+            let message = userInfo[NotificationData.Message] as! String
+            createAuthenticationAlertController(Title.Error, message: message)
+        } else {
+            navigationController?.popViewControllerAnimated(true)
         }
     }
     
-    func handleCreateUser(error: NSError!, result: [NSObject:AnyObject]!) {
-        dispatch_async(dispatch_get_main_queue(), {
-            if error != nil {
-                self.requestFinished()
-                let message = self.getCreateUserError(error)
-                self.createAuthenticationAlertController(Title.Error, message: message)
-            } else {
-                self.uid = result["uid"] as? String
-                print("Successfully logged in with uid: \(self.uid!)")
-                self.uploadProfilePicture()
-            }
-        })
-    }
-    
-    func getCreateUserError(error: NSError) -> String {
-        if let errorCode = FAuthenticationError(rawValue: error.code) {
-            switch errorCode {
-            case .EmailTaken:
-                return Error.EmailTaken
-            default:
-                return Error.UnexpectedError
-            }
-        }
-        
-        return Error.UnexpectedError
-    }
-    
-    func setUserDetails(username: String, profilePictureUrl: String?) {
-        // Set the user details.
-        let users = firebase.childByAppendingPath(FirebaseConstants.Users)
-        var userDetails = [FirebaseConstants.Username: username]
-        if let image = profilePictureUrl {
-            userDetails[FirebaseConstants.ProfilePicture] = image
-        }
-        let user = [uid!: userDetails]
-        users.setValue(user) { error, firebase in
-            self.handleUserDetails(error, firebase: firebase)
-        }
-    }
-    
-    func handleUserDetails(error: NSError?, firebase: Firebase?) {
-        dispatch_async(dispatch_get_main_queue(), {
-            if error != nil {
-                self.requestFinished()
-                self.createAuthenticationAlertController(Title.Error, message: "")
-            } else {
-                print("User details uploaded successfull")
-            }
-        })
-    }
-    
-    func uploadProfilePicture() {
-        guard let profilePicture = profilePictureButton.currentImage else {
-            let username = usernameValidationView.inputTextField.text!
-            setUserDetails(username, profilePictureUrl: nil)
-            return
-        }
-        
-        let targetSize = CGSize(width: Image.ThumbnailWidth, height: Image.ThumbnailHeight)
-        let thumbnail = Utils.resizeImage(profilePicture, targetSize: targetSize)
-        let directoryURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("favoured", isDirectory: true)
-        do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            // ...
-        }
-        
-        let fileName = uid! + Image.ProfilePictureJPEG
-        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(fileName)
-        let filePath = fileURL.path!
-        let imageData = UIImageJPEGRepresentation(thumbnail, 0.8)
-        imageData!.writeToFile(filePath, atomically: true)
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest.body = fileURL
-        uploadRequest.key = fileName
-        uploadRequest.bucket = AWSConstants.BucketProfilePictures
-        
-        upload(uploadRequest)
-    }
-    
-    func upload(uploadRequest: AWSS3TransferManagerUploadRequest) {
-        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
-        
-        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
-            if let error = task.error {
-                if error.domain == AWSS3TransferManagerErrorDomain as String {
-                    if let errorCode = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                        switch (errorCode) {
-                        case .Cancelled, .Paused:
-                            self.requestFinished()
-                            print("upload() cancelled or paused: [\(error)]")
-                            break;
-                            
-                        default:
-                            self.requestFinished()
-                            print("upload() failed: [\(error)]")
-                            break;
-                        }
-                    } else {
-                        self.requestFinished()
-                        print("upload() failed: [\(error)]")
-                    }
-                } else {
-                    self.requestFinished()
-                    print("upload() failed: [\(error)]")
-                }
-            }
-            
-            if let exception = task.exception {
-                self.requestFinished()
-                print("upload() failed: [\(exception)]")
-            }
-            
-            if task.result != nil {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    print("upload() completed")
-                    let username = self.usernameValidationView.inputTextField.text!
-                    self.setUserDetails(username, profilePictureUrl: uploadRequest.key)
-                })
-            }
-            return nil
-        }
-    }
-    
-    func requestStarted() {
-        activityIndicatorUtils.showProgressView(view)
-        enableViews(false)
-    }
-    
-    func requestFinished() {
-        activityIndicatorUtils.hideProgressView()
-        enableViews(true)
+    func toggleRequestProgress(inProgress: Bool) {
+        inProgress ? activityIndicatorUtils.showProgressView(view) : activityIndicatorUtils.hideProgressView()
+        usernameValidationView.enabled = !inProgress
+        emailValidationView.enabled = !inProgress
+        passwordValidationView.enabled = !inProgress
+        registerButton.enabled = !inProgress
     }
     
     // MARK: - Handler methods for alert controller.
@@ -323,12 +221,5 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     func createAuthenticationAlertController(title: String, message: String) {
         alertController = Utils.createAlertController(title, message: message)
         presentViewController(alertController!, animated: true, completion: nil)
-    }
-    
-    func enableViews(enabled: Bool) {
-        usernameValidationView.enabled = enabled
-        emailValidationView.enabled = enabled
-        passwordValidationView.enabled = enabled
-        registerButton.enabled = enabled
     }
 }

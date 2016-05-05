@@ -59,6 +59,7 @@ struct Error {
     static let UserDoesNotExist = "That user does not exist. Please try again."
     static let UnexpectedError = "An unexpected error occured. Please try again."
     static let UnableToUploadProfilePicture = "Unable to upload profile picture. Would you like to try again?"
+    static let UserInfoNoData = "No data passsed to user info!"
 }
 
 struct Button {
@@ -73,8 +74,13 @@ struct Placeholder {
     static let Email = "Email"
 }
 
-struct Image {
+struct ImageConstants {
     static let ProfilePictureJPEG = "_profile_picture.jpeg"
+    static let PollPictureJPEG = "_poll_picture_%s.jpeg"
+    static let PollPictureA = "a"
+    static let PollPictureB = "b"
+    static let PollPictureC = "c"
+    static let PollPictureD = "d"
     static let ThumbnailWidth = 100.0
     static let ThumbnailHeight = 100.0
 }

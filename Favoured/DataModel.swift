@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import AWSS3
 
 class DataModel: NSObject {
     
@@ -27,6 +28,8 @@ class DataModel: NSObject {
         CoreDataStackManager.sharedInstance().saveContext()
     }
     
+    // MARK:- Firebase
+    
     class func authUser() {
         if let _ = firebase.authData {
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
@@ -38,7 +41,7 @@ class DataModel: NSObject {
             var userInfo: [String: String]? = nil
             if error != nil {
                 userInfo = [String: String]()
-                userInfo = [NotificationData.Message: getAuthenticationError(error)]
+                userInfo![NotificationData.Message] = getAuthenticationError(error)
             }
             
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: userInfo)
@@ -60,35 +63,38 @@ class DataModel: NSObject {
         }
     }
     
-    class func createUser(username: String, email: String, password: String, profilePicturePath: String?) {
+    class func createUser(username: String, email: String, password: String, profilePicture: UIImage?) {
         firebase.createUser(email, password: password) { error, result in
+            var userInfo: [String: String]? = nil
             if error != nil {
-                let message = getAuthenticationError(error)
-                // TODO - Send notification
+                userInfo = [String: String]()
+                userInfo![NotificationData.Message] = getAuthenticationError(error)
             } else {
                 let uid = result["uid"] as? String
-                print("Successfully logged in with uid: \(uid)")
-                setUserDetails(uid!, username: username, profilePicturePath: profilePicturePath)
+                setUserDetails(uid!, username: username, profilePicture: profilePicture)
+            }
+            
+            defaultCenter.postNotificationName(NotificationNames.CreateUserCompleted, object: nil, userInfo: userInfo)
+        }
+    }
+    
+    class func setUserDetails(uid: String, username: String, profilePicture: UIImage?) {
+        // Set the user details.
+        let users = firebase.childByAppendingPath(FirebaseConstants.Users).childByAppendingPath(uid)
+        let userDetails = [FirebaseConstants.Username: username]
+
+        users.setValue(userDetails) { error, firebase in
+            if error != nil {
+                // TODO - Send notification
+            } else {
+                uploadProfilePicture(uid, profilePicture: profilePicture)
             }
         }
     }
     
-    class func setUserDetails(uid: String, username: String, profilePicturePath: String?) {
-        // Set the user details.
-        let users = firebase.childByAppendingPath(FirebaseConstants.Users)
-        var userDetails = [FirebaseConstants.Username: username]
-//        if let image = profilePictureUrl {
-//            userDetails[FirebaseConstants.ProfilePicture] = image
-//        }
-        let user = [uid: userDetails]
-        users.setValue(user) { error, firebase in
-            if error != nil {
-                // TODO - Send notification
-            } else {
-                print("User details uploaded successfully")
-                // TODO - Upload profile picture
-            }
-        }
+    private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
+        let users = firebase.childByAppendingPath(FirebaseConstants.Users).childByAppendingPath(uid)
+        users.updateChildValues(userDetails)
     }
     
     private class func getAuthenticationError(error: NSError) -> String {
@@ -108,5 +114,74 @@ class DataModel: NSObject {
         }
         
         return Error.UnexpectedError
+    }
+    
+    // MARK:- AWS S3
+    
+    private class func uploadProfilePicture(id: String, profilePicture: UIImage?) {
+        guard let profilePictureImage = profilePicture else {
+            return
+        }
+        
+        let profilePictureId = id + ImageConstants.ProfilePictureJPEG
+        let targetSize = CGSize(width: ImageConstants.ThumbnailWidth, height: ImageConstants.ThumbnailHeight)
+        let thumbnail = Utils.resizeImage(profilePictureImage, targetSize: targetSize)
+        let image = Image(id: profilePictureId, uploaded: false, context: context)
+        image.image = thumbnail
+        saveContext()
+        
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = NSURL(fileURLWithPath: image.path!)
+        uploadRequest.key = profilePictureId
+        uploadRequest.bucket = AWSConstants.BucketProfilePictures
+        
+        upload(uploadRequest) { success, key in
+            if success {
+                image.uploaded = true
+                saveContext()
+                let userDetails = [FirebaseConstants.ProfilePicture: image.id]
+                updateUserDetails(id, userDetails: userDetails)
+            }
+        }
+    }
+    
+    private class func upload(uploadRequest: AWSS3TransferManagerUploadRequest, handler: ((success: Bool, key: String) -> Void)) {
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        
+        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
+            if let error = task.error {
+                if error.domain == AWSS3TransferManagerErrorDomain as String {
+                    if let errorCode = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                        switch (errorCode) {
+                        case .Cancelled, .Paused:
+                            handler(success: false, key: uploadRequest.key!)
+                            print("upload() cancelled or paused: [\(error)]")
+                            break;
+                            
+                        default:
+                            handler(success: false, key: uploadRequest.key!)
+                            print("upload() failed: [\(error)]")
+                            break;
+                        }
+                    } else {
+                        handler(success: false, key: uploadRequest.key!)
+                        print("upload() failed: [\(error)]")
+                    }
+                } else {
+                    handler(success: false, key: uploadRequest.key!)
+                    print("upload() failed: [\(error)]")
+                }
+            }
+            
+            if let exception = task.exception {
+                handler(success: false, key: uploadRequest.key!)
+                print("upload() failed: [\(exception)]")
+            }
+            
+            if task.result != nil {
+                handler(success: true, key: uploadRequest.key!)
+            }
+            return nil
+        }
     }
 }

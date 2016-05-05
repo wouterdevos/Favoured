@@ -21,7 +21,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gJ7-D7-KoR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1131" y="22"/>
+            <point key="canvasLocation" x="-1386" y="-132"/>
         </scene>
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
@@ -184,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-291" y="22"/>
+            <point key="canvasLocation" x="-546" y="-132"/>
         </scene>
         <!--Register-->
         <scene sceneID="X16-0W-2iG">
@@ -357,7 +357,105 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OgN-dv-chV" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="601.5" y="22"/>
+            <point key="canvasLocation" x="346.5" y="-132"/>
+        </scene>
+        <!--Favoured-->
+        <scene sceneID="bFl-uB-Pdc">
+            <objects>
+                <viewController id="QbN-vO-LtD" customClass="PollListViewController" customModule="Favoured" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZZ3-4p-vgP"/>
+                        <viewControllerLayoutGuide type="bottom" id="dYl-ps-Ssd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Hh-aX-jJh" customClass="PollViewController">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FPj-b6-Kx6">
+                                <rect key="frame" x="-60" y="-14" width="121" height="29"/>
+                                <segments>
+                                    <segment title="My Polls"/>
+                                    <segment title="Open Polls"/>
+                                    <segment title="Closed Polls"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentIndexChanged:" destination="QbN-vO-LtD" eventType="valueChanged" id="4aE-Ou-tgx"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Uh2-zi-twM">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FPj-b6-Kx6" firstAttribute="top" secondItem="ZZ3-4p-vgP" secondAttribute="bottom" constant="8" id="PUD-li-mgq"/>
+                            <constraint firstItem="Uh2-zi-twM" firstAttribute="leading" secondItem="2Hh-aX-jJh" secondAttribute="leadingMargin" constant="-20" id="Rww-cX-ogS"/>
+                            <constraint firstItem="FPj-b6-Kx6" firstAttribute="centerX" secondItem="2Hh-aX-jJh" secondAttribute="centerX" id="Tmm-uT-cjR"/>
+                            <constraint firstItem="Uh2-zi-twM" firstAttribute="top" secondItem="ZZ3-4p-vgP" secondAttribute="bottom" constant="44" id="Xge-Qa-Icv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Uh2-zi-twM" secondAttribute="trailing" constant="-20" id="kTj-gi-0S2"/>
+                            <constraint firstItem="dYl-ps-Ssd" firstAttribute="top" secondItem="Uh2-zi-twM" secondAttribute="bottom" id="q05-5F-oCV"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="FPj-b6-Kx6"/>
+                                <exclude reference="Uh2-zi-twM"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="PUD-li-mgq"/>
+                                <exclude reference="Tmm-uT-cjR"/>
+                                <exclude reference="Rww-cX-ogS"/>
+                                <exclude reference="Xge-Qa-Icv"/>
+                                <exclude reference="kTj-gi-0S2"/>
+                                <exclude reference="q05-5F-oCV"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="FPj-b6-Kx6"/>
+                                <include reference="Uh2-zi-twM"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="PUD-li-mgq"/>
+                                <include reference="Tmm-uT-cjR"/>
+                                <include reference="Rww-cX-ogS"/>
+                                <include reference="Xge-Qa-Icv"/>
+                                <include reference="kTj-gi-0S2"/>
+                                <include reference="q05-5F-oCV"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Favoured" id="PQi-zv-pdO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="62B-T7-MYk">
+                            <connections>
+                                <action selector="addPoll:" destination="QbN-vO-LtD" id="NqV-XE-8l1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="onAddPollClicked" destination="62B-T7-MYk" id="oMb-4H-uCL"/>
+                        <outlet property="segmentedControl" destination="FPj-b6-Kx6" id="1LD-Bf-Ved"/>
+                        <outlet property="tableView" destination="Uh2-zi-twM" id="IGX-o9-ror"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h1n-Bf-Kcn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2131.5" y="-132"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aPJ-4F-WOC">
+            <objects>
+                <navigationController id="H8c-Uq-ljU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6xx-Tr-RzF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="QbN-vO-LtD" kind="relationship" relationship="rootViewController" id="mXP-l8-7dP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EVt-jR-Flh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1309.5" y="-132"/>
         </scene>
     </scenes>
     <resources>
