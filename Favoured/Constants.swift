@@ -10,9 +10,24 @@ import Foundation
 
 struct FirebaseConstants {
     static let URL = "https://flickering-inferno-7778.firebaseio.com/"
+    
     static let Users = "users"
     static let Username = "username"
     static let ProfilePicture = "profilePicture"
+    
+    static let Polls = "polls"
+    static let Question = "question"
+    static let UserId = "user_id"
+    static let CreationDate = "creation_date"
+    static let Closed = "closed"
+    static let PhotosUploaded = "photos_uploaded"
+    static let SelectedOption = "selected_option"
+    static let OptionA = "option_a"
+    static let OptionB = "option_b"
+    static let OptionC = "option_c"
+    static let OptionD = "option_d"
+    static let PollPicture = "poll_picture"
+    static let VoteCount = "vote_count"
 }
 
 struct AWSConstants {
@@ -26,11 +41,13 @@ struct NotificationNames {
     static let ResetPasswordForUserCompleted = "com.wouterdevos.ResetPasswordForUserCompleted"
     static let CreateUserCompleted = "com.wouterdevos.CreateUserCompleted"
     static let SetUserDetailsCompleted = "com.wouterdevos.SetUserDetailsCompleted"
+    static let GetPollsCompleted = "com.wouterdevos.GetPollsCompleted"
 }
 
 struct NotificationData {
     static let Title = "Title"
     static let Message = "Message"
+    static let Polls = "Polls"
 }
 
 struct Title {

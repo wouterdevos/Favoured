@@ -92,6 +92,25 @@ class DataModel: NSObject {
         }
     }
     
+    class func addPollListObserver() {
+        let polls = firebase.childByAppendingPath(FirebaseConstants.Polls)
+        polls.observeEventType(.Value, withBlock: { snapshot in
+            var polls = [Poll]()
+            for snapshotItem in snapshot.children.allObjects as! [FDataSnapshot] {
+                let poll = Poll(snapshot: snapshotItem)
+                polls.append(poll)
+            }
+            
+            let userInfo = [NotificationData.Polls: polls]
+            defaultCenter.postNotificationName(NotificationNames.GetPollsCompleted, object: nil, userInfo: userInfo)
+        })
+    }
+    
+    class func removePollListObserver() {
+        let polls = firebase.childByAppendingPath(FirebaseConstants.Polls)
+        polls.removeAllObservers()
+    }
+    
     private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
         let users = firebase.childByAppendingPath(FirebaseConstants.Users).childByAppendingPath(uid)
         users.updateChildValues(userDetails)
