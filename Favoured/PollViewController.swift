@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PollViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PollViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     enum Button {
         case ButtonA
@@ -20,17 +20,40 @@ class PollViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     let defaultCenter = NSNotificationCenter.defaultCenter()
     var selectedButton: Button = Button.ButtonA
+    var pollOptions = [String]()
     var alertController: UIAlertController?
     
     // MARK: - Interface builder outlets and actions.
     
+    @IBOutlet weak var addPollButton: UIButton!
+    @IBOutlet weak var collectionView: UICollectionView!
 
+    @IBAction func addPoll(sender: AnyObject) {
+    }
     
     // MARK: - Lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        pollOptions.append("A")
+        pollOptions.append("B")
+        pollOptions.append("C")
+        pollOptions.append("D")
+        
+        // Configure the collection view.
+//        let screenSize = UIScreen.mainScreen().bounds
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        print("Collection view width \(collectionView.frame.size.width / 2)")
+        layout.itemSize = CGSize(width: collectionView.frame.size.width / 2, height: collectionView.frame.size.width / 2)
+        
+        collectionView.frame.size.height = collectionView.frame.size.width
+        collectionView.dataSource = self
+        collectionView.delegate = self
+//        collectionView.setCollectionViewLayout(layout, animated: true)
     }
     
     // MARK: - UIImagePickerControllerDelegate and UINavigationControllerDelegate methods.
@@ -40,6 +63,40 @@ class PollViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //            profilePictureButton.setImage(pickedImage, forState: .Normal)
         }
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - UICollectionViewDelegate, UICollectionViewDatasource and UICollectionViewDelegateFlowlayout methods.
+    
+//    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+//        return pollOptions.count
+//    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pollOptions.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let addPollCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddPollCollectionViewCell", forIndexPath: indexPath) as! AddPollCollectionViewCell
+        
+        let pollOption = pollOptions[indexPath.row]
+        let profilePicture = UIImage(named: "ProfilePicture")
+        addPollCollectionViewCell.imageView.image = profilePicture
+        addPollCollectionViewCell.label.text = pollOption
+        
+        return addPollCollectionViewCell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let width = (collectionView.frame.size.width - 20) / 2
+        return CGSize(width: width, height: width)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
     // MARK: - Initialisation methods.
