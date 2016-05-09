@@ -30,10 +30,6 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    @IBAction func addPoll(sender: AnyObject) {
-        
-    }
-    
     // MARK: - Lifecycle methods.
     
     override func viewDidLoad() {
@@ -93,7 +89,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         polls.removeAll()
-        polls.appendContentsOf(userInfo[NotificationData.Message] as! [Poll])
+        polls = userInfo[NotificationData.Polls] as! [Poll]
         tableView.reloadData()
     }
     

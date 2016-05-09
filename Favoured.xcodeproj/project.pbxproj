@@ -29,6 +29,7 @@
 		10B6D0281CDA3C9000E5128D /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0271CDA3C9000E5128D /* CoreDataStackManager.swift */; };
 		10B6D02A1CDA3DC000E5128D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0291CDA3DC000E5128D /* Image.swift */; };
 		10D6ED3C1CC2624A00A6A0A2 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */; };
+		10E4E0221CE09F67004FF86D /* AddPollCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */; };
 		CF0262DEFA56E1BC9DEA2BFA /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF31D9AE86C57D49D195E1A /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		10B6D0271CDA3C9000E5128D /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		10B6D0291CDA3DC000E5128D /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
+		10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPollCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A1EA419FF6090C2B5CCFB17 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DBF31D9AE86C57D49D195E1A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8FA2AA2D5B3842374475FFC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */,
 				104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */,
 				1046C2ED1CDF789A00E995E7 /* PollViewController.swift */,
+				10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10E4E0221CE09F67004FF86D /* AddPollCollectionViewCell.swift in Sources */,
 				109814761CB306FF0042E06E /* ActivityIndicatorUtils.swift in Sources */,
 				109814781CB309FA0042E06E /* Constants.swift in Sources */,
 				104A01DD1CBA65780051D332 /* RegisterViewController.swift in Sources */,

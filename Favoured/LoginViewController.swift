@@ -49,6 +49,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         addObservers()
+        DataModel.authUser()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -183,7 +184,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
             let message = userInfo[NotificationData.Message] as! String
             createAuthenticationAlertController(Title.Error, message: message)
         } else {
-            print("Successfully logged in")
+            let mainNavigationController = navigationController!.storyboard!.instantiateViewControllerWithIdentifier("MainNavigationController")
+            navigationController!.presentViewController(mainNavigationController, animated: true, completion: nil)
         }
     }
     
