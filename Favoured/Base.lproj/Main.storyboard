@@ -532,10 +532,10 @@
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="HNB-ge-9kK">
                                 <rect key="frame" x="0.0" y="211" width="192" height="34"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="equalSpacing" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="JuW-8U-sX5">
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="JuW-8U-sX5">
                                         <rect key="frame" x="0.0" y="0.0" width="108" height="34"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBk-cr-rLr">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBk-cr-rLr">
                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="34"/>
                                                 <color key="backgroundColor" red="0.64313725489999995" green="0.67450980390000004" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -559,7 +559,7 @@
                                                     </mask>
                                                 </variation>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpv-8c-Z1M">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpv-8c-Z1M">
                                                 <rect key="frame" x="78" y="0.0" width="30" height="34"/>
                                                 <color key="backgroundColor" red="0.64313725489999995" green="0.67450980390000004" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -598,10 +598,10 @@
                                             </mask>
                                         </variation>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Trf-A5-7Uz">
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Trf-A5-7Uz">
                                         <rect key="frame" x="132" y="0.0" width="60" height="34"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkq-bV-24b">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkq-bV-24b">
                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="34"/>
                                                 <color key="backgroundColor" red="0.64313725489999995" green="0.67450980390000004" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -625,7 +625,7 @@
                                                     </mask>
                                                 </variation>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avA-Us-0DL">
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avA-Us-0DL">
                                                 <rect key="frame" x="30" y="0.0" width="30" height="34"/>
                                                 <color key="backgroundColor" red="0.64313725489999995" green="0.67450980390000004" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -675,11 +675,13 @@
                                     <action selector="addPoll:" destination="j3A-XN-NSK" eventType="touchUpInside" id="tZi-GC-E7w"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6ZG-xO-lSY">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6ZG-xO-lSY">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="260" id="G4z-VJ-xTY"/>
+                                    <constraint firstAttribute="height" constant="360" id="4tN-RS-npC">
+                                        <variation key="widthClass=compact" constant="362"/>
+                                    </constraint>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bku-hN-BCh">
                                     <size key="itemSize" width="120" height="120"/>
@@ -723,12 +725,12 @@
                                                 <exclude reference="X08-Uh-cEE"/>
                                             </mask>
                                             <mask key="constraints">
+                                                <exclude reference="3JE-Bn-UJP"/>
+                                                <exclude reference="MKr-Qh-DmN"/>
                                                 <exclude reference="Djv-gK-Q0w"/>
                                                 <exclude reference="K3N-46-JdJ"/>
                                                 <exclude reference="cnQ-1u-RRp"/>
                                                 <exclude reference="zhI-Qz-zta"/>
-                                                <exclude reference="3JE-Bn-UJP"/>
-                                                <exclude reference="MKr-Qh-DmN"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact">
@@ -737,12 +739,12 @@
                                                 <include reference="X08-Uh-cEE"/>
                                             </mask>
                                             <mask key="constraints">
+                                                <include reference="3JE-Bn-UJP"/>
+                                                <include reference="MKr-Qh-DmN"/>
                                                 <include reference="Djv-gK-Q0w"/>
                                                 <include reference="K3N-46-JdJ"/>
                                                 <include reference="cnQ-1u-RRp"/>
                                                 <include reference="zhI-Qz-zta"/>
-                                                <include reference="3JE-Bn-UJP"/>
-                                                <include reference="MKr-Qh-DmN"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -753,12 +755,12 @@
                                 </cells>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="G4z-VJ-xTY"/>
+                                        <exclude reference="4tN-RS-npC"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="G4z-VJ-xTY"/>
+                                        <include reference="4tN-RS-npC"/>
                                     </mask>
                                 </variation>
                             </collectionView>
@@ -769,9 +771,6 @@
                             <constraint firstItem="6ZG-xO-lSY" firstAttribute="centerX" secondItem="AI5-DC-xFe" secondAttribute="centerX" id="AQS-YV-X62"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6ZG-xO-lSY" secondAttribute="trailing" id="Bco-OY-0Mt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DKf-3j-95t" secondAttribute="trailing" id="EmI-8m-joZ"/>
-                            <constraint firstItem="6ZG-xO-lSY" firstAttribute="centerY" secondItem="AI5-DC-xFe" secondAttribute="centerY" id="FQr-V3-age">
-                                <variation key="widthClass=compact" constant="10"/>
-                            </constraint>
                             <constraint firstItem="HNB-ge-9kK" firstAttribute="centerY" secondItem="AI5-DC-xFe" secondAttribute="centerY" id="K7K-2p-s6L"/>
                             <constraint firstAttribute="leadingMargin" secondItem="6ZG-xO-lSY" secondAttribute="leading" id="SO7-aI-odk"/>
                             <constraint firstItem="YMk-hu-pxw" firstAttribute="top" secondItem="NO9-nd-hIb" secondAttribute="bottom" constant="25" id="Zvb-up-mDG">
@@ -781,6 +780,7 @@
                             <constraint firstItem="YMk-hu-pxw" firstAttribute="centerX" secondItem="AI5-DC-xFe" secondAttribute="centerX" id="gUh-kq-if3"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YMk-hu-pxw" secondAttribute="leading" id="hHy-iN-164"/>
                             <constraint firstAttribute="leadingMargin" secondItem="DKf-3j-95t" secondAttribute="leading" id="kdS-7j-pa8"/>
+                            <constraint firstItem="6ZG-xO-lSY" firstAttribute="top" secondItem="YMk-hu-pxw" secondAttribute="bottom" constant="41" id="kli-Tz-tsh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YMk-hu-pxw" secondAttribute="trailing" id="sqc-Za-puJ"/>
                         </constraints>
                         <variation key="default">
@@ -798,8 +798,8 @@
                                 <exclude reference="sqc-Za-puJ"/>
                                 <exclude reference="AQS-YV-X62"/>
                                 <exclude reference="Bco-OY-0Mt"/>
-                                <exclude reference="FQr-V3-age"/>
                                 <exclude reference="SO7-aI-odk"/>
+                                <exclude reference="kli-Tz-tsh"/>
                                 <exclude reference="EmI-8m-joZ"/>
                                 <exclude reference="kdS-7j-pa8"/>
                                 <exclude reference="eVG-AZ-O47"/>
@@ -821,8 +821,8 @@
                                 <include reference="sqc-Za-puJ"/>
                                 <include reference="AQS-YV-X62"/>
                                 <include reference="Bco-OY-0Mt"/>
-                                <include reference="FQr-V3-age"/>
                                 <include reference="SO7-aI-odk"/>
+                                <include reference="kli-Tz-tsh"/>
                                 <include reference="EmI-8m-joZ"/>
                                 <include reference="kdS-7j-pa8"/>
                                 <include reference="eVG-AZ-O47"/>
@@ -833,6 +833,7 @@
                     <connections>
                         <outlet property="addPollButton" destination="DKf-3j-95t" id="GoS-pc-5kr"/>
                         <outlet property="collectionView" destination="6ZG-xO-lSY" id="yQG-lh-TVE"/>
+                        <outlet property="questionValidationView" destination="YMk-hu-pxw" id="ejw-dY-r86"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oc7-7S-ZdF" userLabel="First Responder" sceneMemberID="firstResponder"/>

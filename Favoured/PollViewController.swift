@@ -25,6 +25,7 @@ class PollViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     // MARK: - Interface builder outlets and actions.
     
+    @IBOutlet weak var questionValidationView: ValidationView!
     @IBOutlet weak var addPollButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -43,14 +44,14 @@ class PollViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         // Configure the collection view.
 //        let screenSize = UIScreen.mainScreen().bounds
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        print("Collection view width \(collectionView.frame.size.width / 2)")
-        layout.itemSize = CGSize(width: collectionView.frame.size.width / 2, height: collectionView.frame.size.width / 2)
+//        let layout = UICollectionViewFlowLayout()
+//        layout.minimumInteritemSpacing = 0
+//        layout.minimumLineSpacing = 0
+//        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        print("Collection view width \(collectionView.frame.size.width / 2)")
+//        layout.itemSize = CGSize(width: collectionView.frame.size.width / 2, height: collectionView.frame.size.width / 2)
         
-        collectionView.frame.size.height = collectionView.frame.size.width
+//        collectionView.frame.size.height = collectionView.frame.size.width
         collectionView.dataSource = self
         collectionView.delegate = self
 //        collectionView.setCollectionViewLayout(layout, animated: true)
@@ -91,8 +92,10 @@ class PollViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = (collectionView.frame.size.width - 20) / 2
-        return CGSize(width: width, height: width)
+        let width = collectionView.frame.size.width
+        let spacing = width * 0.06
+        let cellWidth = (width - spacing) / 4
+        return CGSize(width: cellWidth, height: cellWidth)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
