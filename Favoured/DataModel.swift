@@ -111,9 +111,28 @@ class DataModel: NSObject {
         polls.removeAllObservers()
     }
     
+    
+    class func addPoll(pollDetails: [String:AnyObject], pollPictures: [UIImage]) {
+        let newPoll = firebase.childByAppendingPath(FirebaseConstants.Polls).childByAutoId()
+        let pollId = newPoll.key!
+        newPoll.setValue(pollDetails) { error, firebase in
+            if error != nil {
+                print("Failure")
+            } else {
+                print("Success")
+            }
+            
+        }
+    }
+    
     private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
         let users = firebase.childByAppendingPath(FirebaseConstants.Users).childByAppendingPath(uid)
         users.updateChildValues(userDetails)
+    }
+    
+    private class func updatePollDetails(pollId: String, pollDetails: [String: AnyObject]) {
+        let poll = firebase.childByAppendingPath(FirebaseConstants.Polls).childByAppendingPath(pollId)
+        poll.updateChildValues(pollDetails)
     }
     
     private class func getAuthenticationError(error: NSError) -> String {
@@ -164,6 +183,10 @@ class DataModel: NSObject {
         }
     }
     
+    private class func uploadPollPictures(pollId: String, pollPictures: [UIImage]) {
+        
+    }
+    
     private class func upload(uploadRequest: AWSS3TransferManagerUploadRequest, handler: ((success: Bool, key: String) -> Void)) {
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
         
@@ -202,5 +225,11 @@ class DataModel: NSObject {
             }
             return nil
         }
+    }
+    
+    private class func getImage(pollId: String, index: Int, pollPicture: UIImage) -> Image {
+        let suffix = String(format: ImageConstants.PollPictureJPEG, arguments: [String(index)])
+        let id = pollId + suffix
+        return Image(id: id, uploaded: false, context: context)
     }
 }

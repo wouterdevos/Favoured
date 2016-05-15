@@ -22,6 +22,7 @@
 		105E61DA1CAFE3C5009D9851 /* Favoured.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 105E61D81CAFE3C5009D9851 /* Favoured.xcdatamodeld */; };
 		105E61DC1CAFE3C5009D9851 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 105E61DB1CAFE3C5009D9851 /* Assets.xcassets */; };
 		105E61DF1CAFE3C5009D9851 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 105E61DD1CAFE3C5009D9851 /* LaunchScreen.storyboard */; };
+		1083979E1CE87D7400C39C39 /* AddPollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1083979D1CE87D7400C39C39 /* AddPollViewController.swift */; };
 		109814761CB306FF0042E06E /* ActivityIndicatorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109814751CB306FF0042E06E /* ActivityIndicatorUtils.swift */; };
 		109814781CB309FA0042E06E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109814771CB309FA0042E06E /* Constants.swift */; };
 		10A222131CB6E87000D3BD1D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A222121CB6E87000D3BD1D /* Utils.swift */; };
@@ -52,6 +53,7 @@
 		105E61DB1CAFE3C5009D9851 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		105E61DE1CAFE3C5009D9851 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		105E61E01CAFE3C5009D9851 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1083979D1CE87D7400C39C39 /* AddPollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPollViewController.swift; sourceTree = "<group>"; };
 		109814751CB306FF0042E06E /* ActivityIndicatorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorUtils.swift; sourceTree = "<group>"; };
 		109814771CB309FA0042E06E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		109814791CB30C080042E06E /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */,
 				1046C2ED1CDF789A00E995E7 /* PollViewController.swift */,
 				10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */,
+				1083979D1CE87D7400C39C39 /* AddPollViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				105E61DA1CAFE3C5009D9851 /* Favoured.xcdatamodeld in Sources */,
 				105E61D41CAFE3C5009D9851 /* LoginViewController.swift in Sources */,
 				10B6D0241CDA132C00E5128D /* DataModel.swift in Sources */,
+				1083979E1CE87D7400C39C39 /* AddPollViewController.swift in Sources */,
 				1046C2EE1CDF789A00E995E7 /* PollViewController.swift in Sources */,
 				10B6D0261CDA3C1600E5128D /* ImageCache.swift in Sources */,
 				10B6D02A1CDA3DC000E5128D /* Image.swift in Sources */,

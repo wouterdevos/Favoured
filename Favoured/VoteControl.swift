@@ -8,9 +8,17 @@
 
 import UIKit
 
-class VoteControl: UIView {
+class VoteControl: UIControl {
 
-    let MaxButtons = 4
+    enum VoteOption: Int {
+        case OptionA = 0
+        case OptionB = 1
+        case OptionC = 2
+        case OptionD = 3
+    }
+    
+    let buttons = 4
+    let spacing = 30
     
     var voteValue: String? = nil
     var voteButtons = [UIButton]()
@@ -26,35 +34,43 @@ class VoteControl: UIView {
     }
     
     override func intrinsicContentSize() -> CGSize {
-        return CGSize(width: 240, height: 44)
+        let buttonSize = Int(frame.size.height)
+        let width = (buttonSize * buttons) + (spacing * (buttons - 1))
+        return CGSize(width: width, height: buttonSize)
     }
     
     override func layoutSubviews() {
-        var buttonFrame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        let buttonSize = Int(frame.size.height)
+        var buttonFrame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
         for (index, button) in voteButtons.enumerate() {
-            buttonFrame.origin.x = CGFloat(index * (44 + 5))
+            buttonFrame.origin.x = CGFloat(index * (buttonSize + spacing))
             button.frame = buttonFrame
+//            button.layer.cornerRadius = 0.5 * button.bounds.size.width
         }
     }
     
     func setup() {
-        let controlWidth = frame.size.width
-        let controlHeight = frame.size.height
+//        let controlWidth = frame.size.width
+//        let controlHeight = frame.size.height
+        let buttonNormal = UIImage(named: "VoteButtonNormal")
+        let buttonSelected = UIImage(named: "VoteButtonSelected")
         
-        for _ in 0 ..< MaxButtons {
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        for _ in 0 ..< buttons {
+            let button = UIButton()
+//            button.backgroundColor = UIColor.redColor()
             button.addTarget(self, action: "voteButtonClicked:", forControlEvents: .TouchDown)
-            button.backgroundColor = UIColor.redColor()
-            button.titleLabel?.text = "A"
+            button.setBackgroundImage(buttonNormal, forState: .Normal)
+            button.setBackgroundImage(buttonSelected, forState: .Highlighted)
+            button.setTitle("A", forState: .Normal)
+            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            button.adjustsImageWhenHighlighted = false
             voteButtons += [button]
             addSubview(button)
         }
-        
     }
     
-    
-    
-    func voteButtonClicked(sender: UIButton) {
-        print("vote button clicked")
+    func voteButtonClicked(button: UIButton) {
+        let voteButtonIndex = voteButtons.indexOf(button)!
+        let voteOption = VoteOption(rawValue: voteButtonIndex)
     }
 }

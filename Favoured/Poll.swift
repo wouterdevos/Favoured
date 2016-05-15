@@ -13,25 +13,40 @@ class Poll {
     
     var question: String
     var userId: String
-    var creationDate: String
-    var selectedOption: String
+    var selectedOption: String?
+    var creationDate: Double
     var closed: Bool
     var photosUploaded: Bool
-    var optionA: PollOption
-    var optionB: PollOption
-    var optionC: PollOption
-    var optionD: PollOption
+    var pollOptions = [PollOption]()
+    
+    init(question: String, userId: String) {
+        self.question = question
+        self.userId = userId
+        creationDate = Utils.getTimeIntervalSince1970()
+        closed = false
+        photosUploaded = false
+    }
     
     init(snapshot: FDataSnapshot) {
         question = snapshot.value[FirebaseConstants.Question] as! String
         userId = snapshot.value[FirebaseConstants.UserId] as! String
-        creationDate = snapshot.value[FirebaseConstants.CreationDate] as! String
-        selectedOption = snapshot.value[FirebaseConstants.SelectedOption] as! String
+        selectedOption = snapshot.value[FirebaseConstants.SelectedOption] as? String
+        creationDate = snapshot.value[FirebaseConstants.CreationDate] as! Double
         closed = snapshot.value[FirebaseConstants.Question] as! Bool
         photosUploaded = snapshot.value[FirebaseConstants.Question] as! Bool
-        optionA = PollOption(snapshot: snapshot.childSnapshotForPath(FirebaseConstants.OptionA))
-        optionB = PollOption(snapshot: snapshot.childSnapshotForPath(FirebaseConstants.OptionB))
-        optionC = PollOption(snapshot: snapshot.childSnapshotForPath(FirebaseConstants.OptionC))
-        optionD = PollOption(snapshot: snapshot.childSnapshotForPath(FirebaseConstants.OptionD))
+        let pollOptionsSnapshot = snapshot.childSnapshotForPath(FirebaseConstants.PollOptions)
+        for index in 0..<pollOptionsSnapshot.childrenCount {
+            let pollOption = PollOption(snapshot: pollOptionsSnapshot.childSnapshotForPath(String(index)))
+            pollOptions += [pollOption]
+        }
+    }
+    
+    func getPollData() -> [String:AnyObject] {
+        var data = [String: AnyObject]()
+        data[FirebaseConstants.Question] = question
+        data[FirebaseConstants.UserId] = userId
+        data[FirebaseConstants.Closed] = closed
+        
+        return data
     }
 }

@@ -105,4 +105,16 @@ class Utils {
         UIGraphicsEndImageContext()
         return newImage
     }
+    
+    static func getTimeIntervalSince1970() -> Double {
+        let date = NSDate()
+        return date.timeIntervalSince1970
+    }
+    
+    static func formatDate(timeIntervalSince1970: Double) -> String {
+        let date = NSDate(timeIntervalSince1970: timeIntervalSince1970)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .MediumStyle
+        return dateFormatter.stringFromDate(date)
+    }
 }
