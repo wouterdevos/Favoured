@@ -849,12 +849,12 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="1Yb-az-zzM" firstAttribute="centerY" secondItem="agk-t0-VBW" secondAttribute="centerY" id="6je-EU-qJG"/>
                                             <constraint firstItem="agk-t0-VBW" firstAttribute="bottom" secondItem="qsC-LK-WC0" secondAttribute="bottomMargin" id="UnK-3I-4df"/>
                                             <constraint firstItem="agk-t0-VBW" firstAttribute="leading" secondItem="qsC-LK-WC0" secondAttribute="leadingMargin" id="cdv-4H-iBE"/>
+                                            <constraint firstItem="1Yb-az-zzM" firstAttribute="centerX" secondItem="qsC-LK-WC0" secondAttribute="centerX" id="tkJ-57-U5V"/>
                                             <constraint firstItem="agk-t0-VBW" firstAttribute="top" secondItem="qsC-LK-WC0" secondAttribute="topMargin" id="udg-ev-pYH"/>
                                             <constraint firstItem="agk-t0-VBW" firstAttribute="trailing" secondItem="qsC-LK-WC0" secondAttribute="trailingMargin" id="vTm-dY-f0S"/>
-                                            <constraint firstItem="1Yb-az-zzM" firstAttribute="centerX" secondItem="agk-t0-VBW" secondAttribute="centerX" id="xHt-SY-hXs"/>
+                                            <constraint firstItem="1Yb-az-zzM" firstAttribute="centerY" secondItem="qsC-LK-WC0" secondAttribute="centerY" id="xLw-8j-mmO"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="subviews">
@@ -862,12 +862,12 @@
                                                 <exclude reference="agk-t0-VBW"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <exclude reference="6je-EU-qJG"/>
-                                                <exclude reference="xHt-SY-hXs"/>
                                                 <exclude reference="UnK-3I-4df"/>
                                                 <exclude reference="cdv-4H-iBE"/>
                                                 <exclude reference="udg-ev-pYH"/>
                                                 <exclude reference="vTm-dY-f0S"/>
+                                                <exclude reference="tkJ-57-U5V"/>
+                                                <exclude reference="xLw-8j-mmO"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact">
@@ -876,12 +876,12 @@
                                                 <include reference="agk-t0-VBW"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <include reference="6je-EU-qJG"/>
-                                                <include reference="xHt-SY-hXs"/>
                                                 <include reference="UnK-3I-4df"/>
                                                 <include reference="cdv-4H-iBE"/>
                                                 <include reference="udg-ev-pYH"/>
                                                 <include reference="vTm-dY-f0S"/>
+                                                <include reference="tkJ-57-U5V"/>
+                                                <include reference="xLw-8j-mmO"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -1115,11 +1115,93 @@
                     <connections>
                         <outlet property="collectionView" destination="4tP-62-Dn5" id="BLC-sX-VnK"/>
                         <outlet property="questionTextView" destination="yL8-al-n5B" id="ZV9-qY-x6a"/>
+                        <segue destination="kbf-f1-Eku" kind="show" identifier="FullScreenImageSegue" id="g3c-c5-ZSF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mvW-re-sSk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3135" y="-494"/>
+            <point key="canvasLocation" x="3177" y="-494"/>
+        </scene>
+        <!--Photo-->
+        <scene sceneID="vFF-qt-Zxm">
+            <objects>
+                <viewController id="kbf-f1-Eku" customClass="FullScreenImageViewController" customModule="Favoured" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Lqw-05-Vz9"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z0C-7s-p1V"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hQm-82-eMn">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UvD-1n-tga">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="Change photo" id="10o-Mb-ijo">
+                                        <connections>
+                                            <action selector="changePhoto:" destination="kbf-f1-Eku" id="DQA-pa-OLS"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="OMa-VT-z4a"/>
+                                    <barButtonItem title="Delete photo" id="7AD-uq-atQ">
+                                        <connections>
+                                            <action selector="deletePhoto:" destination="kbf-f1-Eku" id="5Je-m1-DG0"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tCM-XP-T1r">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tCM-XP-T1r" firstAttribute="leading" secondItem="hQm-82-eMn" secondAttribute="leadingMargin" constant="-20" id="6Kr-ds-Fdw"/>
+                            <constraint firstItem="UvD-1n-tga" firstAttribute="top" secondItem="tCM-XP-T1r" secondAttribute="bottom" id="7qD-UP-fQg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UvD-1n-tga" secondAttribute="trailing" constant="-20" id="Aj8-lx-o6h"/>
+                            <constraint firstItem="UvD-1n-tga" firstAttribute="leading" secondItem="hQm-82-eMn" secondAttribute="leadingMargin" constant="-20" id="Ets-Uy-zVA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tCM-XP-T1r" secondAttribute="trailing" constant="-20" id="Glr-T0-X29"/>
+                            <constraint firstItem="Z0C-7s-p1V" firstAttribute="top" secondItem="UvD-1n-tga" secondAttribute="bottom" id="Omb-mx-uDU"/>
+                            <constraint firstItem="tCM-XP-T1r" firstAttribute="top" secondItem="Lqw-05-Vz9" secondAttribute="bottom" id="W45-Ox-HMT"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="UvD-1n-tga"/>
+                                <exclude reference="tCM-XP-T1r"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="6Kr-ds-Fdw"/>
+                                <exclude reference="Glr-T0-X29"/>
+                                <exclude reference="W45-Ox-HMT"/>
+                                <exclude reference="7qD-UP-fQg"/>
+                                <exclude reference="Aj8-lx-o6h"/>
+                                <exclude reference="Ets-Uy-zVA"/>
+                                <exclude reference="Omb-mx-uDU"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="UvD-1n-tga"/>
+                                <include reference="tCM-XP-T1r"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="6Kr-ds-Fdw"/>
+                                <include reference="Glr-T0-X29"/>
+                                <include reference="W45-Ox-HMT"/>
+                                <include reference="7qD-UP-fQg"/>
+                                <include reference="Aj8-lx-o6h"/>
+                                <include reference="Ets-Uy-zVA"/>
+                                <include reference="Omb-mx-uDU"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Photo" id="sND-7K-hgy"/>
+                    <connections>
+                        <outlet property="imageView" destination="tCM-XP-T1r" id="0ZX-VM-YFU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kbC-zH-A44" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4053" y="-494"/>
         </scene>
     </scenes>
     <resources>

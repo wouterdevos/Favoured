@@ -9,12 +9,9 @@
 import UIKit
 import SwiftValidator
 
-class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ValidationDelegate {
+class RegisterViewController: ImagePickerViewController, UITextFieldDelegate, ValidationDelegate {
 
-    let activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     let validator = Validator()
-    let defaultCenter = NSNotificationCenter.defaultCenter()
-    var alertController: UIAlertController?
     var uid: String?
     
     // MARK: - Interface builder outlets and actions.
@@ -27,14 +24,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     @IBOutlet weak var registerButton: UIButton!
     
     @IBAction func selectProfilePicture(sender: AnyObject) {
-        let isCamera = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        if isCamera {
-            alertController = Utils.createImagePickerAlertController(Title.AddProfilePicture, cameraHandler: cameraHandler, photoLibraryHandler: photoLibraryHandler)
-            presentViewController(alertController!, animated: true, completion: nil)
-        } else {
-            let imagePickerController = Utils.getImagePickerController(.PhotoLibrary, delegate: self)
-            presentViewController(imagePickerController, animated: true, completion: nil)
-        }
+        createImagePickerAlertController()
     }
     
     @IBAction func register(sender: AnyObject) {
@@ -59,11 +49,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         removeObservers()
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        alertController?.dismissViewControllerAnimated(false, completion: nil)
     }
     
     // MARK: - UITextFieldDelegate methods.
@@ -202,24 +187,5 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
         emailValidationView.enabled = !inProgress
         passwordValidationView.enabled = !inProgress
         registerButton.enabled = !inProgress
-    }
-    
-    // MARK: - Handler methods for alert controller.
-    
-    func cameraHandler(alertAction: UIAlertAction) {
-        let imagePickerController = Utils.getImagePickerController(.Camera, delegate: self)
-        presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    func photoLibraryHandler(alertAction: UIAlertAction) {
-        let imagePickerController = Utils.getImagePickerController(.PhotoLibrary, delegate: self)
-        presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    // MARK: - Convenience methods.
-    
-    func createAuthenticationAlertController(title: String, message: String) {
-        alertController = Utils.createAlertController(title, message: message)
-        presentViewController(alertController!, animated: true, completion: nil)
     }
 }

@@ -12,4 +12,10 @@ class AddPollCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imageView.frame.size.width = frame.width
+        imageView.frame.size.height = frame.height
+    }
 }

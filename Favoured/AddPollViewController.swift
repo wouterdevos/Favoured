@@ -8,14 +8,13 @@
 
 import UIKit
 
-class AddPollViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FullScreenImageViewControllerDelegate {
 
     let AddPhoto = "Add Photo"
+    let FullScreenImageSegue = "FullScreenImageSegue"
     
-    let activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
-    let defaultCenter = NSNotificationCenter.defaultCenter()
+    var selectedPictureIndex = 0
     var pollPictures = [UIImage?]()
-    var alertController: UIAlertController?
 
     // MARK: - Interface builder outlets and actions.
     
@@ -33,25 +32,22 @@ class AddPollViewController: UIViewController, UIImagePickerControllerDelegate, 
 
         pollPictures.append(nil)
         
-        // Configure the collection view.
-//        let screenSize = UIScreen.mainScreen().bounds
-//        let layout = UICollectionViewFlowLayout()
-//        layout.minimumInteritemSpacing = 0
-//        layout.minimumLineSpacing = 0
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        print("Collection view width \(collectionView.frame.size.width / 2)")
-//        layout.itemSize = CGSize(width: collectionView.frame.size.width / 2, height: collectionView.frame.size.width / 2)
-        
-//        collectionView.frame.size.height = collectionView.frame.size.width
         collectionView.dataSource = self
         collectionView.delegate = self
-//        collectionView.setCollectionViewLayout(layout, animated: true)
 
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == FullScreenImageSegue {
+            let viewController = segue.destinationViewController as! FullScreenImageViewController
+            let pollPicture = sender as! UIImage
+            viewController.image = pollPicture
+        }
     }
     
     // MARK: - UIImagePickerControllerDelegate and UINavigationControllerDelegate methods.
@@ -70,10 +66,6 @@ class AddPollViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - UICollectionViewDelegate, UICollectionViewDatasource and UICollectionViewDelegateFlowlayout methods.
     
-    //    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-    //        return pollOptions.count
-    //    }
-    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pollPictures.count
     }
@@ -84,7 +76,6 @@ class AddPollViewController: UIViewController, UIImagePickerControllerDelegate, 
         let pollPicture = pollPictures[indexPath.row]
         let isPollPicture = pollPicture != nil
         cell.imageView.backgroundColor = isPollPicture ? UIColor.whiteColor() : UIColor.grayColor()
-//        let profilePicture = UIImage(named: "ProfilePicture")
         cell.imageView.image = pollPicture
         cell.label.hidden = isPollPicture
         cell.label.text = AddPhoto
@@ -93,12 +84,14 @@ class AddPollViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let pollPicture = pollPictures[indexPath.row] else {
+        selectedPictureIndex = indexPath.row
+        guard let pollPicture = pollPictures[selectedPictureIndex] else {
             createImagePickerAlertController()
             return
         }
         
-        // View full screen picture
+        // Instantiate full screen image view controller
+        performSegueWithIdentifier(FullScreenImageSegue, sender: pollPicture)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -110,6 +103,15 @@ class AddPollViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    // MARK: - FullScreenImageViewControllerDelegate method.
+    
+    func imageChanged(image: UIImage?) {
+        if let pollPicture = image {
+            pollPictures[selectedPictureIndex] = pollPicture
+            collectionView.reloadData()
+        }
     }
     
     // MARK: - Initialisation methods.
@@ -128,30 +130,5 @@ class AddPollViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func addPoll() {
         
-    }
-    
-    // MARK: - Handler methods for alert controller.
-    
-    func cameraHandler(alertAction: UIAlertAction) {
-        let imagePickerController = Utils.getImagePickerController(.Camera, delegate: self)
-        presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    func photoLibraryHandler(alertAction: UIAlertAction) {
-        let imagePickerController = Utils.getImagePickerController(.PhotoLibrary, delegate: self)
-        presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    // MARK: - Convenience methods.
-    
-    func createImagePickerAlertController() {
-        let isCamera = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        if isCamera {
-            alertController = Utils.createImagePickerAlertController(Title.AddProfilePicture, cameraHandler: cameraHandler, photoLibraryHandler: photoLibraryHandler)
-            presentViewController(alertController!, animated: true, completion: nil)
-        } else {
-            let imagePickerController = Utils.getImagePickerController(.PhotoLibrary, delegate: self)
-            presentViewController(imagePickerController, animated: true, completion: nil)
-        }
     }
 }

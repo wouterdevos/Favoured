@@ -9,12 +9,9 @@
 import UIKit
 import SwiftValidator
 
-class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDelegate {
+class LoginViewController: FavouredViewController, UITextFieldDelegate, ValidationDelegate {
     
-    let activityIndicatorUtils = ActivityIndicatorUtils.sharedInstance()
     let validator = Validator()
-    let defaultCenter = NSNotificationCenter.defaultCenter()
-    var alertController: UIAlertController?
     
     var emailResetPasswordTextField: UITextField?
     
@@ -55,11 +52,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         removeObservers()
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        alertController?.dismissViewControllerAnimated(false, completion: nil)
     }
     
     // MARK: - UITextFieldDelegate methods.
@@ -209,13 +201,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ValidationDele
         registerBarButtonItem.enabled = !inProgress
         loginButton.enabled = !inProgress
         resetPasswordButton.enabled = !inProgress
-    }
-    
-    // MARK: - Convenience methods.
-    
-    func createAuthenticationAlertController(title: String, message: String) {
-        alertController = Utils.createAlertController(title, message: message)
-        presentViewController(alertController!, animated: true, completion: nil)
     }
 }
 
