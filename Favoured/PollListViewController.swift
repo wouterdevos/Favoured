@@ -71,12 +71,12 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Initialisation methods.
     
     func addObservers() {
-        DataModel.addPollListObserver()
+//        DataModel.addPollListObserver()
         defaultCenter.addObserver(self, selector: "getPollsCompleted:", name: NotificationNames.GetPollsCompleted, object: nil)
     }
     
     func removeObservers() {
-        DataModel.removePollListObserver()
+//        DataModel.removePollListObserver()
         defaultCenter.removeObserver(self, name: NotificationNames.GetPollsCompleted, object: nil)
     }
     
