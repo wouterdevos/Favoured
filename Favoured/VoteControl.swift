@@ -58,7 +58,7 @@ class VoteControl: UIControl {
         for _ in 0 ..< buttons {
             let button = UIButton()
 //            button.backgroundColor = UIColor.redColor()
-            button.addTarget(self, action: "voteButtonClicked:", forControlEvents: .TouchDown)
+            button.addTarget(self, action: #selector(VoteControl.voteButtonClicked(_:)), forControlEvents: .TouchDown)
             button.setBackgroundImage(buttonNormal, forState: .Normal)
             button.setBackgroundImage(buttonSelected, forState: .Highlighted)
             button.setTitle("A", forState: .Normal)

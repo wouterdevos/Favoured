@@ -157,11 +157,11 @@ class RegisterViewController: ImagePickerViewController, UITextFieldDelegate, Va
     }
     
     func addObservers() {
-        defaultCenter.addObserver(self, selector: "createUserCompleted:", name: NotificationNames.CreateUserCompleted, object: nil)
+//        defaultCenter.addObserver(self, selector: "createUserCompleted:", name: NotificationNames.CreateUserCompleted, object: nil)
     }
     
     func removeObservers() {
-        defaultCenter.removeObserver(self, name: NotificationNames.CreateUserCompleted, object: nil)
+//        defaultCenter.removeObserver(self, name: NotificationNames.CreateUserCompleted, object: nil)
     }
     
     // MARK: - REST calls and response handler methods.

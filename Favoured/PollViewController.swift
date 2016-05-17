@@ -50,13 +50,13 @@ class PollViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     // MARK: - Initialisation methods.
     
     func addObservers() {
-        defaultCenter.addObserver(self, selector: "authUserCompleted:", name: NotificationNames.AuthUserCompleted, object: nil)
-        defaultCenter.addObserver(self, selector: "resetPasswordForUserCompleted:", name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
+//        defaultCenter.addObserver(self, selector: "authUserCompleted:", name: NotificationNames.AuthUserCompleted, object: nil)
+//        defaultCenter.addObserver(self, selector: "resetPasswordForUserCompleted:", name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
     }
     
     func removeObservers() {
-        defaultCenter.removeObserver(self, name: NotificationNames.AuthUserCompleted, object: nil)
-        defaultCenter.removeObserver(self, name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
+//        defaultCenter.removeObserver(self, name: NotificationNames.AuthUserCompleted, object: nil)
+//        defaultCenter.removeObserver(self, name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
     }
     
     // MARK: - REST calls and response methods.
