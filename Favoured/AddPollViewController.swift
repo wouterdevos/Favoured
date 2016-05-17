@@ -47,6 +47,7 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
             let viewController = segue.destinationViewController as! FullScreenImageViewController
             let pollPicture = sender as! UIImage
             viewController.image = pollPicture
+            viewController.delegate = self
         }
     }
     
@@ -108,10 +109,16 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     // MARK: - FullScreenImageViewControllerDelegate method.
     
     func imageChanged(image: UIImage?) {
-        if let pollPicture = image {
-            pollPictures[selectedPictureIndex] = pollPicture
-            collectionView.reloadData()
+        if image == nil {
+            let hasReachedTotal = pollPictures.count == ImageConstants.PollPictureTotal && pollPictures[ImageConstants.PollPictureTotal - 1] != nil
+            pollPictures.removeAtIndex(selectedPictureIndex)
+            if hasReachedTotal {
+                pollPictures.append(nil)
+            }
+        } else {
+            pollPictures[selectedPictureIndex] = image
         }
+        collectionView.reloadData()
     }
     
     // MARK: - Initialisation methods.

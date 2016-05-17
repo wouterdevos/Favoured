@@ -31,7 +31,7 @@ class FullScreenImageViewController: ImagePickerViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    
+    // MARK: - Lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
