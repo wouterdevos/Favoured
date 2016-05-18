@@ -10,6 +10,8 @@ import UIKit
 
 class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FullScreenImageViewControllerDelegate {
 
+    let PollPictureMax = 4
+    let PollPictureMin = 2
     let AddPhoto = "Add Photo"
     let FullScreenImageSegue = "FullScreenImageSegue"
     
@@ -22,7 +24,21 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBAction func addPoll(sender: AnyObject) {
-//        DataModel.addPoll()
+        // Check if the question has been completed.
+        guard let question = questionTextView.text where question.characters.count > 0 else {
+            createAlertController(Title.AddPollQuestion, message: Message.AddPollQuestion)
+            return
+        }
+        
+        // Check if the minimum number of pictures have been added.
+        guard pollPictures.count > PollPictureMin else {
+            createAlertController(Title.AddPollPictures, message: Message.AddPollPictures)
+            return
+        }
+        
+        let userId = DataModel.getUserId()
+        addPoll(question, userId: userId)
+        navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: - Lifecycle methods.
@@ -30,7 +46,10 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Initialise the poll pictures array with a nil image.
         pollPictures.append(nil)
+        
+        questionTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -55,10 +74,10 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-            if pollPictures.count < ImageConstants.PollPictureTotal {
+            if pollPictures.count < PollPictureMax {
                 pollPictures.insert(pickedImage, atIndex: pollPictures.count - 1)
             } else {
-                pollPictures[ImageConstants.PollPictureTotal - 1] = pickedImage
+                pollPictures[PollPictureMax - 1] = pickedImage
             }
         }
         picker.dismissViewControllerAnimated(true, completion: nil)
@@ -110,9 +129,13 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     
     func imageChanged(image: UIImage?) {
         if image == nil {
-            let hasReachedTotal = pollPictures.count == ImageConstants.PollPictureTotal && pollPictures[ImageConstants.PollPictureTotal - 1] != nil
+            // Check if the maximum number of images were selected.
+            let hasReachedTotal = pollPictures.count == PollPictureMax && pollPictures[PollPictureMax - 1] != nil
+            
+            // Remove the deleted image from the image list.
             pollPictures.removeAtIndex(selectedPictureIndex)
             if hasReachedTotal {
+                // Append an empty image to the end of the list because the maximum number of images were selected.
                 pollPictures.append(nil)
             }
         } else {
@@ -135,7 +158,15 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     
     // MARK: - REST calls and response methods.
     
-    func addPoll() {
+    func addPoll(question: String, userId: String) {
+        let poll = Poll(question: question, userId: userId)
         
+        var finalPollPictures = [UIImage]()
+        for pollPicture in pollPictures {
+            if let finalPollPicture = pollPicture {
+                finalPollPictures.append(finalPollPicture)
+            }
+        }
+        DataModel.addPoll(poll.getPollData(), pollPictures: finalPollPictures)
     }
 }

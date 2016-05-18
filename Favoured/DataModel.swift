@@ -30,6 +30,10 @@ class DataModel: NSObject {
     
     // MARK:- Firebase
     
+    class func getUserId() -> String {
+        return firebase.authData.uid
+    }
+    
     class func authUser() {
         if let _ = firebase.authData {
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
@@ -111,18 +115,11 @@ class DataModel: NSObject {
         polls.removeAllObservers()
     }
     
-    
     class func addPoll(pollDetails: [String:AnyObject], pollPictures: [UIImage]) {
         let newPoll = firebase.childByAppendingPath(FirebaseConstants.Polls).childByAutoId()
         let pollId = newPoll.key!
-        newPoll.setValue(pollDetails) { error, firebase in
-            if error != nil {
-                print("Failure")
-            } else {
-                print("Success")
-            }
-            
-        }
+        newPoll.setValue(pollDetails)
+        uploadPollPictures(pollId, pollPictures: pollPictures)
     }
     
     private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
@@ -161,18 +158,14 @@ class DataModel: NSObject {
             return
         }
         
-        let profilePictureId = id + ImageConstants.ProfilePictureJPEG
         let targetSize = CGSize(width: ImageConstants.ThumbnailWidth, height: ImageConstants.ThumbnailHeight)
         let thumbnail = Utils.resizeImage(profilePictureImage, targetSize: targetSize)
+        let profilePictureId = id + ImageConstants.ProfilePictureJPEG
         let image = Image(id: profilePictureId, uploaded: false, context: context)
         image.image = thumbnail
         saveContext()
         
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest.body = NSURL(fileURLWithPath: image.path!)
-        uploadRequest.key = profilePictureId
-        uploadRequest.bucket = AWSConstants.BucketProfilePictures
-        
+        let uploadRequest = getUploadRequest(image)
         upload(uploadRequest) { success, key in
             if success {
                 image.uploaded = true
@@ -184,7 +177,29 @@ class DataModel: NSObject {
     }
     
     private class func uploadPollPictures(pollId: String, pollPictures: [UIImage]) {
+        // Store the image in with core data.
+        var images = [Image]()
+        for (index, pollPicture) in pollPictures.enumerate() {
+            let image = getImage(pollId, index: index, pollPicture: pollPicture)
+            images.append(image)
+        }
+        saveContext()
         
+        var count = 0
+        for image in images {
+            let uploadRequest = getUploadRequest(image)
+            upload(uploadRequest) { success, key in
+                if success {
+                    image.uploaded = true
+                    saveContext()
+                    count += 1
+                    if count == images.count {
+                        let pollDetails = [FirebaseConstants.PhotosUploaded: true]
+                        updatePollDetails(pollId, pollDetails: pollDetails)
+                    }
+                }
+            }
+        }
     }
     
     private class func upload(uploadRequest: AWSS3TransferManagerUploadRequest, handler: ((success: Bool, key: String) -> Void)) {
@@ -227,9 +242,18 @@ class DataModel: NSObject {
         }
     }
     
+    private class func getUploadRequest(image: Image) -> AWSS3TransferManagerUploadRequest {
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = NSURL(fileURLWithPath: image.path!)
+        uploadRequest.key = image.id
+        uploadRequest.bucket = AWSConstants.BucketProfilePictures
+        return uploadRequest
+    }
+    
     private class func getImage(pollId: String, index: Int, pollPicture: UIImage) -> Image {
-        let suffix = String(format: ImageConstants.PollPictureJPEG, arguments: [String(index)])
-        let id = pollId + suffix
-        return Image(id: id, uploaded: false, context: context)
+        let id = pollId + String(format: ImageConstants.PollPictureJPEG, index)
+        let image = Image(id: id, uploaded: false, context: context)
+        image.image = pollPicture
+        return image
     }
 }

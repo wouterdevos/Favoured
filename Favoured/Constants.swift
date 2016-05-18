@@ -53,11 +53,15 @@ struct Title {
     static let Error = "Error"
     static let AddProfilePicture = "Add Profile Picture"
     static let AddPicture = "Add Picture"
+    static let AddPollQuestion = "Add Question"
+    static let AddPollPictures = "Add Pictures"
 }
 
 struct Message {
     static let EmailEnter = "Please enter your email."
     static let CheckEmailForPassword = "Please check your email to get your temporary password."
+    static let AddPollQuestion = "Please add a question to the poll."
+    static let AddPollPictures = "Please add a minimum of two pictures to the poll."
 }
 
 struct Error {
@@ -91,11 +95,6 @@ struct Placeholder {
 struct ImageConstants {
     static let ProfilePictureJPEG = "_profile_picture.jpeg"
     static let PollPictureJPEG = "_poll_picture_%@.jpeg"
-    static let PollPictureA = "a"
-    static let PollPictureB = "b"
-    static let PollPictureC = "c"
-    static let PollPictureD = "d"
-    static let PollPictureTotal = 4
     static let ThumbnailWidth = 100.0
     static let ThumbnailHeight = 100.0
 }

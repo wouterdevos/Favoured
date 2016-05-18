@@ -174,7 +174,7 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
         toggleRequestProgress(false)
         if let userInfo = notification.userInfo {
             let message = userInfo[NotificationData.Message] as! String
-            createAuthenticationAlertController(Title.Error, message: message)
+            createAlertController(Title.Error, message: message)
         } else {
             let mainNavigationController = navigationController!.storyboard!.instantiateViewControllerWithIdentifier("MainNavigationController")
             navigationController!.presentViewController(mainNavigationController, animated: true, completion: nil)
@@ -191,7 +191,7 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
         let title = userInfo[NotificationData.Title] as! String
         let message = userInfo[NotificationData.Message] as! String
         
-        createAuthenticationAlertController(title, message: message)
+        createAlertController(title, message: message)
     }
     
     func toggleRequestProgress(inProgress: Bool) {

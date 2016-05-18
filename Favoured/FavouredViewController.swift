@@ -23,7 +23,7 @@ class FavouredViewController: UIViewController {
     
     // MARK: - Convenience methods.
     
-    func createAuthenticationAlertController(title: String, message: String) {
+    func createAlertController(title: String, message: String) {
         alertController = Utils.createAlertController(title, message: message)
         presentViewController(alertController!, animated: true, completion: nil)
     }

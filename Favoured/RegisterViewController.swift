@@ -175,7 +175,7 @@ class RegisterViewController: ImagePickerViewController, UITextFieldDelegate, Va
         toggleRequestProgress(false)
         if let userInfo = notification.userInfo {
             let message = userInfo[NotificationData.Message] as! String
-            createAuthenticationAlertController(Title.Error, message: message)
+            createAlertController(Title.Error, message: message)
         } else {
             navigationController?.popViewControllerAnimated(true)
         }
