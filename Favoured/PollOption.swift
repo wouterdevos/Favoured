@@ -14,8 +14,8 @@ class PollOption {
     var pollPicture: String
     var voteCount: Int
     
-    init(snapshot: FDataSnapshot) {
-        pollPicture = snapshot.value.objectForKey(FirebaseConstants.PollPicture) as! String
-        voteCount = snapshot.value.objectForKey(FirebaseConstants.VoteCount) as! Int
+    init(snapshot: FIRDataSnapshot) {
+        pollPicture = snapshot.value!.objectForKey(FirebaseConstants.PollPicture) as! String
+        voteCount = snapshot.value!.objectForKey(FirebaseConstants.VoteCount) as! Int
     }
 }

@@ -137,8 +137,8 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
     }
     
     func addObservers() {
-        defaultCenter.addObserver(self, selector: #selector(LoginViewController.authUserCompleted(_:)), name: NotificationNames.AuthUserCompleted, object: nil)
-        defaultCenter.addObserver(self, selector: #selector(LoginViewController.resetPasswordForUserCompleted(_:)), name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
+        defaultCenter.addObserver(self, selector: #selector(authUserCompleted(_:)), name: NotificationNames.AuthUserCompleted, object: nil)
+        defaultCenter.addObserver(self, selector: #selector(resetPasswordForUserCompleted(_:)), name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
     }
     
     func removeObservers() {

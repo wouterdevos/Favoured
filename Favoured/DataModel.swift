@@ -12,8 +12,16 @@ import AWSS3
 
 class DataModel: NSObject {
     
-    private class var firebase: Firebase {
-        return Firebase(url: FirebaseConstants.URL)
+    private class var fireAuth: FIRAuth {
+        return FIRAuth.auth()!
+    }
+    
+    private class var fireDatabase: FIRDatabaseReference {
+        return FIRDatabase.database().reference()
+    }
+    
+    private class var fireStorage: FIRStorage {
+        return FIRStorage.storage()
     }
     
     private class var defaultCenter: NSNotificationCenter {
@@ -31,29 +39,45 @@ class DataModel: NSObject {
     // MARK:- Firebase
     
     class func getUserId() -> String {
-        return firebase.authData.uid
+        return fireAuth.currentUser!.uid
     }
     
     class func authUser() {
-        if let _ = firebase.authData {
+        if let _ = fireAuth.currentUser {
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
         }
+//        if let _ = firebase.authData {
+//            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
+//        }
     }
     
     class func authUser(email: String, password: String) {
-        firebase.authUser(email, password: password) { error, authData in
+        fireAuth.signInWithEmail(email, password: password) { user, error in
             var userInfo: [String: String]? = nil
-            if error != nil {
+            if let error = error {
                 userInfo = [String: String]()
                 userInfo![NotificationData.Message] = getAuthenticationError(error)
             }
             
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: userInfo)
         }
+//        firebase.authUser(email, password: password) { error, authData in
+//            var userInfo: [String: String]? = nil
+//            if error != nil {
+//                userInfo = [String: String]()
+//                userInfo![NotificationData.Message] = getAuthenticationError(error)
+//            }
+//            
+//            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: userInfo)
+//        }
+    }
+    
+    class func signOut() {
+        try! fireAuth.signOut()
     }
     
     class func resetPasswordForUser(email: String) {
-        firebase.resetPasswordForUser(email) { error in
+        fireAuth.sendPasswordResetWithEmail(email) { error in
             var userInfo: [String: String] = [String: String]()
             if error != nil {
                 userInfo[NotificationData.Title] = Title.Error
@@ -65,26 +89,49 @@ class DataModel: NSObject {
             
             defaultCenter.postNotificationName(NotificationNames.ResetPasswordForUserCompleted, object: nil, userInfo: userInfo)
         }
+//        firebase.resetPasswordForUser(email) { error in
+//            var userInfo: [String: String] = [String: String]()
+//            if error != nil {
+//                userInfo[NotificationData.Title] = Title.Error
+//                userInfo[NotificationData.Message] = Error.ErrorResettingPassword
+//            } else {
+//                userInfo[NotificationData.Title] = Title.PasswordReset
+//                userInfo[NotificationData.Message] = Message.CheckEmailForPassword
+//            }
+//            
+//            defaultCenter.postNotificationName(NotificationNames.ResetPasswordForUserCompleted, object: nil, userInfo: userInfo)
+//        }
     }
     
     class func createUser(username: String, email: String, password: String, profilePicture: UIImage?) {
-        firebase.createUser(email, password: password) { error, result in
+        fireAuth.createUserWithEmail(email, password: password) { user, error in
             var userInfo: [String: String]? = nil
             if error != nil {
                 userInfo = [String: String]()
-                userInfo![NotificationData.Message] = getAuthenticationError(error)
+                userInfo![NotificationData.Message] = getAuthenticationError(error!)
             } else {
-                let uid = result["uid"] as? String
-                setUserDetails(uid!, username: username, profilePicture: profilePicture)
+                setUserDetails(user!.uid, username: username, profilePicture: profilePicture)
             }
             
             defaultCenter.postNotificationName(NotificationNames.CreateUserCompleted, object: nil, userInfo: userInfo)
         }
+//        firebase.createUser(email, password: password) { error, result in
+//            var userInfo: [String: String]? = nil
+//            if error != nil {
+//                userInfo = [String: String]()
+//                userInfo![NotificationData.Message] = getAuthenticationError(error)
+//            } else {
+//                let uid = result["uid"] as? String
+//                setUserDetails(uid!, username: username, profilePicture: profilePicture)
+//            }
+//            
+//            defaultCenter.postNotificationName(NotificationNames.CreateUserCompleted, object: nil, userInfo: userInfo)
+//        }
     }
     
     class func setUserDetails(uid: String, username: String, profilePicture: UIImage?) {
         // Set the user details.
-        let users = firebase.childByAppendingPath(FirebaseConstants.Users).childByAppendingPath(uid)
+        let users = fireDatabase.child(FirebaseConstants.Users).child(uid)
         let userDetails = [FirebaseConstants.Username: username]
 
         users.setValue(userDetails) { error, firebase in
@@ -97,10 +144,10 @@ class DataModel: NSObject {
     }
     
     class func addPollListObserver() {
-        let polls = firebase.childByAppendingPath(FirebaseConstants.Polls)
+        let polls = fireDatabase.child(FirebaseConstants.Polls)
         polls.observeEventType(.Value, withBlock: { snapshot in
             var polls = [Poll]()
-            for snapshotItem in snapshot.children.allObjects as! [FDataSnapshot] {
+            for snapshotItem in snapshot.children.allObjects as! [FIRDataSnapshot] {
                 let poll = Poll(snapshot: snapshotItem)
                 polls.append(poll)
             }
@@ -111,37 +158,37 @@ class DataModel: NSObject {
     }
     
     class func removePollListObserver() {
-        let polls = firebase.childByAppendingPath(FirebaseConstants.Polls)
+        let polls = fireDatabase.child(FirebaseConstants.Polls)
         polls.removeAllObservers()
     }
     
     class func addPoll(pollDetails: [String:AnyObject], pollPictures: [UIImage]) {
-        let newPoll = firebase.childByAppendingPath(FirebaseConstants.Polls).childByAutoId()
-        let pollId = newPoll.key!
+        let newPoll = fireDatabase.child(FirebaseConstants.Polls).childByAutoId()
+        let pollId = newPoll.key
         newPoll.setValue(pollDetails)
         uploadPollPictures(pollId, pollPictures: pollPictures)
     }
     
     private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
-        let users = firebase.childByAppendingPath(FirebaseConstants.Users).childByAppendingPath(uid)
+        let users = fireDatabase.child(FirebaseConstants.Users).child(uid)
         users.updateChildValues(userDetails)
     }
     
     private class func updatePollDetails(pollId: String, pollDetails: [String: AnyObject]) {
-        let poll = firebase.childByAppendingPath(FirebaseConstants.Polls).childByAppendingPath(pollId)
+        let poll = fireDatabase.child(FirebaseConstants.Polls).child(pollId)
         poll.updateChildValues(pollDetails)
     }
     
     private class func getAuthenticationError(error: NSError) -> String {
-        if let errorCode = FAuthenticationError(rawValue: error.code) {
+        if let errorCode = FIRAuthErrorCode(rawValue: error.code) {
             switch errorCode {
-            case .UserDoesNotExist:
+            case .ErrorCodeUserNotFound:
                 return Error.UserDoesNotExist
-            case .InvalidEmail:
+            case .ErrorCodeInvalidEmail:
                 return Error.EmailInvalidTryAgain
-            case .InvalidPassword:
+            case .ErrorCodeWrongPassword:
                 return Error.PasswordIncorrectTryAgain
-            case .EmailTaken:
+            case .ErrorCodeEmailAlreadyInUse:
                 return Error.EmailTaken
             default:
                 return Error.UnexpectedError
@@ -149,6 +196,10 @@ class DataModel: NSObject {
         }
         
         return Error.UnexpectedError
+    }
+    
+    private class func uploadProfilePicture() {
+    
     }
     
     // MARK:- AWS S3

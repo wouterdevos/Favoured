@@ -29,12 +29,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Firebase.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-Favoured.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,22 +47,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2424F3B8426EC2E6A0EEA813BFA12ACD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>38A885DAE0EE225AA12A8437252FA147</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>3B41A9B1D49827D58E203AF61D34F608</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4F88FFB1EED324CE311576701A688316</key>
+		<key>5C9107D9D08ADE7EF05FF3CF0EA3C007</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>787ADFDC43AC596B7714B24B851BD6D0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,7 +67,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B7AC9326D819482593FE118E915409D7</key>
+		<key>B55D7BB33FA447765D24EEFC5E17FFBF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

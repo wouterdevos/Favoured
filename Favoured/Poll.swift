@@ -27,13 +27,13 @@ class Poll {
         photosUploaded = false
     }
     
-    init(snapshot: FDataSnapshot) {
-        question = snapshot.value.objectForKey(FirebaseConstants.Question) as! String
-        userId = snapshot.value.objectForKey(FirebaseConstants.UserId) as! String
-        selectedOption = snapshot.value.objectForKey(FirebaseConstants.SelectedOption) as? String
-        creationDate = snapshot.value.objectForKey(FirebaseConstants.CreationDate) as! Double
-        closed = snapshot.value.objectForKey(FirebaseConstants.Question) as! Bool
-        photosUploaded = snapshot.value.objectForKey(FirebaseConstants.Question) as! Bool
+    init(snapshot: FIRDataSnapshot) {
+        question = snapshot.value!.objectForKey(FirebaseConstants.Question) as! String
+        userId = snapshot.value!.objectForKey(FirebaseConstants.UserId) as! String
+        selectedOption = snapshot.value!.objectForKey(FirebaseConstants.SelectedOption) as? String
+        creationDate = snapshot.value!.objectForKey(FirebaseConstants.CreationDate) as! Double
+        closed = snapshot.value!.objectForKey(FirebaseConstants.Question) as! Bool
+        photosUploaded = snapshot.value!.objectForKey(FirebaseConstants.Question) as! Bool
         let pollOptionsSnapshot = snapshot.childSnapshotForPath(FirebaseConstants.PollOptions)
         for index in 0..<pollOptionsSnapshot.childrenCount {
             let pollOption = PollOption(snapshot: pollOptionsSnapshot.childSnapshotForPath(String(index)))
