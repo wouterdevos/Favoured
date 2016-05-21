@@ -20,8 +20,8 @@ class DataModel: NSObject {
         return FIRDatabase.database().reference()
     }
     
-    private class var fireStorage: FIRStorage {
-        return FIRStorage.storage()
+    private class var fireStorage: FIRStorageReference {
+        return FIRStorage.storage().reference()
     }
     
     private class var defaultCenter: NSNotificationCenter {
@@ -36,7 +36,7 @@ class DataModel: NSObject {
         CoreDataStackManager.sharedInstance().saveContext()
     }
     
-    // MARK:- Firebase
+    // MARK:- Firebase Authentication
     
     class func getUserId() -> String {
         return fireAuth.currentUser!.uid
@@ -46,12 +46,9 @@ class DataModel: NSObject {
         if let _ = fireAuth.currentUser {
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
         }
-//        if let _ = firebase.authData {
-//            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
-//        }
     }
     
-    class func authUser(email: String, password: String) {
+    class func signInWithEmail(email: String, password: String) {
         fireAuth.signInWithEmail(email, password: password) { user, error in
             var userInfo: [String: String]? = nil
             if let error = error {
@@ -61,22 +58,13 @@ class DataModel: NSObject {
             
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: userInfo)
         }
-//        firebase.authUser(email, password: password) { error, authData in
-//            var userInfo: [String: String]? = nil
-//            if error != nil {
-//                userInfo = [String: String]()
-//                userInfo![NotificationData.Message] = getAuthenticationError(error)
-//            }
-//            
-//            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: userInfo)
-//        }
     }
     
     class func signOut() {
         try! fireAuth.signOut()
     }
     
-    class func resetPasswordForUser(email: String) {
+    class func sendPasswordResetWithEmail(email: String) {
         fireAuth.sendPasswordResetWithEmail(email) { error in
             var userInfo: [String: String] = [String: String]()
             if error != nil {
@@ -89,21 +77,9 @@ class DataModel: NSObject {
             
             defaultCenter.postNotificationName(NotificationNames.ResetPasswordForUserCompleted, object: nil, userInfo: userInfo)
         }
-//        firebase.resetPasswordForUser(email) { error in
-//            var userInfo: [String: String] = [String: String]()
-//            if error != nil {
-//                userInfo[NotificationData.Title] = Title.Error
-//                userInfo[NotificationData.Message] = Error.ErrorResettingPassword
-//            } else {
-//                userInfo[NotificationData.Title] = Title.PasswordReset
-//                userInfo[NotificationData.Message] = Message.CheckEmailForPassword
-//            }
-//            
-//            defaultCenter.postNotificationName(NotificationNames.ResetPasswordForUserCompleted, object: nil, userInfo: userInfo)
-//        }
     }
     
-    class func createUser(username: String, email: String, password: String, profilePicture: UIImage?) {
+    class func createUserWithEmail(username: String, email: String, password: String, profilePicture: UIImage?) {
         fireAuth.createUserWithEmail(email, password: password) { user, error in
             var userInfo: [String: String]? = nil
             if error != nil {
@@ -115,19 +91,9 @@ class DataModel: NSObject {
             
             defaultCenter.postNotificationName(NotificationNames.CreateUserCompleted, object: nil, userInfo: userInfo)
         }
-//        firebase.createUser(email, password: password) { error, result in
-//            var userInfo: [String: String]? = nil
-//            if error != nil {
-//                userInfo = [String: String]()
-//                userInfo![NotificationData.Message] = getAuthenticationError(error)
-//            } else {
-//                let uid = result["uid"] as? String
-//                setUserDetails(uid!, username: username, profilePicture: profilePicture)
-//            }
-//            
-//            defaultCenter.postNotificationName(NotificationNames.CreateUserCompleted, object: nil, userInfo: userInfo)
-//        }
     }
+    
+    // MARK: - Firebase database.
     
     class func setUserDetails(uid: String, username: String, profilePicture: UIImage?) {
         // Set the user details.
@@ -162,11 +128,30 @@ class DataModel: NSObject {
         polls.removeAllObservers()
     }
     
-    class func addPoll(pollDetails: [String:AnyObject], pollPictures: [UIImage]) {
-        let newPoll = fireDatabase.child(FirebaseConstants.Polls).childByAutoId()
-        let pollId = newPoll.key
-        newPoll.setValue(pollDetails)
-        uploadPollPictures(pollId, pollPictures: pollPictures)
+    class func addPoll(question: String, pollPictures: [UIImage]) {
+        let pollRef = fireDatabase.child(FirebaseConstants.Polls).childByAutoId()
+        let pollId = pollRef.key
+        
+        // Store the images with core data.
+        var images = [Image]()
+        for (index, pollPicture) in pollPictures.enumerate() {
+            let image = getImage(pollId, index: index, pollPicture: pollPicture)
+            images.append(image)
+        }
+        saveContext()
+        
+        // Create the poll options.
+        var pollOptions = [PollOption]()
+        for image in images {
+            pollOptions.append(PollOption(pollPicture: image.id))
+        }
+        
+        // Create and save the poll.
+        let poll = Poll(question: question, userId: DataModel.getUserId())
+        poll.pollOptions = pollOptions
+        pollRef.setValue(poll.getPollData())
+        
+        uploadPollPictures(pollId, images: images)
     }
     
     private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
@@ -198,11 +183,7 @@ class DataModel: NSObject {
         return Error.UnexpectedError
     }
     
-    private class func uploadProfilePicture() {
-    
-    }
-    
-    // MARK:- AWS S3
+    //MARK: - Firebase storage.
     
     private class func uploadProfilePicture(id: String, profilePicture: UIImage?) {
         guard let profilePictureImage = profilePicture else {
@@ -216,31 +197,28 @@ class DataModel: NSObject {
         image.image = thumbnail
         saveContext()
         
-        let uploadRequest = getUploadRequest(image)
-        upload(uploadRequest) { success, key in
-            if success {
+        let file = NSURL(fileURLWithPath: image.path!)
+        let profilePictureRef = fireStorage.child(FirebaseConstants.BucketProfilePictures).child(image.id)
+        profilePictureRef.putFile(file, metadata: nil) { metadata, error in
+            if error == nil {
                 image.uploaded = true
                 saveContext()
                 let userDetails = [FirebaseConstants.ProfilePicture: image.id]
                 updateUserDetails(id, userDetails: userDetails)
             }
         }
+        
     }
     
-    private class func uploadPollPictures(pollId: String, pollPictures: [UIImage]) {
-        // Store the image in with core data.
-        var images = [Image]()
-        for (index, pollPicture) in pollPictures.enumerate() {
-            let image = getImage(pollId, index: index, pollPicture: pollPicture)
-            images.append(image)
-        }
-        saveContext()
+    private class func uploadPollPictures(pollId: String, images: [Image]) {
+        let pollPicturesRef = fireStorage.child(FirebaseConstants.BucketPollPictures)
         
         var count = 0
         for image in images {
-            let uploadRequest = getUploadRequest(image)
-            upload(uploadRequest) { success, key in
-                if success {
+            let file = NSURL(fileURLWithPath: image.path!)
+            let pollPictureRef = pollPicturesRef.child(image.id)
+            pollPictureRef.putFile(file, metadata: nil) { metadata, error in
+                if error == nil {
                     image.uploaded = true
                     saveContext()
                     count += 1
@@ -251,54 +229,6 @@ class DataModel: NSObject {
                 }
             }
         }
-    }
-    
-    private class func upload(uploadRequest: AWSS3TransferManagerUploadRequest, handler: ((success: Bool, key: String) -> Void)) {
-        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
-        
-        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
-            if let error = task.error {
-                if error.domain == AWSS3TransferManagerErrorDomain as String {
-                    if let errorCode = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                        switch (errorCode) {
-                        case .Cancelled, .Paused:
-                            handler(success: false, key: uploadRequest.key!)
-                            print("upload() cancelled or paused: [\(error)]")
-                            break;
-                            
-                        default:
-                            handler(success: false, key: uploadRequest.key!)
-                            print("upload() failed: [\(error)]")
-                            break;
-                        }
-                    } else {
-                        handler(success: false, key: uploadRequest.key!)
-                        print("upload() failed: [\(error)]")
-                    }
-                } else {
-                    handler(success: false, key: uploadRequest.key!)
-                    print("upload() failed: [\(error)]")
-                }
-            }
-            
-            if let exception = task.exception {
-                handler(success: false, key: uploadRequest.key!)
-                print("upload() failed: [\(exception)]")
-            }
-            
-            if task.result != nil {
-                handler(success: true, key: uploadRequest.key!)
-            }
-            return nil
-        }
-    }
-    
-    private class func getUploadRequest(image: Image) -> AWSS3TransferManagerUploadRequest {
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest.body = NSURL(fileURLWithPath: image.path!)
-        uploadRequest.key = image.id
-        uploadRequest.bucket = AWSConstants.BucketProfilePictures
-        return uploadRequest
     }
     
     private class func getImage(pollId: String, index: Int, pollPicture: UIImage) -> Image {

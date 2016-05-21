@@ -8,12 +8,13 @@
 
 import UIKit
 
-class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FullScreenImageViewControllerDelegate {
+class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate, FullScreenImageViewControllerDelegate {
 
     let PollPictureMax = 4
     let PollPictureMin = 2
     let AddPhoto = "Add Photo"
     let FullScreenImageSegue = "FullScreenImageSegue"
+    let DefaultQuestionText = "Question"
     
     var selectedPictureIndex = 0
     var pollPictures = [UIImage?]()
@@ -36,8 +37,7 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
             return
         }
         
-        let userId = DataModel.getUserId()
-        addPoll(question, userId: userId)
+        addNewPoll(question)
         navigationController?.popViewControllerAnimated(true)
     }
     
@@ -49,6 +49,7 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
         // Initialise the poll pictures array with a nil image.
         pollPictures.append(nil)
         
+        questionTextView.delegate = self
         questionTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         collectionView.dataSource = self
@@ -125,6 +126,20 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
+    // MARK: - UITextViewDelegate methods.
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == DefaultQuestionText {
+            textView.text = ""
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text == "" {
+            textView.text = DefaultQuestionText
+        }
+    }
+    
     // MARK: - FullScreenImageViewControllerDelegate method.
     
     func imageChanged(image: UIImage?) {
@@ -158,15 +173,13 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     
     // MARK: - REST calls and response methods.
     
-    func addPoll(question: String, userId: String) {
-        let poll = Poll(question: question, userId: userId)
-        
+    func addNewPoll(question: String) {
         var finalPollPictures = [UIImage]()
         for pollPicture in pollPictures {
             if let finalPollPicture = pollPicture {
                 finalPollPictures.append(finalPollPicture)
             }
         }
-        DataModel.addPoll(poll.getPollData(), pollPictures: finalPollPictures)
+        DataModel.addPoll(question, pollPictures: finalPollPictures)
     }
 }

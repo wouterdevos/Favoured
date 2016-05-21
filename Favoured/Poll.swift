@@ -28,12 +28,16 @@ class Poll {
     }
     
     init(snapshot: FIRDataSnapshot) {
+        let creationDateNumber = snapshot.value!.objectForKey(FirebaseConstants.CreationDate) as! NSNumber
+        let closedNumber = snapshot.value!.objectForKey(FirebaseConstants.Closed) as! NSNumber
+        let photosUploadedNumber = snapshot.value!.objectForKey(FirebaseConstants.PhotosUploaded) as! NSNumber
+        
         question = snapshot.value!.objectForKey(FirebaseConstants.Question) as! String
         userId = snapshot.value!.objectForKey(FirebaseConstants.UserId) as! String
         selectedOption = snapshot.value!.objectForKey(FirebaseConstants.SelectedOption) as? String
-        creationDate = snapshot.value!.objectForKey(FirebaseConstants.CreationDate) as! Double
-        closed = snapshot.value!.objectForKey(FirebaseConstants.Question) as! Bool
-        photosUploaded = snapshot.value!.objectForKey(FirebaseConstants.Question) as! Bool
+        creationDate = Double(creationDateNumber)
+        closed = Bool(closedNumber)
+        photosUploaded = Bool(photosUploadedNumber)
         let pollOptionsSnapshot = snapshot.childSnapshotForPath(FirebaseConstants.PollOptions)
         for index in 0..<pollOptionsSnapshot.childrenCount {
             let pollOption = PollOption(snapshot: pollOptionsSnapshot.childSnapshotForPath(String(index)))
@@ -42,10 +46,18 @@ class Poll {
     }
     
     func getPollData() -> [String:AnyObject] {
+        var pollOptionsData = [[String:AnyObject]]()
+        for pollOption in pollOptions {
+            pollOptionsData.append(pollOption.getPollOptionData())
+        }
+        
         var data = [String: AnyObject]()
         data[FirebaseConstants.Question] = question
         data[FirebaseConstants.UserId] = userId
+        data[FirebaseConstants.CreationDate] = NSDate().timeIntervalSince1970
         data[FirebaseConstants.Closed] = closed
+        data[FirebaseConstants.PhotosUploaded] = photosUploaded
+        data[FirebaseConstants.PollOptions] = pollOptionsData
         
         return data
     }

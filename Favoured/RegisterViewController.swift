@@ -168,7 +168,7 @@ class RegisterViewController: ImagePickerViewController, UITextFieldDelegate, Va
     
     func createUser(username: String, email: String, password: String, profilePicture: UIImage?) {
         toggleRequestProgress(true)
-        DataModel.createUser(username, email: email, password: password, profilePicture: profilePicture)
+        DataModel.createUserWithEmail(username, email: email, password: password, profilePicture: profilePicture)
     }
     
     func createUserCompleted(notification: NSNotification) {

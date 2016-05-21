@@ -46,6 +46,7 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         addObservers()
+//        DataModel.signOut()
         DataModel.authUser()
     }
     
@@ -162,12 +163,12 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
     
     func authUser(email: String, password: String) {
         toggleRequestProgress(true)
-        DataModel.authUser(email, password: password)
+        DataModel.signInWithEmail(email, password: password)
     }
     
     func resetPasswordForUser(email: String) {
         toggleRequestProgress(true)
-        DataModel.resetPasswordForUser(email)
+        DataModel.sendPasswordResetWithEmail(email)
     }
     
     func authUserCompleted(notification: NSNotification) {
