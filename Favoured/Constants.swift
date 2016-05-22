@@ -24,6 +24,7 @@ struct FirebaseConstants {
     static let SelectedOption = "selected_option"
     static let PollOptions = "poll_options"
     static let PollPicture = "poll_picture"
+    static let PollPictureThumbnail = "poll_picture_thumbnail"
     static let VoteCount = "vote_count"
     
     static let BucketProfilePictures = "profile_pictures"
@@ -98,6 +99,7 @@ struct Placeholder {
 struct ImageConstants {
     static let ProfilePictureJPEG = "_profile_picture.jpeg"
     static let PollPictureJPEG = "_poll_picture_%d.jpeg"
+    static let PollPictureThumbnailJPEG = "_poll_picture_thumbnail_%d.jpeg"
     static let ThumbnailWidth = 100.0
     static let ThumbnailHeight = 100.0
 }
