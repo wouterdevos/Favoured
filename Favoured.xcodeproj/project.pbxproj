@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10100A821CF3856B00FE3F91 /* PollListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10100A811CF3856B00FE3F91 /* PollListCell.swift */; };
 		1036304D1CEA50BC008CD72B /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */; };
 		1036304F1CEA53BC008CD72B /* FavouredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1036304E1CEA53BC008CD72B /* FavouredViewController.swift */; };
 		103630511CEA568E008CD72B /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103630501CEA568E008CD72B /* ImagePickerViewController.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10100A811CF3856B00FE3F91 /* PollListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollListCell.swift; sourceTree = "<group>"; };
 		1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		1036304E1CEA53BC008CD72B /* FavouredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouredViewController.swift; sourceTree = "<group>"; };
 		103630501CEA568E008CD72B /* ImagePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				104A01E31CBA99340051D332 /* ValidationView.xib */,
 				104A01E51CBA9D070051D332 /* ValidationView.swift */,
 				1049BB711CE3C558001D799B /* VoteControl.swift */,
+				10100A811CF3856B00FE3F91 /* PollListCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				1046C2EA1CDF647800E995E7 /* Poll.swift in Sources */,
 				10D6ED3C1CC2624A00A6A0A2 /* ViewControllerExtensions.swift in Sources */,
 				1036304D1CEA50BC008CD72B /* FullScreenImageViewController.swift in Sources */,
+				10100A821CF3856B00FE3F91 /* PollListCell.swift in Sources */,
 				10594FBE1CC82AF100C7A782 /* User.swift in Sources */,
 				10A222131CB6E87000D3BD1D /* Utils.swift in Sources */,
 			);
