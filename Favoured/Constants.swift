@@ -100,6 +100,8 @@ struct ImageConstants {
     static let ProfilePictureJPEG = "_profile_picture.jpeg"
     static let PollPictureJPEG = "_poll_picture_%d.jpeg"
     static let PollPictureThumbnailJPEG = "_poll_picture_thumbnail_%d.jpeg"
-    static let ThumbnailWidth = 100.0
-    static let ThumbnailHeight = 100.0
+    static let ProfilePictureThumbnailWidth = 100.0
+    static let ProfilePictureThumbnailHeight = 100.0
+    static let PollPictureThumbnailWidth = 50.0
+    static let PollPictureThumbnailHeight = 50.0
 }

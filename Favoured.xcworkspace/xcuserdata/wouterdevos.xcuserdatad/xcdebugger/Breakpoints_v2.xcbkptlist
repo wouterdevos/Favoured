@@ -111,7 +111,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "157"
             endingLineNumber = "157"
-            landmarkName = "updateUserDetails(_:userDetails:)"
+            landmarkName = "addPoll(_:pollPictures:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -365,7 +365,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "189"
             endingLineNumber = "189"
-            landmarkName = "uploadProfilePicture(_:profilePicture:)"
+            landmarkName = "getAuthenticationError(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

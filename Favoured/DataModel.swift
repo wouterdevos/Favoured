@@ -133,18 +133,23 @@ class DataModel: NSObject {
         let pollId = pollRef.key
         
         // Store the images with core data.
+        var pollOptions = [PollOption]()
         var images = [Image]()
         for (index, pollPicture) in pollPictures.enumerate() {
-            let image = getImage(pollId, index: index, pollPicture: pollPicture)
+            // Add the full image to the list.
+            let image = getImage(pollId, imageName: ImageConstants.PollPictureJPEG, index: index, pollPicture: pollPicture)
             images.append(image)
+            
+            // Create a thumbnail image and add it to the list.
+            let targetSize = CGSize(width: ImageConstants.PollPictureThumbnailWidth, height: ImageConstants.PollPictureThumbnailHeight)
+            let pollPictureThumbnail = Utils.resizeImage(pollPicture, targetSize: targetSize)
+            let thumbnail = getImage(pollId, imageName: ImageConstants.PollPictureThumbnailJPEG, index: index, pollPicture: pollPictureThumbnail)
+            images.append(thumbnail)
+            
+            // Append a new poll option using the image and thumbnail.
+            pollOptions.append(PollOption(pollPicture: image.id, pollPictureThumbnail: thumbnail.id))
         }
         saveContext()
-        
-        // Create the poll options.
-        var pollOptions = [PollOption]()
-        for image in images {
-            pollOptions.append(PollOption(pollPicture: image.id))
-        }
         
         // Create and save the poll.
         let poll = Poll(question: question, userId: DataModel.getUserId())
@@ -190,7 +195,7 @@ class DataModel: NSObject {
             return
         }
         
-        let targetSize = CGSize(width: ImageConstants.ThumbnailWidth, height: ImageConstants.ThumbnailHeight)
+        let targetSize = CGSize(width: ImageConstants.ProfilePictureThumbnailWidth, height: ImageConstants.ProfilePictureThumbnailHeight)
         let thumbnail = Utils.resizeImage(profilePictureImage, targetSize: targetSize)
         let profilePictureId = id + ImageConstants.ProfilePictureJPEG
         let image = Image(id: profilePictureId, uploaded: false, context: context)
@@ -231,8 +236,8 @@ class DataModel: NSObject {
         }
     }
     
-    private class func getImage(pollId: String, index: Int, pollPicture: UIImage) -> Image {
-        let id = pollId + String(format: ImageConstants.PollPictureJPEG, index)
+    private class func getImage(pollId: String, imageName: String, index: Int, pollPicture: UIImage) -> Image {
+        let id = pollId + String(format: imageName, index)
         let image = Image(id: id, uploaded: false, context: context)
         image.image = pollPicture
         return image
