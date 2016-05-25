@@ -56,9 +56,9 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let poll = polls[indexPath.row]
-        let CellIdentifier = "PollListCell"
+        let CellIdentifier = "PollTableViewCell"
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! PollListCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! PollTableViewCell
         cell.pollLabel?.text = poll.question
         
         return cell

@@ -98,6 +98,7 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
         let isPollPicture = pollPicture != nil
         cell.imageView.backgroundColor = isPollPicture ? UIColor.whiteColor() : UIColor.grayColor()
         cell.imageView.image = pollPicture
+        cell.imageView.hidden = !isPollPicture
         cell.label.hidden = isPollPicture
         cell.label.text = AddPhoto
         
