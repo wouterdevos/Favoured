@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100FBD421CF7A4BF0086EFBC /* PollListTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100FBD411CF7A4BF0086EFBC /* PollListTableViewDataSource.swift */; };
 		10100A821CF3856B00FE3F91 /* PollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10100A811CF3856B00FE3F91 /* PollTableViewCell.swift */; };
 		1036304D1CEA50BC008CD72B /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */; };
 		1036304F1CEA53BC008CD72B /* FavouredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1036304E1CEA53BC008CD72B /* FavouredViewController.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		100FBD411CF7A4BF0086EFBC /* PollListTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollListTableViewDataSource.swift; sourceTree = "<group>"; };
 		10100A811CF3856B00FE3F91 /* PollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollTableViewCell.swift; sourceTree = "<group>"; };
 		1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		1036304E1CEA53BC008CD72B /* FavouredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouredViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		100FBD401CF7A3AE0086EFBC /* ModelController */ = {
+			isa = PBXGroup;
+			children = (
+				10B6D0231CDA132C00E5128D /* DataModel.swift */,
+				100FBD411CF7A4BF0086EFBC /* PollListTableViewDataSource.swift */,
+			);
+			name = ModelController;
+			sourceTree = "<group>";
+		};
 		104A01E01CBA870B0051D332 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,21 +130,22 @@
 			name = "Core Data";
 			sourceTree = "<group>";
 		};
-		104A01E21CBA874A0051D332 /* Views */ = {
+		104A01E21CBA874A0051D332 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				10100A811CF3856B00FE3F91 /* PollTableViewCell.swift */,
+				10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */,
 				104A01E31CBA99340051D332 /* ValidationView.xib */,
 				104A01E51CBA9D070051D332 /* ValidationView.swift */,
 				1049BB711CE3C558001D799B /* VoteControl.swift */,
 			);
-			name = Views;
+			name = View;
 			sourceTree = "<group>";
 		};
 		10594FBC1CC82ADB00C7A782 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				10594FBD1CC82AF100C7A782 /* User.swift */,
-				10B6D0231CDA132C00E5128D /* DataModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -160,16 +172,17 @@
 			isa = PBXGroup;
 			children = (
 				10594FBC1CC82ADB00C7A782 /* Model */,
-				104A01E21CBA874A0051D332 /* Views */,
+				100FBD401CF7A3AE0086EFBC /* ModelController */,
+				104A01E21CBA874A0051D332 /* View */,
+				109814731CB2DA560042E06E /* ViewController */,
 				104A01E11CBA87250051D332 /* Core Data */,
 				104A01E01CBA870B0051D332 /* Supporting Files */,
 				109814741CB306E20042E06E /* Utils */,
-				109814731CB2DA560042E06E /* ViewControllers */,
 			);
 			path = Favoured;
 			sourceTree = "<group>";
 		};
-		109814731CB2DA560042E06E /* ViewControllers */ = {
+		109814731CB2DA560042E06E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				105E61D31CAFE3C5009D9851 /* LoginViewController.swift */,
@@ -177,14 +190,12 @@
 				10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */,
 				104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */,
 				1046C2ED1CDF789A00E995E7 /* PollViewController.swift */,
-				10100A811CF3856B00FE3F91 /* PollTableViewCell.swift */,
-				10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */,
 				1083979D1CE87D7400C39C39 /* AddPollViewController.swift */,
 				1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */,
 				1036304E1CEA53BC008CD72B /* FavouredViewController.swift */,
 				103630501CEA568E008CD72B /* ImagePickerViewController.swift */,
 			);
-			name = ViewControllers;
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 		109814741CB306E20042E06E /* Utils */ = {
@@ -350,6 +361,7 @@
 				105E61D41CAFE3C5009D9851 /* LoginViewController.swift in Sources */,
 				10B6D0241CDA132C00E5128D /* DataModel.swift in Sources */,
 				1083979E1CE87D7400C39C39 /* AddPollViewController.swift in Sources */,
+				100FBD421CF7A4BF0086EFBC /* PollListTableViewDataSource.swift in Sources */,
 				1046C2EE1CDF789A00E995E7 /* PollViewController.swift in Sources */,
 				10B6D0261CDA3C1600E5128D /* ImageCache.swift in Sources */,
 				10B6D02A1CDA3DC000E5128D /* Image.swift in Sources */,

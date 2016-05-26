@@ -17,11 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         FIRApp.configure()
         
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: AWSConstants.RegionType,
-            identityPoolId: AWSConstants.IdentityPoolId)
-        let configuration = AWSServiceConfiguration(region: AWSConstants.RegionType, credentialsProvider: credentialsProvider)
-        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
-        
         return true
     }
 }

@@ -1,13 +1,4 @@
 PODS:
-  - AWSAutoScaling (2.4.1):
-    - AWSCore (= 2.4.1)
-  - AWSCognito (2.4.1):
-    - AWSCore (= 2.4.1)
-  - AWSCore (2.4.1)
-  - AWSDynamoDB (2.4.1):
-    - AWSCore (= 2.4.1)
-  - AWSS3 (2.4.1):
-    - AWSCore (= 2.4.1)
   - Firebase (3.2.0):
     - Firebase/Core (= 3.2.0)
   - Firebase/Analytics (3.2.0):
@@ -48,11 +39,6 @@ PODS:
   - SwiftValidator (3.0.3)
 
 DEPENDENCIES:
-  - AWSAutoScaling
-  - AWSCognito
-  - AWSCore
-  - AWSDynamoDB
-  - AWSS3
   - Firebase
   - Firebase/Auth
   - Firebase/Core
@@ -61,11 +47,6 @@ DEPENDENCIES:
   - SwiftValidator (= 3.0.3)
 
 SPEC CHECKSUMS:
-  AWSAutoScaling: 3b87242dfe7a2a2ab32f19841303c20269ac517f
-  AWSCognito: a57173a82505161bd1a9c8cfe393cea9b5b1f6bb
-  AWSCore: 9bfd632f04aaf12053e639d2a9120372844beb0d
-  AWSDynamoDB: 1e9b01602df37e9d5ef014eff9d7b16663add6bb
-  AWSS3: d7a3a694ffc4010e90b14755b5b9dbf70989c117
   Firebase: 6d4012da1598732a2b43f16d8355eca90f94ed59
   FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863
   FirebaseAuth: 94b851fc345ce98036dfedfdc2eddeaef8fa3b4c
@@ -78,6 +59,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   SwiftValidator: 0b6a48bf10364411b0d64c97f78665ff87ca9f8b
 
-PODFILE CHECKSUM: c69f276fdd5ecf56dedb9a790542519e2ae8dc04
+PODFILE CHECKSUM: 00940309269772cbd45f54a8fda8ccad487fc505
 
 COCOAPODS: 1.0.0

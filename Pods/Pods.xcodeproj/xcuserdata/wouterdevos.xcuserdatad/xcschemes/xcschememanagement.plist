@@ -4,31 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AWSAutoScaling.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>AWSCognito.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>AWSCore.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>AWSDynamoDB.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>AWSS3.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Favoured.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>108CB98FE2926893B1E8D043EFAC94DE</key>
+		<key>C8951D3064DB1F5CA2717355157A26BE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3B41A9B1D49827D58E203AF61D34F608</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5C9107D9D08ADE7EF05FF3CF0EA3C007</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>787ADFDC43AC596B7714B24B851BD6D0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A79E4DFDB520AC579CEA22EC6DE9ECD7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B55D7BB33FA447765D24EEFC5E17FFBF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BC279E1A4A79751E826180F63A851E07</key>
+		<key>F4594C3192891BDCF88DA9DAF8E9F06C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -31,12 +31,6 @@ struct FirebaseConstants {
     static let BucketPollPictures = "poll_pictures"
 }
 
-struct AWSConstants {
-    static let IdentityPoolId = "eu-west-1:6799258d-3454-45cd-bbc5-c3c37715260f"
-    static let RegionType = AWSRegionType.EUWest1
-    static let BucketProfilePictures = "favoured/profile_pictures"
-}
-
 struct NotificationNames {
     static let AuthUserCompleted = "com.wouterdevos.AuthUserCompleted"
     static let ResetPasswordForUserCompleted = "com.wouterdevos.ResetPasswordForUserCompleted"
