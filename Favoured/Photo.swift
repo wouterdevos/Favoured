@@ -7,8 +7,9 @@
 //
 
 import CoreData
+import UIKit
 
-class Image: NSManagedObject {
+class Photo: NSManagedObject {
     
     @NSManaged var id: String
     @NSManaged var uploaded: Bool
@@ -24,7 +25,7 @@ class Image: NSManagedObject {
     init(id: String, uploaded: Bool, context: NSManagedObjectContext) {
         
         // Core Data
-        let entity = NSEntityDescription.entityForName("Image", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         // Initialise photo
@@ -46,5 +47,16 @@ class Image: NSManagedObject {
         get {
             return ImageCache.sharedInstance().pathForIdentifier(id)
         }
+    }
+    
+    class func getPhoto(id: String, image: UIImage?, uploaded: Bool, context: NSManagedObjectContext) -> Photo {
+        let photo = Photo(id: id, uploaded: uploaded, context: context)
+        photo.image = image
+        return photo
+    }
+    
+    class func getPhoto(id: String, imageName: String, index: Int, image: UIImage?, context: NSManagedObjectContext) -> Photo {
+        let id = id + String(format: imageName, index)
+        return getPhoto(id, image: image, uploaded: false, context: context)
     }
 }

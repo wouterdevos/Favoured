@@ -6,31 +6,44 @@
 //  Copyright © 2016 Wouter. All rights reserved.
 //
 
-import Foundation
+import CoreData
 import Firebase
 
-class Poll {
+class Poll: NSManagedObject {
     
-    var question: String
-    var userId: String
-    var selectedOption: String?
-    var creationDate: Double
-    var closed: Bool
-    var photosUploaded: Bool
-    var pollOptions = [PollOption]()
+    @NSManaged var question: String
+    @NSManaged var userId: String
+    @NSManaged var selectedOption: String?
+    @NSManaged var creationDate: Double
+    @NSManaged var closed: Bool
+    @NSManaged var photosUploaded: Bool
+    @NSManaged var profilePicture: Photo?
+    @NSManaged var pollOptions: [PollOption]
     
-    init(question: String, userId: String) {
-        self.question = question
-        self.userId = userId
-        creationDate = Utils.getTimeIntervalSince1970()
-        closed = false
-        photosUploaded = false
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    init(snapshot: FIRDataSnapshot) {
+    init(question: String, userId: String, profilePicture: Photo?, context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entityForName("Poll", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
+        self.question = question
+        self.userId = userId
+        self.creationDate = Utils.getTimeIntervalSince1970()
+        self.closed = false
+        self.photosUploaded = false
+        self.profilePicture = profilePicture
+    }
+    
+    init(snapshot: FIRDataSnapshot, context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entityForName("Poll", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
         let creationDateNumber = snapshot.value!.objectForKey(FirebaseConstants.CreationDate) as! NSNumber
         let closedNumber = snapshot.value!.objectForKey(FirebaseConstants.Closed) as! NSNumber
         let photosUploadedNumber = snapshot.value!.objectForKey(FirebaseConstants.PhotosUploaded) as! NSNumber
+        let profilePictureId = snapshot.value!.objectForKey(FirebaseConstants.ProfilePictureId) as! String
         
         question = snapshot.value!.objectForKey(FirebaseConstants.Question) as! String
         userId = snapshot.value!.objectForKey(FirebaseConstants.UserId) as! String
@@ -38,9 +51,12 @@ class Poll {
         creationDate = Double(creationDateNumber)
         closed = Bool(closedNumber)
         photosUploaded = Bool(photosUploadedNumber)
+        profilePicture = Photo.getPhoto(profilePictureId, image: nil, uploaded: true, context: context)
+        
         let pollOptionsSnapshot = snapshot.childSnapshotForPath(FirebaseConstants.PollOptions)
         for index in 0..<pollOptionsSnapshot.childrenCount {
-            let pollOption = PollOption(snapshot: pollOptionsSnapshot.childSnapshotForPath(String(index)))
+            let pollOptionSnapshot = pollOptionsSnapshot.childSnapshotForPath(String(index))
+            let pollOption = PollOption(snapshot: pollOptionSnapshot, context: context)
             pollOptions += [pollOption]
         }
     }
@@ -58,6 +74,9 @@ class Poll {
         data[FirebaseConstants.Closed] = closed
         data[FirebaseConstants.PhotosUploaded] = photosUploaded
         data[FirebaseConstants.PollOptions] = pollOptionsData
+        if let profilePictureId = profilePicture?.id {
+            data[FirebaseConstants.ProfilePictureId] = profilePictureId
+        }
         
         return data
     }

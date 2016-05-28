@@ -59,7 +59,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         let CellIdentifier = "PollTableViewCell"
         
         let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier, forIndexPath: indexPath) as! PollTableViewCell
-        cell.pollLabel?.text = poll.question
+        configureCell(cell, poll: poll)
         
         return cell
     }
@@ -68,11 +68,17 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    func configureCell(cell: PollTableViewCell, poll: Poll) {
+        cell.pollLabel.text = poll.question
+        
+        let profilePicture = UIImage(named: "ProfilePicture")
+    }
+    
     // MARK: - Initialisation methods.
     
     func addObservers() {
         DataModel.addPollListObserver()
-        defaultCenter.addObserver(self, selector: #selector(PollListViewController.getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
+        defaultCenter.addObserver(self, selector: #selector(getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
     }
     
     func removeObservers() {
