@@ -15,8 +15,8 @@ class PollOption: NSManagedObject {
     
     @NSManaged var pollPicture: Photo
     @NSManaged var pollPictureThumbnail: Photo
-    @NSManaged var voteCount: Int
-    @NSManaged var poll: Poll
+    @NSManaged var voteCount: NSNumber
+    @NSManaged var poll: Poll?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -35,17 +35,17 @@ class PollOption: NSManagedObject {
         let entity = NSEntityDescription.entityForName("PollOption", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
-        let pollPictureId = snapshot.value!.objectForKey(FirebaseConstants.PollPicture) as! String
-        let pollPictureThumbnailId = snapshot.value!.objectForKey(FirebaseConstants.PollPictureThumbnail) as! String
-        pollPicture = Photo.getPhoto(pollPictureId, image: nil, context: context)
-        pollPictureThumbnail = Photo.getPhoto(pollPictureThumbnailId, image: nil, context: context)
-        voteCount = snapshot.value!.objectForKey(FirebaseConstants.VoteCount) as! Int
+        let pollPictureId = snapshot.value!.objectForKey(FirebaseConstants.PollPictureId) as! String
+        let pollPictureThumbnailId = snapshot.value!.objectForKey(FirebaseConstants.PollPictureThumbnailId) as! String
+        pollPicture = Photo.getPhoto(pollPictureId, image: nil, uploaded: true, context: context)
+        pollPictureThumbnail = Photo.getPhoto(pollPictureThumbnailId, image: nil, uploaded: true, context: context)
+        voteCount = snapshot.value!.objectForKey(FirebaseConstants.VoteCount) as! NSNumber
     }
     
     func getPollOptionData() -> [String:AnyObject] {
         var data = [String: AnyObject]()
-        data[FirebaseConstants.PollPicture] = pollPicture.id
-        data[FirebaseConstants.PollPictureThumbnail] = pollPictureThumbnail.id
+        data[FirebaseConstants.PollPictureId] = pollPicture.id
+        data[FirebaseConstants.PollPictureThumbnailId] = pollPictureThumbnail.id
         data[FirebaseConstants.VoteCount] = voteCount
         
         return data

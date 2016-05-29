@@ -14,7 +14,7 @@ class Poll: NSManagedObject {
     @NSManaged var question: String
     @NSManaged var userId: String
     @NSManaged var selectedOption: String?
-    @NSManaged var creationDate: Double
+    @NSManaged var creationDate: NSNumber
     @NSManaged var closed: Bool
     @NSManaged var photosUploaded: Bool
     @NSManaged var profilePicture: Photo?
@@ -30,7 +30,7 @@ class Poll: NSManagedObject {
         
         self.question = question
         self.userId = userId
-        self.creationDate = Utils.getTimeIntervalSince1970()
+        self.creationDate = NSNumber(double: Utils.getTimeIntervalSince1970())
         self.closed = false
         self.photosUploaded = false
         self.profilePicture = profilePicture
@@ -40,7 +40,6 @@ class Poll: NSManagedObject {
         let entity = NSEntityDescription.entityForName("Poll", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
-        let creationDateNumber = snapshot.value!.objectForKey(FirebaseConstants.CreationDate) as! NSNumber
         let closedNumber = snapshot.value!.objectForKey(FirebaseConstants.Closed) as! NSNumber
         let photosUploadedNumber = snapshot.value!.objectForKey(FirebaseConstants.PhotosUploaded) as! NSNumber
         let profilePictureId = snapshot.value!.objectForKey(FirebaseConstants.ProfilePictureId) as! String
@@ -48,7 +47,7 @@ class Poll: NSManagedObject {
         question = snapshot.value!.objectForKey(FirebaseConstants.Question) as! String
         userId = snapshot.value!.objectForKey(FirebaseConstants.UserId) as! String
         selectedOption = snapshot.value!.objectForKey(FirebaseConstants.SelectedOption) as? String
-        creationDate = Double(creationDateNumber)
+        creationDate = snapshot.value!.objectForKey(FirebaseConstants.CreationDate) as! NSNumber
         closed = Bool(closedNumber)
         photosUploaded = Bool(photosUploadedNumber)
         profilePicture = Photo.getPhoto(profilePictureId, image: nil, uploaded: true, context: context)

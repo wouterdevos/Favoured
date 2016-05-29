@@ -133,6 +133,10 @@ class DataModel: NSObject {
         let pollRef = fireDatabase.child(FirebaseConstants.Polls).childByAutoId()
         let pollId = pollRef.key
         
+        // Create and save the poll.
+        let profilePicture = getProfilePicture()
+        let poll = Poll(question: question, userId: DataModel.getUserId(), profilePicture: profilePicture, context: context)
+        
         // Store the images with core data.
         var pollOptions = [PollOption]()
         var photos = [Photo]()
@@ -149,16 +153,18 @@ class DataModel: NSObject {
             
             // Append a new poll option using the image and thumbnail.
             let pollOption = PollOption(pollPicture: pollPicture, pollPictureThumbnail: pollPictureThumbnail, context: context)
-            pollOptions.append(pollOption)
+//            pollOptions.append(pollOption)
+            pollOption.poll = poll
         }
         
         
         // Create and save the poll.
-        let profilePicture = getProfilePicture()
-        let poll = Poll(question: question, userId: DataModel.getUserId(), profilePicture: profilePicture, context: context)
-        poll.pollOptions = pollOptions
+//        let profilePicture = getProfilePicture()
+//        let poll = Poll(question: question, userId: DataModel.getUserId(), profilePicture: profilePicture, context: context)
+        
         saveContext()
         
+        poll.pollOptions = pollOptions
         pollRef.setValue(poll.getPollData())
         
         uploadPollPictures(pollId, photos: photos)
@@ -227,7 +233,7 @@ class DataModel: NSObject {
             print("Error in fetchPhoto \(error)")
         }
         
-        return photos?[0] ?? nil
+        return photos?.count > 0 ? photos![0] : nil
     }
     
     private class func uploadProfilePicture(id: String, profilePicture: UIImage?) {

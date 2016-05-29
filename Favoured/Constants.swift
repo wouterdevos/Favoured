@@ -24,7 +24,7 @@ struct FirebaseConstants {
     static let SelectedOption = "selected_option"
     static let PollOptions = "poll_options"
     static let PollPictureId = "poll_picture_id"
-    static let PollPictureThumbnail = "poll_picture_thumbnail_id"
+    static let PollPictureThumbnailId = "poll_picture_thumbnail_id"
     static let VoteCount = "vote_count"
     
     static let BucketProfilePictures = "profile_pictures"

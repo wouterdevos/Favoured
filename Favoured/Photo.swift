@@ -23,12 +23,9 @@ class Photo: NSManagedObject {
     }
     
     init(id: String, uploaded: Bool, context: NSManagedObjectContext) {
-        
-        // Core Data
         let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
-        // Initialise photo
         self.id = id
         self.uploaded = uploaded
     }

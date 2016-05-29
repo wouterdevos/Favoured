@@ -175,12 +175,12 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     // MARK: - REST calls and response methods.
     
     func addNewPoll(question: String) {
-        var finalPollPictures = [UIImage]()
+        var images = [UIImage]()
         for pollPicture in pollPictures {
-            if let finalPollPicture = pollPicture {
-                finalPollPictures.append(finalPollPicture)
+            if let image = pollPicture {
+                images.append(image)
             }
         }
-        DataModel.addPoll(question, pollPictures: finalPollPictures)
+        DataModel.addPoll(question, images: images)
     }
 }
