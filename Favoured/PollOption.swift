@@ -6,46 +6,34 @@
 //  Copyright © 2016 Wouter. All rights reserved.
 //
 
-import CoreData
 import Firebase
 
-class PollOption: NSManagedObject {
+class PollOption {
     
     let DefaultVoteCount = 0
     
-    @NSManaged var pollPicture: Photo
-    @NSManaged var pollPictureThumbnail: Photo
-    @NSManaged var voteCount: NSNumber
-    @NSManaged var poll: Poll?
+    var pollPictureId: String
+    var pollPictureThumbnailId: String
+    var voteCount: Int
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
-    }
-    
-    init(pollPicture: Photo, pollPictureThumbnail: Photo, context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entityForName("PollOption", inManagedObjectContext: context)!
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
-        
-        self.pollPicture = pollPicture
-        self.pollPictureThumbnail = pollPictureThumbnail
+    init(pollPictureId: String, pollPictureThumbnailId: String) {
+        self.pollPictureId = pollPictureId
+        self.pollPictureThumbnailId = pollPictureThumbnailId
         self.voteCount = DefaultVoteCount
     }
     
-    init(snapshot: FIRDataSnapshot, context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entityForName("PollOption", inManagedObjectContext: context)!
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    init(snapshot: FIRDataSnapshot) {
+        let voteCountNumber = snapshot.value!.objectForKey(FirebaseConstants.VoteCount) as! NSNumber
         
-        let pollPictureId = snapshot.value!.objectForKey(FirebaseConstants.PollPictureId) as! String
-        let pollPictureThumbnailId = snapshot.value!.objectForKey(FirebaseConstants.PollPictureThumbnailId) as! String
-        pollPicture = Photo.getPhoto(pollPictureId, image: nil, uploaded: true, context: context)
-        pollPictureThumbnail = Photo.getPhoto(pollPictureThumbnailId, image: nil, uploaded: true, context: context)
-        voteCount = snapshot.value!.objectForKey(FirebaseConstants.VoteCount) as! NSNumber
+        pollPictureId = snapshot.value!.objectForKey(FirebaseConstants.PollPictureId) as! String
+        pollPictureThumbnailId = snapshot.value!.objectForKey(FirebaseConstants.PollPictureThumbnailId) as! String
+        voteCount = Int(voteCountNumber)
     }
     
     func getPollOptionData() -> [String:AnyObject] {
         var data = [String: AnyObject]()
-        data[FirebaseConstants.PollPictureId] = pollPicture.id
-        data[FirebaseConstants.PollPictureThumbnailId] = pollPictureThumbnail.id
+        data[FirebaseConstants.PollPictureId] = pollPictureId
+        data[FirebaseConstants.PollPictureThumbnailId] = pollPictureThumbnailId
         data[FirebaseConstants.VoteCount] = voteCount
         
         return data

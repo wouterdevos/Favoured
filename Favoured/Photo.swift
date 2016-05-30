@@ -11,7 +11,12 @@ import UIKit
 
 class Photo: NSManagedObject {
     
+    static let EntityName = "Poll"
+    static let KeyId = "id"
+    static let KeyPollId = "pollId"
+    
     @NSManaged var id: String
+    @NSManaged var pollId: String?
     @NSManaged var uploaded: Bool
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -22,11 +27,12 @@ class Photo: NSManagedObject {
         ImageCache.sharedInstance().deleteImage(id)
     }
     
-    init(id: String, uploaded: Bool, context: NSManagedObjectContext) {
+    init(id: String, pollId: String?, uploaded: Bool, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         self.id = id
+        self.pollId = pollId
         self.uploaded = uploaded
     }
     
@@ -46,14 +52,14 @@ class Photo: NSManagedObject {
         }
     }
     
-    class func getPhoto(id: String, image: UIImage?, uploaded: Bool, context: NSManagedObjectContext) -> Photo {
-        let photo = Photo(id: id, uploaded: uploaded, context: context)
+    class func getPhoto(id: String, pollId: String?, image: UIImage?, uploaded: Bool, context: NSManagedObjectContext) -> Photo {
+        let photo = Photo(id: id, pollId: pollId, uploaded: uploaded, context: context)
         photo.image = image
         return photo
     }
     
-    class func getPhoto(id: String, imageName: String, index: Int, image: UIImage?, context: NSManagedObjectContext) -> Photo {
-        let id = id + String(format: imageName, index)
-        return getPhoto(id, image: image, uploaded: false, context: context)
+    class func getPhoto(pollId: String, imageName: String, index: Int, image: UIImage?, context: NSManagedObjectContext) -> Photo {
+        let id = pollId + String(format: imageName, index)
+        return getPhoto(id, pollId: pollId, image: image, uploaded: false, context: context)
     }
 }

@@ -114,7 +114,7 @@ class DataModel: NSObject {
         polls.observeEventType(.Value, withBlock: { snapshot in
             var polls = [Poll]()
             for snapshotItem in snapshot.children.allObjects as! [FIRDataSnapshot] {
-                let poll = Poll(snapshot: snapshotItem, context: context)
+                let poll = Poll(snapshot: snapshotItem)
                 polls.append(poll)
             }
             saveContext()
@@ -133,10 +133,6 @@ class DataModel: NSObject {
         let pollRef = fireDatabase.child(FirebaseConstants.Polls).childByAutoId()
         let pollId = pollRef.key
         
-        // Create and save the poll.
-        let profilePicture = getProfilePicture()
-        let poll = Poll(question: question, userId: DataModel.getUserId(), profilePicture: profilePicture, context: context)
-        
         // Store the images with core data.
         var pollOptions = [PollOption]()
         var photos = [Photo]()
@@ -152,19 +148,18 @@ class DataModel: NSObject {
             photos.append(pollPictureThumbnail)
             
             // Append a new poll option using the image and thumbnail.
-            let pollOption = PollOption(pollPicture: pollPicture, pollPictureThumbnail: pollPictureThumbnail, context: context)
-//            pollOptions.append(pollOption)
-            pollOption.poll = poll
+            let pollOption = PollOption(pollPictureId: pollPicture.id, pollPictureThumbnailId: pollPictureThumbnail.id)
+            pollOptions.append(pollOption)
         }
-        
-        
-        // Create and save the poll.
-//        let profilePicture = getProfilePicture()
-//        let poll = Poll(question: question, userId: DataModel.getUserId(), profilePicture: profilePicture, context: context)
-        
         saveContext()
         
+        // Create and save the poll.
+        let poll = Poll(question: question, userId: DataModel.getUserId())
+        if let profilePicture = getProfilePicture() {
+            poll.profilePictureId = profilePicture.id
+        }
         poll.pollOptions = pollOptions
+        
         pollRef.setValue(poll.getPollData())
         
         uploadPollPictures(pollId, photos: photos)
@@ -201,30 +196,33 @@ class DataModel: NSObject {
     
     //MARK: - Firebase storage.
     
-//    class func getProfilePicture(ids: [String], placeholder: String, rowIndex: Int?) -> UIImage {
-//        let profilePictureImage = fetchImage(id)
-//        guard let image = profilePictureImage.image else {
-//            for id in ids {
-//                downloadPicture(id, rowIndex)
-//            }
-//            return UIImage(named: placeholder)!
-//        }
-//        
-//        return image
-//    }
-//    
-//    class func getPollPicture(id: String, rowIndex: Int?) -> UIImage {
-//        
-//    }
-//    
-//    private class func downloadPicture(id: String, rowIndex: Int?) -> UIImage {
-//        
-//    }
+    class func getProfilePicture(id: String, rowIndex: Int?) -> UIImage {
+        let profilePicturePhoto = fetchPhoto(Photo.KeyId, value: id)
+        guard let image = profilePicturePhoto?.image else {
+            downloadPicture(id, rowIndex: rowIndex)
+            return UIImage(named: "ProfilePicture")!
+        }
+        
+        return image
+    }
     
-    private class func fetchPhoto(id: String) -> Photo? {
-        let request = NSFetchRequest(entityName: "Photo")
+    class func getPollPictures(pollOptions: [PollOption], rowIndex: Int?) -> [UIImage] {
+        var images = [UIImage]()
+        for pollOption in pollOptions {
+            
+        }
+        
+        return images
+    }
+    
+    private class func downloadPicture(id: String, rowIndex: Int?) {
+        
+    }
+    
+    private class func fetchPhoto(key: String, value: String) -> Photo? {
+        let request = NSFetchRequest(entityName: Photo.EntityName)
         request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-//        request.predicate = NSPredicate(format: "createdAt == %@", createdAt)
+        request.predicate = NSPredicate(format: "\(key) == %@", value)
         
         var photos: [Photo]? = nil
         do {
@@ -244,7 +242,7 @@ class DataModel: NSObject {
         let targetSize = CGSize(width: ImageConstants.ProfilePictureThumbnailWidth, height: ImageConstants.ProfilePictureThumbnailHeight)
         let thumbnail = Utils.resizeImage(profilePictureImage, targetSize: targetSize)
         let profilePictureId = id + ImageConstants.ProfilePictureJPEG
-        let photo = Photo.getPhoto(profilePictureId, image: thumbnail, uploaded: false, context: context)
+        let photo = Photo.getPhoto(profilePictureId, pollId: nil, image: thumbnail, uploaded: false, context: context)
         saveContext()
         
         let file = NSURL(fileURLWithPath: photo.path!)
@@ -293,7 +291,7 @@ class DataModel: NSObject {
     private class func getProfilePicture() -> Photo? {
         let uid = getUserId()
         let profilePictureId = uid + ImageConstants.ProfilePictureJPEG
-        let photo = fetchPhoto(profilePictureId)
+        let photo = fetchPhoto(Photo.KeyId, value: profilePictureId)
         return photo
     }
 }
