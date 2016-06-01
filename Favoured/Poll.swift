@@ -10,6 +10,7 @@ import Firebase
 
 class Poll {
     
+    var id: String?
     var question: String
     var userId: String
     var selectedOption: String?
@@ -32,6 +33,7 @@ class Poll {
         let photosUploadedNumber = snapshot.value!.objectForKey(FirebaseConstants.PhotosUploaded) as! NSNumber
         let creationDateNumber = snapshot.value!.objectForKey(FirebaseConstants.CreationDate) as! NSNumber
         
+        id = snapshot.key
         question = snapshot.value!.objectForKey(FirebaseConstants.Question) as! String
         userId = snapshot.value!.objectForKey(FirebaseConstants.UserId) as! String
         selectedOption = snapshot.value!.objectForKey(FirebaseConstants.SelectedOption) as? String

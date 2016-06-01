@@ -11,13 +11,14 @@ import UIKit
 
 class Photo: NSManagedObject {
     
-    static let EntityName = "Poll"
+    static let EntityName = "Photo"
     static let KeyId = "id"
     static let KeyPollId = "pollId"
     
     @NSManaged var id: String
     @NSManaged var pollId: String?
     @NSManaged var uploaded: Bool
+    @NSManaged var isThumbnail: Bool
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -27,13 +28,14 @@ class Photo: NSManagedObject {
         ImageCache.sharedInstance().deleteImage(id)
     }
     
-    init(id: String, pollId: String?, uploaded: Bool, context: NSManagedObjectContext) {
+    init(id: String, pollId: String?, uploaded: Bool, isThumbnail: Bool, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         self.id = id
         self.pollId = pollId
         self.uploaded = uploaded
+        self.isThumbnail = isThumbnail
     }
     
     var image: UIImage? {
@@ -52,14 +54,14 @@ class Photo: NSManagedObject {
         }
     }
     
-    class func getPhoto(id: String, pollId: String?, image: UIImage?, uploaded: Bool, context: NSManagedObjectContext) -> Photo {
-        let photo = Photo(id: id, pollId: pollId, uploaded: uploaded, context: context)
+    class func getPhoto(id: String, pollId: String?, image: UIImage?, uploaded: Bool, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
+        let photo = Photo(id: id, pollId: pollId, uploaded: uploaded, isThumbnail: isThumbnail, context: context)
         photo.image = image
         return photo
     }
     
-    class func getPhoto(pollId: String, imageName: String, index: Int, image: UIImage?, context: NSManagedObjectContext) -> Photo {
+    class func getPhoto(pollId: String, imageName: String, index: Int, image: UIImage?, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
         let id = pollId + String(format: imageName, index)
-        return getPhoto(id, pollId: pollId, image: image, uploaded: false, context: context)
+        return getPhoto(id, pollId: pollId, image: image, uploaded: false, isThumbnail: isThumbnail, context: context)
     }
 }

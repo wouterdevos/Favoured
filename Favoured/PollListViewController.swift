@@ -59,7 +59,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         let CellIdentifier = "PollTableViewCell"
         
         let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier, forIndexPath: indexPath) as! PollTableViewCell
-        configureCell(cell, poll: poll)
+        configureCell(cell, poll: poll, rowIndex: indexPath.row)
         
         return cell
     }
@@ -68,10 +68,21 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    func configureCell(cell: PollTableViewCell, poll: Poll) {
+    func configureCell(cell: PollTableViewCell, poll: Poll, rowIndex: Int) {
         cell.pollLabel.text = poll.question
         
-        let profilePicture = UIImage(named: "ProfilePicture")
+//        let profilePicture = DataModel.getProfilePicture(poll.profilePictureId!, rowIndex: rowIndex)
+        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: rowIndex)
+        
+//        cell.profileImageView.image = profilePicture
+        let pollImageViews = cell.getPollImageViews()
+        for (index, pollImageView) in pollImageViews.enumerate() {
+            let hasImage = index < pollPictures.count
+            pollImageView.hidden = !hasImage
+            if hasImage {
+                pollImageView.image = pollPictures[index]
+            }
+        }
     }
     
     // MARK: - Initialisation methods.
@@ -79,11 +90,13 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     func addObservers() {
         DataModel.addPollListObserver()
         defaultCenter.addObserver(self, selector: #selector(getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
+        defaultCenter.addObserver(self, selector: #selector(photoDownloadCompleted(_:)), name: NotificationNames.PhotoDownloadCompleted, object: nil)
     }
     
     func removeObservers() {
         DataModel.removePollListObserver()
         defaultCenter.removeObserver(self, name: NotificationNames.GetPollsCompleted, object: nil)
+        defaultCenter.removeObserver(self, name: NotificationNames.PhotoDownloadCompleted, object: nil)
     }
     
     // MARK: - REST response methods.
@@ -97,6 +110,13 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         polls.removeAll()
         polls = userInfo[NotificationData.Polls] as! [Poll]
         tableView.reloadData()
+    }
+    
+    func photoDownloadCompleted(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {
+            print(Error.UserInfoNoData)
+            return
+        }
     }
     
     // MARK: - Convenience methods.

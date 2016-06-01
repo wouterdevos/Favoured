@@ -109,7 +109,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in with Favoured" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcR-Aw-meq">
                                 <rect key="frame" x="20" y="72" width="560" height="156"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -403,12 +403,12 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="pollImageView1" destination="Xws-qv-mWo" id="KpX-Qx-XMQ"/>
+                                            <outlet property="pollImageView2" destination="T2h-DX-zfd" id="sgf-EF-yaC"/>
+                                            <outlet property="pollImageView3" destination="Nrw-Df-gsW" id="Wsw-Li-fyn"/>
+                                            <outlet property="pollImageView4" destination="CyC-z5-3Bc" id="bJ5-z6-z8F"/>
                                             <outlet property="pollLabel" destination="K9z-Qr-hfG" id="Cx8-ar-Mdt"/>
-                                            <outlet property="pollOption1" destination="Xws-qv-mWo" id="kkg-a8-fqc"/>
-                                            <outlet property="pollOption2" destination="T2h-DX-zfd" id="mCW-R7-ECu"/>
-                                            <outlet property="pollOption3" destination="Nrw-Df-gsW" id="yvt-vA-y6T"/>
-                                            <outlet property="pollOption4" destination="CyC-z5-3Bc" id="KSj-s8-vbJ"/>
-                                            <outlet property="profilePicture" destination="PCm-c8-MZH" id="W0K-ea-4cV"/>
+                                            <outlet property="profileImageView" destination="PCm-c8-MZH" id="RSJ-bE-ZIL"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

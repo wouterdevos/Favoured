@@ -32,17 +32,19 @@ struct FirebaseConstants {
 }
 
 struct NotificationNames {
-    static let AuthUserCompleted = "com.wouterdevos.AuthUserCompleted"
-    static let ResetPasswordForUserCompleted = "com.wouterdevos.ResetPasswordForUserCompleted"
-    static let CreateUserCompleted = "com.wouterdevos.CreateUserCompleted"
-    static let SetUserDetailsCompleted = "com.wouterdevos.SetUserDetailsCompleted"
-    static let GetPollsCompleted = "com.wouterdevos.GetPollsCompleted"
+    static let AuthUserCompleted = "com.favoured.AuthUserCompleted"
+    static let ResetPasswordForUserCompleted = "com.favoured.ResetPasswordForUserCompleted"
+    static let CreateUserCompleted = "com.favoured.CreateUserCompleted"
+    static let SetUserDetailsCompleted = "com.favoured.SetUserDetailsCompleted"
+    static let GetPollsCompleted = "com.favoured.GetPollsCompleted"
+    static let PhotoDownloadCompleted = "com.favoured.PhotoDownloadCompleted"
 }
 
 struct NotificationData {
     static let Title = "Title"
     static let Message = "Message"
     static let Polls = "Polls"
+    static let Photo = "Photo"
 }
 
 struct Title {

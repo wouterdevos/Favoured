@@ -117,7 +117,6 @@ class DataModel: NSObject {
                 let poll = Poll(snapshot: snapshotItem)
                 polls.append(poll)
             }
-            saveContext()
             
             let userInfo = [NotificationData.Polls: polls]
             defaultCenter.postNotificationName(NotificationNames.GetPollsCompleted, object: nil, userInfo: userInfo)
@@ -138,13 +137,13 @@ class DataModel: NSObject {
         var photos = [Photo]()
         for (index, image) in images.enumerate() {
             // Add the full image to the list.
-            let pollPicture = Photo.getPhoto(pollId, imageName: ImageConstants.PollPictureJPEG, index: index, image: image, context: context)
+            let pollPicture = Photo.getPhoto(pollId, imageName: ImageConstants.PollPictureJPEG, index: index, image: image, isThumbnail: false, context: context)
             photos.append(pollPicture)
             
             // Create a thumbnail image and add it to the list.
             let targetSize = CGSize(width: ImageConstants.PollPictureThumbnailWidth, height: ImageConstants.PollPictureThumbnailHeight)
             let imageThumbnail = Utils.resizeImage(image, targetSize: targetSize)
-            let pollPictureThumbnail = Photo.getPhoto(pollId, imageName: ImageConstants.PollPictureThumbnailJPEG, index: index, image: imageThumbnail, context: context)
+            let pollPictureThumbnail = Photo.getPhoto(pollId, imageName: ImageConstants.PollPictureThumbnailJPEG, index: index, image: imageThumbnail, isThumbnail: true, context: context)
             photos.append(pollPictureThumbnail)
             
             // Append a new poll option using the image and thumbnail.
@@ -197,32 +196,87 @@ class DataModel: NSObject {
     //MARK: - Firebase storage.
     
     class func getProfilePicture(id: String, rowIndex: Int?) -> UIImage {
-        let profilePicturePhoto = fetchPhoto(Photo.KeyId, value: id)
-        guard let image = profilePicturePhoto?.image else {
-            downloadPicture(id, rowIndex: rowIndex)
+        let photo = fetchProfilePicture(Photo.KeyId, value: id)
+        guard photo != nil, let image = photo!.image else {
+            downloadProfilePicture(id, isThumbnail: nil, rowIndex: rowIndex)
             return UIImage(named: "ProfilePicture")!
         }
         
         return image
     }
     
-    class func getPollPictures(pollOptions: [PollOption], rowIndex: Int?) -> [UIImage] {
+    class func getPollPictures(poll: Poll, isThumbnail: Bool, rowIndex: Int?) -> [UIImage] {
         var images = [UIImage]()
-        for pollOption in pollOptions {
-            
+        let photos = fetchPollPictures(Photo.KeyPollId, value: poll.id!, isThumbnail: isThumbnail)
+        if photos?.count > 0 {
+            for pollOption in poll.pollOptions {
+                var hasPhoto = false
+                for photo in photos! {
+                    // Add thumbnail images to the array if they are stored locally.
+                    if pollOption.pollPictureThumbnailId == photo.id, let image = photo.image {
+                        images.append(image)
+                        hasPhoto = true
+                        break
+                    }
+                }
+                
+                if !hasPhoto {
+                    // If the photo is not saved locally then download it.
+                    images.append(UIImage(named: "PollPicture")!)
+                    let id = isThumbnail ? pollOption.pollPictureThumbnailId : pollOption.pollPictureId
+                    downloadPollPicture(id, pollId: poll.id!, isThumbnail: isThumbnail, rowIndex: rowIndex)
+                }
+            }
         }
+        
         
         return images
     }
     
-    private class func downloadPicture(id: String, rowIndex: Int?) {
-        
+    private class func downloadProfilePicture(id: String, isThumbnail: Bool?, rowIndex: Int?) {
+        let profilePictureRef = fireStorage.child(FirebaseConstants.BucketProfilePictures).child(id)
+        profilePictureRef.dataWithMaxSize(1 * 8192 * 8192) { data, error in
+            if error == nil {
+                let image = UIImage(data: data!)
+                let photo = Photo.getPhoto(id, pollId: nil, image: image, uploaded: true, isThumbnail: false, context: context)
+                saveContext()
+                let userInfo = [NotificationData.Photo: photo]
+                defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
+            }
+        }
     }
     
-    private class func fetchPhoto(key: String, value: String) -> Photo? {
+    private class func downloadPollPicture(id: String, pollId: String, isThumbnail: Bool?, rowIndex: Int?) {
+        let pollPicturesRef = fireStorage.child(FirebaseConstants.BucketPollPictures).child(id)
+        pollPicturesRef.dataWithMaxSize(1 * 8192 * 8192) { data, error in
+            if error == nil {
+                let image = UIImage(data: data!)
+                let photo = Photo.getPhoto(id, pollId: pollId, image: image, uploaded: true, isThumbnail: false, context: context)
+                saveContext()
+                let userInfo = [NotificationData.Photo: photo]
+                defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
+            }
+        }
+    }
+    
+    private class func fetchProfilePicture(key: String, value: String) -> Photo? {
+        let predicate = NSPredicate(format: "%@ == %@", key, value)
+        let photos = fetchPhotos(predicate)
+        
+        return photos?.count > 0 ? photos![0] : nil
+    }
+    
+    private class func fetchPollPictures(key: String, value: String, isThumbnail: Bool) -> [Photo]? {
+        let predicate = NSPredicate(format: "(%@ == %@) AND (isThumbnail == %@)", key, value, isThumbnail)
+        let photos = fetchPhotos(predicate)
+        
+        return photos
+    }
+    
+    private class func fetchPhotos(predicate: NSPredicate) -> [Photo]? {
         let request = NSFetchRequest(entityName: Photo.EntityName)
         request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-        request.predicate = NSPredicate(format: "\(key) == %@", value)
+        request.predicate = predicate
         
         var photos: [Photo]? = nil
         do {
@@ -231,7 +285,7 @@ class DataModel: NSObject {
             print("Error in fetchPhoto \(error)")
         }
         
-        return photos?.count > 0 ? photos![0] : nil
+        return photos
     }
     
     private class func uploadProfilePicture(id: String, profilePicture: UIImage?) {
@@ -242,8 +296,11 @@ class DataModel: NSObject {
         let targetSize = CGSize(width: ImageConstants.ProfilePictureThumbnailWidth, height: ImageConstants.ProfilePictureThumbnailHeight)
         let thumbnail = Utils.resizeImage(profilePictureImage, targetSize: targetSize)
         let profilePictureId = id + ImageConstants.ProfilePictureJPEG
-        let photo = Photo.getPhoto(profilePictureId, pollId: nil, image: thumbnail, uploaded: false, context: context)
+        let photo = Photo.getPhoto(profilePictureId, pollId: nil, image: thumbnail, uploaded: false, isThumbnail: false, context: context)
         saveContext()
+        
+        // NB - For testing core data.
+        let testPhoto = getProfilePicture()
         
         let file = NSURL(fileURLWithPath: photo.path!)
         let profilePictureRef = fireStorage.child(FirebaseConstants.BucketProfilePictures).child(photo.id)
@@ -253,6 +310,7 @@ class DataModel: NSObject {
                 saveContext()
                 let userDetails = [FirebaseConstants.ProfilePictureId: photo.id]
                 updateUserDetails(id, userDetails: userDetails)
+                
             }
         }
         
@@ -288,10 +346,10 @@ class DataModel: NSObject {
     
     // MARK: - Convenience.
     
-    private class func getProfilePicture() -> Photo? {
+    class func getProfilePicture() -> Photo? {
         let uid = getUserId()
         let profilePictureId = uid + ImageConstants.ProfilePictureJPEG
-        let photo = fetchPhoto(Photo.KeyId, value: profilePictureId)
+        let photo = fetchProfilePicture(Photo.KeyId, value: profilePictureId)
         return photo
     }
 }
