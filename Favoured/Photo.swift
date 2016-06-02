@@ -28,7 +28,7 @@ class Photo: NSManagedObject {
         ImageCache.sharedInstance().deleteImage(id)
     }
     
-    init(id: String, pollId: String?, uploaded: Bool, isThumbnail: Bool, context: NSManagedObjectContext) {
+    init(id: String, pollId: String?, uploaded: Bool, isThumbnail: Bool, image: UIImage?, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
@@ -36,6 +36,7 @@ class Photo: NSManagedObject {
         self.pollId = pollId
         self.uploaded = uploaded
         self.isThumbnail = isThumbnail
+        self.image = image
     }
     
     var image: UIImage? {
@@ -54,14 +55,14 @@ class Photo: NSManagedObject {
         }
     }
     
-    class func getPhoto(id: String, pollId: String?, image: UIImage?, uploaded: Bool, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
-        let photo = Photo(id: id, pollId: pollId, uploaded: uploaded, isThumbnail: isThumbnail, context: context)
-        photo.image = image
-        return photo
-    }
-    
-    class func getPhoto(pollId: String, imageName: String, index: Int, image: UIImage?, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
-        let id = pollId + String(format: imageName, index)
-        return getPhoto(id, pollId: pollId, image: image, uploaded: false, isThumbnail: isThumbnail, context: context)
-    }
+//    class func getPhoto(id: String, pollId: String?, image: UIImage?, uploaded: Bool, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
+//        let photo = Photo(id: id, pollId: pollId, uploaded: uploaded, isThumbnail: isThumbnail, context: context)
+//        photo.image = image
+//        return photo
+//    }
+//    
+//    class func getPhoto(pollId: String, imageName: String, index: Int, image: UIImage?, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
+//        let id = pollId + String(format: imageName, index)
+//        return getPhoto(id, pollId: pollId, image: image, uploaded: false, isThumbnail: isThumbnail, context: context)
+//    }
 }

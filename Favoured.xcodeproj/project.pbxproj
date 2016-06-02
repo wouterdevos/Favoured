@@ -15,7 +15,7 @@
 		104213EB1CDBD0DD0085BF3C /* PollListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */; };
 		1046C2EA1CDF647800E995E7 /* Poll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1046C2E91CDF647800E995E7 /* Poll.swift */; };
 		1046C2EC1CDF656700E995E7 /* PollOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1046C2EB1CDF656700E995E7 /* PollOption.swift */; };
-		1046C2EE1CDF789A00E995E7 /* PollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1046C2ED1CDF789A00E995E7 /* PollViewController.swift */; };
+		1046C2EE1CDF789A00E995E7 /* VotePollPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1046C2ED1CDF789A00E995E7 /* VotePollPageViewController.swift */; };
 		1049BB721CE3C558001D799B /* VoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1049BB711CE3C558001D799B /* VoteControl.swift */; };
 		104A01DD1CBA65780051D332 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104A01DC1CBA65780051D332 /* RegisterViewController.swift */; };
 		104A01E41CBA99340051D332 /* ValidationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 104A01E31CBA99340051D332 /* ValidationView.xib */; };
@@ -38,6 +38,8 @@
 		10B6D02A1CDA3DC000E5128D /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0291CDA3DC000E5128D /* Photo.swift */; };
 		10D6ED3C1CC2624A00A6A0A2 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */; };
 		10E4E0221CE09F67004FF86D /* AddPollCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */; };
+		10FE4BBC1CFF4B3900216029 /* VotePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FE4BBB1CFF4B3900216029 /* VotePollViewController.swift */; };
+		10FE4BBE1CFF832C00216029 /* ThumbnailPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FE4BBD1CFF832C00216029 /* ThumbnailPageControl.swift */; };
 		636579F5D76B22028BE52357 /* Pods_Favoured.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658D5C7E0DC7387C61A8D075 /* Pods_Favoured.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +52,7 @@
 		104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollListViewController.swift; sourceTree = "<group>"; };
 		1046C2E91CDF647800E995E7 /* Poll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Poll.swift; sourceTree = "<group>"; };
 		1046C2EB1CDF656700E995E7 /* PollOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollOption.swift; sourceTree = "<group>"; };
-		1046C2ED1CDF789A00E995E7 /* PollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollViewController.swift; sourceTree = "<group>"; };
+		1046C2ED1CDF789A00E995E7 /* VotePollPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VotePollPageViewController.swift; sourceTree = "<group>"; };
 		1049BB711CE3C558001D799B /* VoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteControl.swift; sourceTree = "<group>"; };
 		104A01DC1CBA65780051D332 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		104A01E31CBA99340051D332 /* ValidationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValidationView.xib; sourceTree = "<group>"; };
@@ -76,6 +78,8 @@
 		10B6D0291CDA3DC000E5128D /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPollCollectionViewCell.swift; sourceTree = "<group>"; };
+		10FE4BBB1CFF4B3900216029 /* VotePollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VotePollViewController.swift; sourceTree = "<group>"; };
+		10FE4BBD1CFF832C00216029 /* ThumbnailPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailPageControl.swift; sourceTree = "<group>"; };
 		658D5C7E0DC7387C61A8D075 /* Pods_Favoured.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Favoured.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8656D15A4E9CABD522D724B1 /* Pods-Favoured.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Favoured.release.xcconfig"; path = "Pods/Target Support Files/Pods-Favoured/Pods-Favoured.release.xcconfig"; sourceTree = "<group>"; };
 		C8D4103E4800570701D6FCF9 /* Pods-Favoured.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Favoured.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Favoured/Pods-Favoured.debug.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				104A01E31CBA99340051D332 /* ValidationView.xib */,
 				104A01E51CBA9D070051D332 /* ValidationView.swift */,
 				1049BB711CE3C558001D799B /* VoteControl.swift */,
+				10FE4BBD1CFF832C00216029 /* ThumbnailPageControl.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -189,11 +194,12 @@
 				104A01DC1CBA65780051D332 /* RegisterViewController.swift */,
 				10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */,
 				104213EA1CDBD0DD0085BF3C /* PollListViewController.swift */,
-				1046C2ED1CDF789A00E995E7 /* PollViewController.swift */,
 				1083979D1CE87D7400C39C39 /* AddPollViewController.swift */,
 				1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */,
 				1036304E1CEA53BC008CD72B /* FavouredViewController.swift */,
 				103630501CEA568E008CD72B /* ImagePickerViewController.swift */,
+				1046C2ED1CDF789A00E995E7 /* VotePollPageViewController.swift */,
+				10FE4BBB1CFF4B3900216029 /* VotePollViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -353,6 +359,7 @@
 				10E4E0221CE09F67004FF86D /* AddPollCollectionViewCell.swift in Sources */,
 				109814761CB306FF0042E06E /* ActivityIndicatorUtils.swift in Sources */,
 				109814781CB309FA0042E06E /* Constants.swift in Sources */,
+				10FE4BBC1CFF4B3900216029 /* VotePollViewController.swift in Sources */,
 				1049BB721CE3C558001D799B /* VoteControl.swift in Sources */,
 				1036304F1CEA53BC008CD72B /* FavouredViewController.swift in Sources */,
 				104A01DD1CBA65780051D332 /* RegisterViewController.swift in Sources */,
@@ -362,8 +369,9 @@
 				10B6D0241CDA132C00E5128D /* DataModel.swift in Sources */,
 				1083979E1CE87D7400C39C39 /* AddPollViewController.swift in Sources */,
 				100FBD421CF7A4BF0086EFBC /* PollListTableViewDataSource.swift in Sources */,
-				1046C2EE1CDF789A00E995E7 /* PollViewController.swift in Sources */,
+				1046C2EE1CDF789A00E995E7 /* VotePollPageViewController.swift in Sources */,
 				10B6D0261CDA3C1600E5128D /* ImageCache.swift in Sources */,
+				10FE4BBE1CFF832C00216029 /* ThumbnailPageControl.swift in Sources */,
 				10B6D02A1CDA3DC000E5128D /* Photo.swift in Sources */,
 				104213EB1CDBD0DD0085BF3C /* PollListViewController.swift in Sources */,
 				105E61D21CAFE3C5009D9851 /* AppDelegate.swift in Sources */,

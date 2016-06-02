@@ -71,10 +71,10 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     func configureCell(cell: PollTableViewCell, poll: Poll, rowIndex: Int) {
         cell.pollLabel.text = poll.question
         
-//        let profilePicture = DataModel.getProfilePicture(poll.profilePictureId!, rowIndex: rowIndex)
+        let profilePicture = DataModel.getProfilePicture(poll.profilePictureId!, rowIndex: rowIndex)
         let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: rowIndex)
         
-//        cell.profileImageView.image = profilePicture
+        cell.profileImageView.image = profilePicture
         let pollImageViews = cell.getPollImageViews()
         for (index, pollImageView) in pollImageViews.enumerate() {
             let hasImage = index < pollPictures.count
@@ -89,12 +89,14 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func addObservers() {
         DataModel.addPollListObserver()
+        DataModel.addConnectionStateObserver()
         defaultCenter.addObserver(self, selector: #selector(getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
         defaultCenter.addObserver(self, selector: #selector(photoDownloadCompleted(_:)), name: NotificationNames.PhotoDownloadCompleted, object: nil)
     }
     
     func removeObservers() {
         DataModel.removePollListObserver()
+        DataModel.removeConnectionStateObserver()
         defaultCenter.removeObserver(self, name: NotificationNames.GetPollsCompleted, object: nil)
         defaultCenter.removeObserver(self, name: NotificationNames.PhotoDownloadCompleted, object: nil)
     }
