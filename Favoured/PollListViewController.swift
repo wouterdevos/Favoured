@@ -10,10 +10,9 @@ import UIKit
 
 class PollListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    enum PollsType {
-        case MyPolls
-        case OpenPolls
-        case ClosedPolls
+    enum PollsType: Int {
+        case MyPolls = 0
+        case AllPolls = 1
     }
     
     let defaultCenter = NSNotificationCenter.defaultCenter()
@@ -27,7 +26,12 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBAction func segmentIndexChanged(sender: UISegmentedControl) {
-        
+        switch segmentedControl.selectedSegmentIndex {
+        case PollsType.MyPolls.rawValue:
+            DataModel.addMyPollsListObserver()
+        default:
+            DataModel.addAllPollsListObserver()
+        }
     }
     
     // MARK: - Lifecycle methods.
@@ -88,7 +92,8 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Initialisation methods.
     
     func addObservers() {
-        DataModel.addPollListObserver()
+//        DataModel.addPollListObserver()
+        DataModel.addMyPollsListObserver()
         DataModel.addConnectionStateObserver()
         defaultCenter.addObserver(self, selector: #selector(getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
         defaultCenter.addObserver(self, selector: #selector(photoDownloadCompleted(_:)), name: NotificationNames.PhotoDownloadCompleted, object: nil)
@@ -119,6 +124,10 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
             print(Error.UserInfoNoData)
             return
         }
+        
+//        let photo = userInfo[NotificationData.Photo] as! Photo
+        let rowIndex = userInfo[NotificationData.RowIndex] as! Int
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(index:rowIndex)], withRowAnimation: .None)
     }
     
     // MARK: - Convenience methods.

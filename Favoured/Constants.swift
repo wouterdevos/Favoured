@@ -47,6 +47,7 @@ struct NotificationData {
     static let Message = "Message"
     static let Polls = "Polls"
     static let Photo = "Photo"
+    static let RowIndex = "RowIndex"
 }
 
 struct Title {

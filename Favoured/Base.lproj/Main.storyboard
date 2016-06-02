@@ -310,18 +310,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hax-57-Iy8">
-                                <rect key="frame" x="166" y="72" width="269" height="29"/>
+                                <rect key="frame" x="235" y="72" width="131" height="29"/>
                                 <segments>
                                     <segment title="My Polls"/>
-                                    <segment title="Open Polls"/>
-                                    <segment title="Closed Polls"/>
+                                    <segment title="All Polls"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentIndexChanged:" destination="QbN-vO-LtD" eventType="valueChanged" id="Q4S-2T-KrA"/>
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkO-sk-eGt">
-                                <rect key="frame" x="8" y="290" width="584" height="21"/>
+                                <rect key="frame" x="8" y="301" width="584" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

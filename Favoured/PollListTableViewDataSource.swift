@@ -14,7 +14,7 @@ class PollListTableViewDataSource: NSObject {
     
     override init() {
         super.init()
-        DataModel.addPollListObserver()
+//        DataModel.addPollListObserver()
         defaultCenter.addObserver(self, selector: #selector(PollListTableViewDataSource.getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
     }
     

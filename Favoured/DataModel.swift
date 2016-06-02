@@ -108,9 +108,41 @@ class DataModel: NSObject {
         }
     }
     
-    class func addPollListObserver() {
+    class func addMyPollsListObserver() {
+        removePollListObserver()
+        let myPolls = fireDatabase.child(FirebaseConstants.Polls)
+        let myPollsQuery = myPolls.queryOrderedByChild(FirebaseConstants.CreationDate).queryEqualToValue(getUserId())
+        observePollsList(myPollsQuery)
+    }
+    
+    class func addAllPollsListObserver() {
+        removePollListObserver()
+        let allPolls = fireDatabase.child(FirebaseConstants.Polls)
+        let allPollsQuery = allPolls.queryOrderedByChild(FirebaseConstants.CreationDate)
+        observePollsList(allPollsQuery)
+    }
+    
+//    class func addPollListObserver() {
+//        let polls = fireDatabase.child(FirebaseConstants.Polls)
+//        polls.observeEventType(.Value, withBlock: { snapshot in
+//            var polls = [Poll]()
+//            for snapshotItem in snapshot.children.allObjects as! [FIRDataSnapshot] {
+//                let poll = Poll(snapshot: snapshotItem)
+//                polls.append(poll)
+//            }
+//            
+//            let userInfo = [NotificationData.Polls: polls]
+//            defaultCenter.postNotificationName(NotificationNames.GetPollsCompleted, object: nil, userInfo: userInfo)
+//        })
+//    }
+    
+    class func removePollListObserver() {
         let polls = fireDatabase.child(FirebaseConstants.Polls)
-        polls.observeEventType(.Value, withBlock: { snapshot in
+        polls.removeAllObservers()
+    }
+    
+    class func observePollsList(query: FIRDatabaseQuery) {
+        query.observeEventType(.Value, withBlock: { snapshot in
             var polls = [Poll]()
             for snapshotItem in snapshot.children.allObjects as! [FIRDataSnapshot] {
                 let poll = Poll(snapshot: snapshotItem)
@@ -120,11 +152,6 @@ class DataModel: NSObject {
             let userInfo = [NotificationData.Polls: polls]
             defaultCenter.postNotificationName(NotificationNames.GetPollsCompleted, object: nil, userInfo: userInfo)
         })
-    }
-    
-    class func removePollListObserver() {
-        let polls = fireDatabase.child(FirebaseConstants.Polls)
-        polls.removeAllObservers()
     }
     
     class func addPoll(question: String, images: [UIImage]) {
@@ -281,7 +308,8 @@ class DataModel: NSObject {
                 let image = UIImage(data: data!)
                 let photo = Photo(id: id, pollId: pollId, uploaded: true, isThumbnail: isThumbnail, image: image, context: context)
                 saveContext()
-                let userInfo = [NotificationData.Photo: photo]
+                let userInfo = [NotificationData.Photo: photo,
+                                NotificationData.RowIndex: rowIndex!] as [String:AnyObject]
                 defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
             }
         }
