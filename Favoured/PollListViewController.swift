@@ -56,7 +56,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == VotePollSegue {
-            let viewController = segue.destinationViewController as! VotePollPageViewController
+            let viewController = segue.destinationViewController as! TestViewController
             let poll = sender as! Poll
             viewController.poll = poll
         }
@@ -133,7 +133,6 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
         
-//        let photo = userInfo[NotificationData.Photo] as! Photo
         let rowIndex = userInfo[NotificationData.RowIndex] as! Int
         let indexPath = NSIndexPath(forRow: rowIndex, inSection: 0)
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)

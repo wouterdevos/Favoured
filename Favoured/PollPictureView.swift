@@ -9,9 +9,9 @@
 import UIKit
 
 @IBDesignable
-class PollOptionView: UIView {
+class PollPictureView: UIView {
 
-    let nibName = "PollOptionView"
+    let nibName = "PollPictureView"
     var view: UIView!
     
     @IBOutlet weak var pollPictureImageView: UIImageView!
@@ -27,6 +27,12 @@ class PollOptionView: UIView {
         setup()
     }
 
+    override func layoutSubviews() {
+//        pollPictureImageView.hidden = true
+//        activityindicator.hidden = false
+//        activityindicator.startAnimating()
+    }
+    
     func setup() {
         view = loadViewFromNib()
         // Use bounds not frame or it'll be offset
@@ -44,5 +50,12 @@ class PollOptionView: UIView {
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         
         return view
+    }
+    
+    func setPollPicture(image: UIImage?) {
+        pollPictureImageView.image = image
+        pollPictureImageView.hidden = image == nil
+        activityindicator.hidden = image != nil
+        image == nil ? activityindicator.startAnimating() : activityindicator.stopAnimating()
     }
 }
