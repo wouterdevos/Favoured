@@ -10,6 +10,8 @@ import UIKit
 
 class PollTableViewCell: UITableViewCell {
     
+    static let Identifier = "PollTableViewCell"
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var pollLabel: UILabel!
     @IBOutlet weak var pollImageView1: UIImageView!

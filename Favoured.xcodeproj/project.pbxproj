@@ -27,6 +27,9 @@
 		105E61DA1CAFE3C5009D9851 /* Favoured.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 105E61D81CAFE3C5009D9851 /* Favoured.xcdatamodeld */; };
 		105E61DC1CAFE3C5009D9851 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 105E61DB1CAFE3C5009D9851 /* Assets.xcassets */; };
 		105E61DF1CAFE3C5009D9851 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 105E61DD1CAFE3C5009D9851 /* LaunchScreen.storyboard */; };
+		1060FDC51D01872500AA7270 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1060FDC41D01872500AA7270 /* TestViewController.swift */; };
+		1060FDC71D01DAC400AA7270 /* PollOptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1060FDC61D01DAC400AA7270 /* PollOptionView.xib */; };
+		1060FDC91D01DB1500AA7270 /* PollOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1060FDC81D01DB1500AA7270 /* PollOptionView.swift */; };
 		1083979E1CE87D7400C39C39 /* AddPollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1083979D1CE87D7400C39C39 /* AddPollViewController.swift */; };
 		109814761CB306FF0042E06E /* ActivityIndicatorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109814751CB306FF0042E06E /* ActivityIndicatorUtils.swift */; };
 		109814781CB309FA0042E06E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109814771CB309FA0042E06E /* Constants.swift */; };
@@ -66,6 +69,9 @@
 		105E61DB1CAFE3C5009D9851 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		105E61DE1CAFE3C5009D9851 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		105E61E01CAFE3C5009D9851 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1060FDC41D01872500AA7270 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		1060FDC61D01DAC400AA7270 /* PollOptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollOptionView.xib; sourceTree = "<group>"; };
+		1060FDC81D01DB1500AA7270 /* PollOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollOptionView.swift; sourceTree = "<group>"; };
 		1083979D1CE87D7400C39C39 /* AddPollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPollViewController.swift; sourceTree = "<group>"; };
 		109814751CB306FF0042E06E /* ActivityIndicatorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorUtils.swift; sourceTree = "<group>"; };
 		109814771CB309FA0042E06E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -143,6 +149,8 @@
 				104A01E51CBA9D070051D332 /* ValidationView.swift */,
 				1049BB711CE3C558001D799B /* VoteControl.swift */,
 				10FE4BBD1CFF832C00216029 /* ThumbnailPageControl.swift */,
+				1060FDC61D01DAC400AA7270 /* PollOptionView.xib */,
+				1060FDC81D01DB1500AA7270 /* PollOptionView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -200,6 +208,7 @@
 				103630501CEA568E008CD72B /* ImagePickerViewController.swift */,
 				1046C2ED1CDF789A00E995E7 /* VotePollPageViewController.swift */,
 				10FE4BBB1CFF4B3900216029 /* VotePollViewController.swift */,
+				1060FDC41D01872500AA7270 /* TestViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -295,6 +304,7 @@
 			files = (
 				104A01E41CBA99340051D332 /* ValidationView.xib in Resources */,
 				105E61DF1CAFE3C5009D9851 /* LaunchScreen.storyboard in Resources */,
+				1060FDC71D01DAC400AA7270 /* PollOptionView.xib in Resources */,
 				10A7D7271CEE0C9B009C05FD /* GoogleService-Info.plist in Resources */,
 				105E61DC1CAFE3C5009D9851 /* Assets.xcassets in Resources */,
 				105E61D71CAFE3C5009D9851 /* Main.storyboard in Resources */,
@@ -368,6 +378,7 @@
 				105E61D41CAFE3C5009D9851 /* LoginViewController.swift in Sources */,
 				10B6D0241CDA132C00E5128D /* DataModel.swift in Sources */,
 				1083979E1CE87D7400C39C39 /* AddPollViewController.swift in Sources */,
+				1060FDC91D01DB1500AA7270 /* PollOptionView.swift in Sources */,
 				100FBD421CF7A4BF0086EFBC /* PollListTableViewDataSource.swift in Sources */,
 				1046C2EE1CDF789A00E995E7 /* VotePollPageViewController.swift in Sources */,
 				10B6D0261CDA3C1600E5128D /* ImageCache.swift in Sources */,
@@ -381,6 +392,7 @@
 				1046C2EA1CDF647800E995E7 /* Poll.swift in Sources */,
 				10D6ED3C1CC2624A00A6A0A2 /* ViewControllerExtensions.swift in Sources */,
 				1036304D1CEA50BC008CD72B /* FullScreenImageViewController.swift in Sources */,
+				1060FDC51D01872500AA7270 /* TestViewController.swift in Sources */,
 				10100A821CF3856B00FE3F91 /* PollTableViewCell.swift in Sources */,
 				10594FBE1CC82AF100C7A782 /* User.swift in Sources */,
 				10A222131CB6E87000D3BD1D /* Utils.swift in Sources */,

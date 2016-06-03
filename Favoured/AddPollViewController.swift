@@ -118,7 +118,6 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = collectionView.frame.size.width
-//        let spacing = width * 0.06
         let cellWidth = (width - 10) / 2
         return CGSize(width: cellWidth, height: cellWidth)
     }
@@ -158,18 +157,6 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
             pollPictures[selectedPictureIndex] = image
         }
         collectionView.reloadData()
-    }
-    
-    // MARK: - Initialisation methods.
-    
-    func addObservers() {
-//        defaultCenter.addObserver(self, selector: "authUserCompleted:", name: NotificationNames.AuthUserCompleted, object: nil)
-//        defaultCenter.addObserver(self, selector: "resetPasswordForUserCompleted:", name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
-    }
-    
-    func removeObservers() {
-//        defaultCenter.removeObserver(self, name: NotificationNames.AuthUserCompleted, object: nil)
-//        defaultCenter.removeObserver(self, name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
     }
     
     // MARK: - REST calls and response methods.

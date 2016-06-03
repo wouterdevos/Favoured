@@ -8,77 +8,74 @@
 
 import UIKit
 
-class VotePollPageViewController: UIPageViewController, UIPageViewControllerDataSource {
+class VotePollPageViewController: FavouredViewController, UIPageViewControllerDataSource {
+    
+    static let Identifier = "VotePollPageViewController"
     
     var poll: Poll!
+    var pageViewController: UIPageViewController!
     var votePollViewControllers = [UIViewController]()
     
     // MARK: - Interface builder outlets and actions.
     
+    @IBOutlet weak var questionLabel: UILabel!
     
     // MARK: - Lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = self
-        initVotePollViewControllers()
+        
+//        poll = Poll(question: "", userId: "")
+//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
+//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
+//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
+//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
+        questionLabel.text = poll.question
+        initPageViewController()
     }
     
     // MARK: - UIPageViewControllerDataSource methods.
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = votePollViewControllers.indexOf(viewController) else {
-            return nil
-        }
+        let votePollViewController = viewController as! VotePollViewController
+        let pageIndex = votePollViewController.pageIndex - 1
         
-        var previousIndex = viewControllerIndex - 1
-        if previousIndex < 0 {
-            previousIndex = votePollViewControllers.count - 1
-        }
-        
-        return votePollViewControllers[previousIndex]
+        return viewControllerAtIndex(pageIndex)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = votePollViewControllers.indexOf(viewController) else {
-            return nil
-        }
+        let votePollViewController = viewController as! VotePollViewController
+        let pageIndex = votePollViewController.pageIndex + 1
         
-        var nextIndex = viewControllerIndex + 1
-        if nextIndex >= votePollViewControllers.count {
-            nextIndex = 0
-        }
-        
-        return votePollViewControllers[nextIndex]
+        return viewControllerAtIndex(pageIndex)
     }
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return votePollViewControllers.count
+        return poll.pollOptions.count
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        guard let firstViewController = viewControllers?.first,
-            firstViewControllerIndex = votePollViewControllers.indexOf(firstViewController) else {
-                return 0
-        }
-        
-        return firstViewControllerIndex
+        return 0
     }
     
     // MARK: - Initialisation methods.
     
-    func initVotePollViewControllers() {
-        for _ in 0..<4 {
-            votePollViewControllers.append(getVotePollViewController())
-        }
+    func initPageViewController() {
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+        let navigationBarHeight = navigationController!.navigationBar.frame.size.height
+        let questionLabelTopMargin = CGFloat(8)
+        let questionLabelHeight = CGFloat(40)
         
-        if let firstVotePollViewController = votePollViewControllers.first {
-            setViewControllers([firstVotePollViewController], direction: .Forward, animated: true, completion: nil)
-        }
-    }
-    
-    func getVotePollViewController() -> VotePollViewController {
-        return storyboard?.instantiateViewControllerWithIdentifier(VotePollViewController.VotePollViewControllerName) as! VotePollViewController
+        let heightOffset = statusBarHeight + navigationBarHeight + questionLabelTopMargin + questionLabelHeight
+        let firstVotePollViewController = viewControllerAtIndex(0)
+        pageViewController = storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
+        pageViewController.dataSource = self
+        pageViewController.setViewControllers([firstVotePollViewController], direction: .Forward, animated: true, completion: nil)
+        pageViewController.view.frame = CGRect(x: 0, y: heightOffset, width: view.frame.width, height: view.frame.height - heightOffset)
+        
+        addChildViewController(pageViewController)
+        view.addSubview(pageViewController.view)
+        pageViewController.didMoveToParentViewController(self)
     }
     
     func addObservers() {
@@ -93,13 +90,24 @@ class VotePollPageViewController: UIPageViewController, UIPageViewControllerData
     
     // MARK: - REST calls and response methods.
     
-
     
-    // MARK: - Handler methods for alert controller.
-    
-
     
     // MARK: - Convenience methods.
     
-
+    func viewControllerAtIndex(index: Int) -> VotePollViewController {
+        let pollOptions = poll.pollOptions
+        
+        var currentIndex = index
+        if currentIndex < 0 {
+            currentIndex = pollOptions.count - 1
+        } else if currentIndex >= pollOptions.count {
+            currentIndex = 0
+        }
+        
+        let votePollViewController = storyboard?.instantiateViewControllerWithIdentifier(VotePollViewController.Identifier) as! VotePollViewController
+        votePollViewController.pageIndex = currentIndex
+        votePollViewController.pollOption = pollOptions[currentIndex]
+        
+        return votePollViewController
+    }
 }

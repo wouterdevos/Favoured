@@ -111,7 +111,7 @@ class DataModel: NSObject {
     class func addMyPollsListObserver() {
         removePollListObserver()
         let myPolls = fireDatabase.child(FirebaseConstants.Polls)
-        let myPollsQuery = myPolls.queryOrderedByChild(FirebaseConstants.CreationDate).queryEqualToValue(getUserId())
+        let myPollsQuery = myPolls.queryOrderedByChild(FirebaseConstants.CreationDate)//.queryEqualToValue(FirebaseConstants.UserId, childKey: getUserId())
         observePollsList(myPollsQuery)
     }
     
@@ -154,6 +154,23 @@ class DataModel: NSObject {
         })
     }
     
+    class func addConnectionStateObserver() {
+        let connectedRef = FIRDatabase.database().referenceWithPath(FirebaseConstants.InfoConnected)
+        connectedRef.observeEventType(.Value, withBlock: { snapshot in
+            if let connected = snapshot.value as? Bool where connected {
+                print("Connected")
+                uploadLocalOnlyPhotos()
+            } else {
+                print("Not connected")
+            }
+        })
+    }
+    
+    class func removeConnectionStateObserver() {
+        let connectedRef = FIRDatabase.database().referenceWithPath(FirebaseConstants.InfoConnected)
+        connectedRef.removeAllObservers()
+    }
+    
     class func addPoll(question: String, images: [UIImage]) {
         let pollRef = fireDatabase.child(FirebaseConstants.Polls).childByAutoId()
         let pollId = pollRef.key
@@ -184,23 +201,6 @@ class DataModel: NSObject {
         poll.pollOptions = pollOptions
         
         pollRef.setValue(poll.getPollData())
-    }
-    
-    class func addConnectionStateObserver() {
-        let connectedRef = FIRDatabase.database().referenceWithPath(FirebaseConstants.InfoConnected)
-        connectedRef.observeEventType(.Value, withBlock: { snapshot in
-            if let connected = snapshot.value as? Bool where connected {
-                print("Connected")
-                uploadLocalOnlyPhotos()
-            } else {
-                print("Not connected")
-            }
-        })
-    }
-    
-    class func removeConnectionStateObserver() {
-        let connectedRef = FIRDatabase.database().referenceWithPath(FirebaseConstants.InfoConnected)
-        connectedRef.removeAllObservers()
     }
     
     private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
@@ -263,9 +263,10 @@ class DataModel: NSObject {
     class func getPollPictures(poll: Poll, isThumbnail: Bool, rowIndex: Int?) -> [UIImage] {
         var images = [UIImage]()
         let photos = fetchPhotosByPollId(poll.id!, isThumbnail: isThumbnail)
-        if photos?.count > 0 {
-            for pollOption in poll.pollOptions {
-                var hasPhoto = false
+        
+        for pollOption in poll.pollOptions {
+            var hasPhoto = false
+            if photos?.count > 0 {
                 for photo in photos! {
                     // Add thumbnail images to the array if they are stored locally.
                     if pollOption.pollPictureThumbnailId == photo.id, let image = photo.image {
@@ -274,16 +275,15 @@ class DataModel: NSObject {
                         break
                     }
                 }
-                
-                if !hasPhoto {
-                    // If the photo is not saved locally then download it.
-                    images.append(UIImage(named: "PollPicture")!)
-                    let id = isThumbnail ? pollOption.pollPictureThumbnailId : pollOption.pollPictureId
-                    downloadPollPicture(id, pollId: poll.id!, isThumbnail: isThumbnail, rowIndex: rowIndex)
-                }
+            }
+            
+            if !hasPhoto {
+                // If the photo is not saved locally then download it.
+                images.append(UIImage(named: "PollPicture")!)
+                let id = isThumbnail ? pollOption.pollPictureThumbnailId : pollOption.pollPictureId
+                downloadPollPicture(id, pollId: poll.id!, isThumbnail: isThumbnail, rowIndex: rowIndex)
             }
         }
-        
         
         return images
     }

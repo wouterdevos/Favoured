@@ -10,9 +10,10 @@ import UIKit
 
 class VotePollViewController: FavouredViewController {
 
-    static let VotePollViewControllerName = "VotePollViewController"
+    static let Identifier = "VotePollViewController"
     
-    var image: UIImage!
+    var pageIndex: Int!
+    var pollOption: PollOption!
     var voteSelected = false
     
     // MARK: - Interface builder outlets and actions.
@@ -25,12 +26,12 @@ class VotePollViewController: FavouredViewController {
         voteButton.selected = voteSelected
     }
 
-    
     // MARK: - Lifecycle methods.
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initPollPictureImageView()
+        initVoteButton()
     }
     
     // MARK: - Initialisation methods.
@@ -38,4 +39,12 @@ class VotePollViewController: FavouredViewController {
     func initPollPictureImageView() {
 //        pollPictureImageView.image = image
     }
+    
+    func initVoteButton() {
+        voteButton.setImage(UIImage(named:"TickNormal"), forState: .Normal)
+        voteButton.setImage(UIImage(named:"TickSelected"), forState: .Selected)
+        voteButton.setImage(UIImage(named:"TickSelected"), forState: .Highlighted)
+    }
+    
+    
 }

@@ -438,12 +438,12 @@
                         <outlet property="emptyLabel" destination="wkO-sk-eGt" id="h1j-8y-Y4A"/>
                         <outlet property="segmentedControl" destination="Hax-57-Iy8" id="qN1-cw-V4y"/>
                         <outlet property="tableView" destination="mU1-NY-03z" id="lj0-W3-T7N"/>
-                        <segue destination="1CQ-qF-YDv" kind="show" identifier="VotePollSegue" id="YJe-uZ-SFi"/>
+                        <segue destination="3T2-ZB-CJF" kind="show" id="duZ-jr-AIT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1n-Bf-Kcn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2290" y="-132"/>
+            <point key="canvasLocation" x="2348" y="-64"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aPJ-4F-WOC">
@@ -481,16 +481,6 @@
                                     <action selector="addPoll:" destination="oXa-Wy-nRX" eventType="touchUpInside" id="vYb-jq-a27"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Question" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jaj-Xp-THe">
-                                <rect key="frame" x="20" y="72" width="560" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="9ZE-tH-b15"/>
-                                </constraints>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose up to four images." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4r-nz-2YF">
                                 <rect key="frame" x="20" y="208" width="560" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -545,6 +535,16 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Question" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jaj-Xp-THe">
+                                <rect key="frame" x="20" y="72" width="560" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="9ZE-tH-b15"/>
+                                </constraints>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -574,15 +574,46 @@
             </objects>
             <point key="canvasLocation" x="3177" y="-495"/>
         </scene>
-        <!--Take Poll-->
-        <scene sceneID="Exh-35-vQb">
+        <!--Test View Controller-->
+        <scene sceneID="6bL-BD-zuS">
             <objects>
-                <pageViewController storyboardIdentifier="VotePollPageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="1CQ-qF-YDv" customClass="VotePollPageViewController" customModule="Favoured" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" title="Take Poll" id="sIX-aH-Daq"/>
-                </pageViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ycD-D6-EAr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="3T2-ZB-CJF" customClass="TestViewController" customModule="Favoured" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="n4s-4S-PFp"/>
+                        <viewControllerLayoutGuide type="bottom" id="QYY-Nk-Xhz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="I4S-1g-0m1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dN3-pT-pY2">
+                                <rect key="frame" x="0.0" y="112" width="600" height="427"/>
+                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What suit should I wear on Saturday night for my high school Prom?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ym8-wC-6yR">
+                                <rect key="frame" x="20" y="64" width="560" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="mTa-jM-m4v"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ym8-wC-6yR" firstAttribute="trailing" secondItem="I4S-1g-0m1" secondAttribute="trailingMargin" id="YfI-O1-oMR"/>
+                            <constraint firstItem="Ym8-wC-6yR" firstAttribute="top" secondItem="n4s-4S-PFp" secondAttribute="bottom" id="ksJ-13-K9w"/>
+                            <constraint firstItem="Ym8-wC-6yR" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" id="uTv-oS-4F9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="questionLabel" destination="Ym8-wC-6yR" id="0Gl-ga-qCk"/>
+                        <outlet property="scrollView" destination="dN3-pT-pY2" id="e6c-bW-ul1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="egB-41-DKm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3177" y="327"/>
+            <point key="canvasLocation" x="3177" y="1028"/>
         </scene>
         <!--Photo-->
         <scene sceneID="vFF-qt-Zxm">
@@ -668,6 +699,52 @@
             </objects>
             <point key="canvasLocation" x="4053" y="-494"/>
         </scene>
+        <!--Take Poll-->
+        <scene sceneID="8sm-gh-0Fc">
+            <objects>
+                <viewController storyboardIdentifier="VotePollPageViewController" id="1As-Qk-74Y" customClass="VotePollPageViewController" customModule="Favoured" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bWZ-hS-z4S"/>
+                        <viewControllerLayoutGuide type="bottom" id="YRg-AW-j1R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Fam-RW-EVh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What suit should I wear on Saturday night for my high school Prom?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omU-ne-Npd">
+                                <rect key="frame" x="20" y="64" width="560" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Zvf-AT-YIb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="omU-ne-Npd" secondAttribute="leading" id="Rsh-nT-XzT"/>
+                            <constraint firstItem="omU-ne-Npd" firstAttribute="top" secondItem="bWZ-hS-z4S" secondAttribute="bottom" id="SZ1-V9-KKs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="omU-ne-Npd" secondAttribute="trailing" id="wg4-yG-6xU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Take Poll" id="qlN-T8-GKF"/>
+                    <connections>
+                        <outlet property="questionLabel" destination="omU-ne-Npd" id="Ide-TJ-jxR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WVH-mo-G4j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3177" y="327"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="A1e-nU-eNL">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="MQX-KM-BfJ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mUU-z4-qES" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3952" y="327"/>
+        </scene>
         <!--Vote Poll View Controller-->
         <scene sceneID="P8s-di-G2q">
             <objects>
@@ -680,9 +757,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePicture" translatesAutoresizingMaskIntoConstraints="NO" id="DwY-GA-XLr">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDj-o5-NeY">
-                                <rect key="frame" x="520" y="520" width="60" height="60"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="270" y="520" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="6Qc-iE-DRE"/>
                                     <constraint firstAttribute="height" constant="60" id="ZQY-zK-q7q"/>
@@ -692,18 +772,14 @@
                                     <action selector="vote:" destination="X2u-tP-iEf" eventType="touchUpInside" id="bx6-hX-Ct2"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePicture" translatesAutoresizingMaskIntoConstraints="NO" id="DwY-GA-XLr">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="DwY-GA-XLr" secondAttribute="trailing" constant="-20" id="Jkw-oq-75b"/>
+                            <constraint firstItem="CDj-o5-NeY" firstAttribute="top" secondItem="DwY-GA-XLr" secondAttribute="bottom" constant="-80" id="LcK-i3-neY"/>
                             <constraint firstItem="DwY-GA-XLr" firstAttribute="leading" secondItem="SLA-d4-mmQ" secondAttribute="leadingMargin" constant="-20" id="dkF-zD-emE"/>
                             <constraint firstItem="eIz-Fu-n2l" firstAttribute="top" secondItem="DwY-GA-XLr" secondAttribute="bottom" id="otL-BA-JcI"/>
-                            <constraint firstItem="eIz-Fu-n2l" firstAttribute="top" secondItem="CDj-o5-NeY" secondAttribute="bottom" constant="20" id="sEY-We-beh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CDj-o5-NeY" secondAttribute="trailing" id="sh1-gd-Iyu"/>
+                            <constraint firstItem="CDj-o5-NeY" firstAttribute="centerX" secondItem="DwY-GA-XLr" secondAttribute="centerX" id="sLa-4H-fIo"/>
                             <constraint firstItem="DwY-GA-XLr" firstAttribute="top" secondItem="JFX-ME-qZ1" secondAttribute="bottom" id="x9J-MG-E1v"/>
                         </constraints>
                     </view>
@@ -714,7 +790,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yaf-Rf-p25" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4053" y="327"/>
+            <point key="canvasLocation" x="4784" y="327"/>
         </scene>
     </scenes>
     <resources>
