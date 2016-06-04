@@ -46,7 +46,6 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         addObservers()
-//        DataModel.signOut()
         DataModel.authUser()
     }
     

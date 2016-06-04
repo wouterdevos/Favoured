@@ -246,8 +246,8 @@ class DataModel: NSObject {
         return image
     }
     
-    class func getPollPictures(poll: Poll, isThumbnail: Bool, rowIndex: Int?) -> [UIImage] {
-        var images = [UIImage]()
+    class func getPollPictures(poll: Poll, isThumbnail: Bool, rowIndex: Int?) -> [UIImage?] {
+        var images = [UIImage?]()
         let photos = fetchPhotosByPollId(poll.id!, isThumbnail: isThumbnail)
         
         for pollOption in poll.pollOptions {
@@ -265,7 +265,7 @@ class DataModel: NSObject {
             
             if !hasPhoto {
                 // If the photo is not saved locally then download it.
-                images.append(UIImage(named: "PollPicture")!)
+                images.append(nil)
                 let id = isThumbnail ? pollOption.pollPictureThumbnailId : pollOption.pollPictureId
                 downloadPollPicture(id, pollId: poll.id!, isThumbnail: isThumbnail, rowIndex: rowIndex)
             }
@@ -281,7 +281,8 @@ class DataModel: NSObject {
                 let image = UIImage(data: data!)
                 let photo = Photo(id: id, pollId: nil, uploaded: true, isThumbnail: true, image: image, context: context)
                 saveContext()
-                let userInfo = [NotificationData.Photo: photo]
+                let userInfo = [NotificationData.Photo: photo,
+                                NotificationData.RowIndex: rowIndex!]
                 defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
             }
         }

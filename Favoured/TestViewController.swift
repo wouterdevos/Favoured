@@ -17,6 +17,7 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     var pageControl : UIPageControl = UIPageControl(frame: CGRectMake(50, 300, 200, 50))
     
     @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var thumbnailsStackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
     
     // MARK: - Lifecycle methods.
@@ -67,27 +68,30 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
         let pollOptionsCount = CGFloat(poll.pollOptions.count)
         scrollView.delegate = self
         scrollView.frame.size.width = view.frame.width
-        scrollView.contentSize = CGSizeMake(scrollView.frame.width * pollOptionsCount, scrollView.frame.height)
         
         let scrollViewWidth = scrollView.frame.width
         let scrollViewHeight = scrollView.frame.height
         let pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
         for (index, pollPicture) in pollPictures.enumerate() {
             let frame = CGRectMake(scrollViewWidth * CGFloat(index), 0, scrollViewWidth, scrollViewHeight)
-//            frame.origin.x = scrollView.frame.size.width * CGFloat(index)
-//            frame.size = scrollView.frame.size
-            
             let pollPictureView = PollPictureView(frame: frame)
             pollPictureView.setPollPicture(pollPicture)
             pollPictureViews.append(pollPictureView)
             scrollView.addSubview(pollPictureView)
         }
+        scrollView.contentSize = CGSizeMake(view.frame.width * pollOptionsCount, scrollView.frame.height)
     }
     
     func initPollPictureThumbnailViews() {
         let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: nil)
         for (index, pollPicture) in pollPictures.enumerate() {
             
+        }
+        
+        for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
+            if index == 0 {
+                subview.removeFromSuperview()
+            }
         }
     }
     

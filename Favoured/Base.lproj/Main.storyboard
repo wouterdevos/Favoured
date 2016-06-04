@@ -428,6 +428,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favoured" id="PQi-zv-pdO">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="DKS-h2-0TW">
+                            <connections>
+                                <action selector="logout:" destination="QbN-vO-LtD" id="OjS-5D-9bI"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="62B-T7-MYk">
                             <connections>
                                 <segue destination="oXa-Wy-nRX" kind="show" identifier="AddPollSegue" id="pHi-Ge-mCd"/>
@@ -592,27 +597,67 @@
                                     <constraint firstAttribute="height" constant="40" id="mTa-jM-m4v"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN3-pT-pY2">
-                                <rect key="frame" x="0.0" y="112" width="600" height="427"/>
+                                <rect key="frame" x="0.0" y="180" width="600" height="420"/>
                             </scrollView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PM7-DX-rSs">
+                                <rect key="frame" x="168" y="112" width="264" height="60"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cey-yw-VBU" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="QKk-JS-XeB"/>
+                                            <constraint firstAttribute="width" constant="60" id="VpA-P5-jnY"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKx-rp-W7u" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="68" y="0.0" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="dvG-4A-J3G"/>
+                                            <constraint firstAttribute="height" constant="60" id="qGZ-ie-O9v"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6M-iH-5mW" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="136" y="0.0" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="pnc-LV-iRc"/>
+                                            <constraint firstAttribute="width" constant="60" id="w20-vV-ApW"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAU-CG-DFZ" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
+                                        <rect key="frame" x="204" y="0.0" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="FSM-nV-y1u"/>
+                                            <constraint firstAttribute="width" constant="60" id="mHS-b1-zJy"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="QYY-Nk-Xhz" firstAttribute="top" secondItem="dN3-pT-pY2" secondAttribute="bottom" constant="61" id="TWF-vn-yvc"/>
+                            <constraint firstItem="dN3-pT-pY2" firstAttribute="top" secondItem="PM7-DX-rSs" secondAttribute="bottom" constant="8" id="3uu-81-pqG"/>
+                            <constraint firstItem="QYY-Nk-Xhz" firstAttribute="top" secondItem="dN3-pT-pY2" secondAttribute="bottom" id="JT8-xU-Amk"/>
+                            <constraint firstItem="PM7-DX-rSs" firstAttribute="centerX" secondItem="I4S-1g-0m1" secondAttribute="centerX" id="JwD-lB-q1K"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="trailing" secondItem="I4S-1g-0m1" secondAttribute="trailingMargin" id="YfI-O1-oMR"/>
-                            <constraint firstItem="dN3-pT-pY2" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" constant="-20" id="gTZ-ZR-XQ0"/>
+                            <constraint firstItem="dN3-pT-pY2" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" constant="-20" id="jJl-8P-XyM"/>
+                            <constraint firstItem="PM7-DX-rSs" firstAttribute="top" secondItem="Ym8-wC-6yR" secondAttribute="bottom" constant="8" id="kkS-uX-oZ7"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="top" secondItem="n4s-4S-PFp" secondAttribute="bottom" id="ksJ-13-K9w"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dN3-pT-pY2" secondAttribute="trailing" constant="-20" id="sKI-or-qzW"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" id="uTv-oS-4F9"/>
-                            <constraint firstItem="dN3-pT-pY2" firstAttribute="top" secondItem="Ym8-wC-6yR" secondAttribute="bottom" constant="8" id="uqF-dF-Uxn"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dN3-pT-pY2" secondAttribute="trailing" constant="-20" id="xvD-XN-ew9"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="questionLabel" destination="Ym8-wC-6yR" id="0Gl-ga-qCk"/>
                         <outlet property="scrollView" destination="dN3-pT-pY2" id="e6c-bW-ul1"/>
+                        <outlet property="thumbnailsStackView" destination="PM7-DX-rSs" id="Ywj-gQ-fVR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="egB-41-DKm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -721,7 +766,7 @@
                                     <constraint firstAttribute="height" constant="40" id="Zvf-AT-YIb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

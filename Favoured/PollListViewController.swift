@@ -27,6 +27,11 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    @IBAction func logout(sender: UIBarButtonItem) {
+        DataModel.signOut()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     @IBAction func segmentIndexChanged(sender: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
         case PollsType.MyPolls.rawValue:
@@ -90,10 +95,12 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         cell.profileImageView.image = profilePicture
         let pollImageViews = cell.getPollImageViews()
         for (index, pollImageView) in pollImageViews.enumerate() {
+            // Check if there is an image for the current poll image view.
             let hasImage = index < pollPictures.count
             pollImageView.hidden = !hasImage
             if hasImage {
-                pollImageView.image = pollPictures[index]
+                let pollPicture = pollPictures[index]
+                pollImageView.image = pollPicture != nil ? pollPicture! : UIImage(named: "PollPicture")!
             }
         }
     }
