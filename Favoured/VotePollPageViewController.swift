@@ -19,6 +19,8 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     // MARK: - Interface builder outlets and actions.
     
     @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var thumbnailsStackView: UIStackView!
+    @IBOutlet weak var pageViewControllerView: UIView!
     
     // MARK: - Lifecycle methods.
     
@@ -50,13 +52,13 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         return viewControllerAtIndex(pageIndex)
     }
     
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return poll.pollOptions.count
-    }
-    
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return 0
-    }
+//    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+//        return poll.pollOptions.count
+//    }
+//    
+//    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+//        return 0
+//    }
     
     // MARK: - Initialisation methods.
     
@@ -64,17 +66,17 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         let navigationBarHeight = navigationController!.navigationBar.frame.size.height
         let questionLabelTopMargin = CGFloat(8)
-        let questionLabelHeight = CGFloat(40)
+        let questionLabelHeight = questionLabel.frame.size.height
         
         let heightOffset = statusBarHeight + navigationBarHeight + questionLabelTopMargin + questionLabelHeight
         let firstVotePollViewController = viewControllerAtIndex(0)
         pageViewController = storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         pageViewController.dataSource = self
         pageViewController.setViewControllers([firstVotePollViewController], direction: .Forward, animated: true, completion: nil)
-        pageViewController.view.frame = CGRect(x: 0, y: heightOffset, width: view.frame.width, height: view.frame.height - heightOffset)
+        pageViewController.view.frame = CGRect(x: 0, y: 0, width: pageViewControllerView.frame.width, height: pageViewControllerView.frame.height)
         
         addChildViewController(pageViewController)
-        view.addSubview(pageViewController.view)
+        pageViewControllerView.addSubview(pageViewController.view)
         pageViewController.didMoveToParentViewController(self)
     }
     

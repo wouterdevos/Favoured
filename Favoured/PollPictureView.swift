@@ -52,7 +52,7 @@ class PollPictureView: UIView {
         return view
     }
     
-    func setPollPicture(image: UIImage?) {
+    func setImage(image: UIImage?) {
         pollPictureImageView.image = image
         pollPictureImageView.hidden = image == nil
         activityindicator.hidden = image != nil

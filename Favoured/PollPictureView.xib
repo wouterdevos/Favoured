@@ -17,21 +17,34 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZOE-8d-hR3">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="509"/>
                 </imageView>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xgd-yO-f5M">
                     <rect key="frame" x="290" y="290" width="20" height="20"/>
                 </activityIndicatorView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOo-aZ-x3V">
+                    <rect key="frame" x="263" y="517" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="LAS-as-JoA"/>
+                        <constraint firstAttribute="width" constant="75" id="bkZ-fo-gxp"/>
+                    </constraints>
+                    <state key="normal" image="TickNormal"/>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="ZOE-8d-hR3" secondAttribute="trailing" id="1GR-wL-5pN"/>
-                <constraint firstItem="xgd-yO-f5M" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="KHM-vB-qgB"/>
-                <constraint firstAttribute="bottom" secondItem="ZOE-8d-hR3" secondAttribute="bottom" id="fij-DL-UxR"/>
+                <constraint firstItem="xgd-yO-f5M" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7ZE-8P-6tR"/>
+                <constraint firstAttribute="bottom" secondItem="gOo-aZ-x3V" secondAttribute="bottom" constant="8" id="CZp-Ih-0RT"/>
+                <constraint firstItem="gOo-aZ-x3V" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="G7I-UH-Uew"/>
+                <constraint firstItem="xgd-yO-f5M" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="SWS-QF-WKB"/>
+                <constraint firstItem="gOo-aZ-x3V" firstAttribute="top" secondItem="ZOE-8d-hR3" secondAttribute="bottom" constant="8" id="Z5k-lb-RW5"/>
                 <constraint firstItem="ZOE-8d-hR3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="p2p-b6-Dly"/>
-                <constraint firstItem="xgd-yO-f5M" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="phr-aW-5DS"/>
                 <constraint firstItem="ZOE-8d-hR3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wpr-4u-Ujl"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="TickNormal" width="166" height="166"/>
+    </resources>
 </document>

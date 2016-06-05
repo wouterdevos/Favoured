@@ -12,36 +12,29 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     
     var poll: Poll!
     var pollPictureViews = [PollPictureView]()
-    var colors:[UIColor] = [UIColor.redColor(), UIColor.blueColor(), UIColor.greenColor(), UIColor.yellowColor()]
-    var frame: CGRect = CGRectMake(0, 0, 0, 0)
-    var pageControl : UIPageControl = UIPageControl(frame: CGRectMake(50, 300, 200, 50))
+    var currentPage = 0
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var thumbnailsStackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBAction func scrollToPollPicture(sender: UIButton) {
+        sender.highlighted = true
+        let tag = sender.tag
+        if tag == currentPage {
+            return
+        }
+        
+        let x = CGFloat(tag) * scrollView.frame.size.width
+        scrollView.setContentOffset(CGPointMake(x, 0), animated: true)
+    }
+    
     // MARK: - Lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        scrollView.delegate = self
-//        self.view.addSubview(scrollView)
-//        for index in 0..<4 {
-//            
-//            frame.origin.x = self.scrollView.frame.size.width * CGFloat(index)
-//            frame.size = self.scrollView.frame.size
-//            self.scrollView.pagingEnabled = true
-//            
-//            let subView = UIView(frame: frame)
-//            subView.backgroundColor = colors[index]
-//            self.scrollView .addSubview(subView)
-//        }
-//        
-//        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * 4, self.scrollView.frame.size.height)
-//        pageControl.addTarget(self, action: #selector(changePage(_:)), forControlEvents: UIControlEvents.ValueChanged)
         initPollPictureViews()
-        initPollPictureThumbnailViews()
+        initPollPictureButtons()
         
     }
     
@@ -57,9 +50,10 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     
     // MARK: - UIScrollViewDelegate methods.
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-//        pageControl.currentPage = Int(pageNumber)
+        currentPage = Int(pageNumber)
+        updatePollPictureButtons()
     }
     
     // MARK: - Initialisation methods.
@@ -69,27 +63,31 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
         scrollView.delegate = self
         scrollView.frame.size.width = view.frame.width
         
+        let colors = [UIColor.redColor(), UIColor.greenColor(), UIColor.blueColor(), UIColor.brownColor()]
         let scrollViewWidth = scrollView.frame.width
         let scrollViewHeight = scrollView.frame.height
         let pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
         for (index, pollPicture) in pollPictures.enumerate() {
             let frame = CGRectMake(scrollViewWidth * CGFloat(index), 0, scrollViewWidth, scrollViewHeight)
             let pollPictureView = PollPictureView(frame: frame)
-            pollPictureView.setPollPicture(pollPicture)
+            pollPictureView.view.backgroundColor = colors[index]
+            pollPictureView.setImage(pollPicture)
             pollPictureViews.append(pollPictureView)
             scrollView.addSubview(pollPictureView)
         }
-        scrollView.contentSize = CGSizeMake(view.frame.width * pollOptionsCount, scrollView.frame.height)
+        scrollView.contentSize = CGSizeMake(scrollView.frame.width * pollOptionsCount, scrollView.frame.height)
     }
     
-    func initPollPictureThumbnailViews() {
+    func initPollPictureButtons() {
         let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: nil)
-        for (index, pollPicture) in pollPictures.enumerate() {
-            
-        }
-        
         for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
-            if index == 0 {
+            // Check if there is an image for the current poll picture thumbnail
+            let hasImage = index < pollPictures.count
+            if hasImage {
+                let pollPicture = pollPictures[index]
+                let image = pollPicture != nil ? pollPicture! : UIImage(named: "PollPicture")!
+                updatePollPictureButton(subview, image: image, highlighted: index == 0)
+            } else {
                 subview.removeFromSuperview()
             }
         }
@@ -121,11 +119,28 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
         for (index, pollOption) in poll.pollOptions.enumerate() {
             if pollOption.pollPictureId == photo.id {
                 let pollPictureView = pollPictureViews[index]
-                pollPictureView.setPollPicture(photo.image)
+                pollPictureView.setImage(photo.image)
                 break
             } else if pollOption.pollPictureThumbnailId == photo.id {
                 
             }
+        }
+    }
+    
+    // MARK: - Convenience methods.
+    
+    func updatePollPictureButton(subview: UIView, image: UIImage?, highlighted: Bool) {
+        let pollPictureThumbnailButton = subview as! UIButton
+        pollPictureThumbnailButton.highlighted = highlighted
+        pollPictureThumbnailButton.enabled = !highlighted
+        if let image = image {
+            pollPictureThumbnailButton.setImage(image, forState: .Normal)
+        }
+    }
+    
+    func updatePollPictureButtons() {
+        for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
+            updatePollPictureButton(subview, image: nil, highlighted: index == currentPage)
         }
     }
 }

@@ -41,8 +41,6 @@
 		10B6D02A1CDA3DC000E5128D /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B6D0291CDA3DC000E5128D /* Photo.swift */; };
 		10D6ED3C1CC2624A00A6A0A2 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */; };
 		10E4E0221CE09F67004FF86D /* AddPollCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */; };
-		10F6BA541D030DCF0007F3F3 /* PollPictureThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F6BA531D030DCF0007F3F3 /* PollPictureThumbnailView.swift */; };
-		10F6BA561D030E6F0007F3F3 /* PollPictureThumbnailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F6BA551D030E6F0007F3F3 /* PollPictureThumbnailView.xib */; };
 		10FE4BBC1CFF4B3900216029 /* VotePollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FE4BBB1CFF4B3900216029 /* VotePollViewController.swift */; };
 		10FE4BBE1CFF832C00216029 /* ThumbnailPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FE4BBD1CFF832C00216029 /* ThumbnailPageControl.swift */; };
 		636579F5D76B22028BE52357 /* Pods_Favoured.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658D5C7E0DC7387C61A8D075 /* Pods_Favoured.framework */; };
@@ -86,8 +84,6 @@
 		10B6D0291CDA3DC000E5128D /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		10D6ED3B1CC2624A00A6A0A2 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		10E4E0211CE09F67004FF86D /* AddPollCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPollCollectionViewCell.swift; sourceTree = "<group>"; };
-		10F6BA531D030DCF0007F3F3 /* PollPictureThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollPictureThumbnailView.swift; sourceTree = "<group>"; };
-		10F6BA551D030E6F0007F3F3 /* PollPictureThumbnailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollPictureThumbnailView.xib; sourceTree = "<group>"; };
 		10FE4BBB1CFF4B3900216029 /* VotePollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VotePollViewController.swift; sourceTree = "<group>"; };
 		10FE4BBD1CFF832C00216029 /* ThumbnailPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailPageControl.swift; sourceTree = "<group>"; };
 		658D5C7E0DC7387C61A8D075 /* Pods_Favoured.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Favoured.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,8 +151,6 @@
 				10FE4BBD1CFF832C00216029 /* ThumbnailPageControl.swift */,
 				1060FDC61D01DAC400AA7270 /* PollPictureView.xib */,
 				1060FDC81D01DB1500AA7270 /* PollPictureView.swift */,
-				10F6BA551D030E6F0007F3F3 /* PollPictureThumbnailView.xib */,
-				10F6BA531D030DCF0007F3F3 /* PollPictureThumbnailView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -310,7 +304,6 @@
 			files = (
 				104A01E41CBA99340051D332 /* ValidationView.xib in Resources */,
 				105E61DF1CAFE3C5009D9851 /* LaunchScreen.storyboard in Resources */,
-				10F6BA561D030E6F0007F3F3 /* PollPictureThumbnailView.xib in Resources */,
 				1060FDC71D01DAC400AA7270 /* PollPictureView.xib in Resources */,
 				10A7D7271CEE0C9B009C05FD /* GoogleService-Info.plist in Resources */,
 				105E61DC1CAFE3C5009D9851 /* Assets.xcassets in Resources */,
@@ -394,7 +387,6 @@
 				104213EB1CDBD0DD0085BF3C /* PollListViewController.swift in Sources */,
 				105E61D21CAFE3C5009D9851 /* AppDelegate.swift in Sources */,
 				104A01E61CBA9D070051D332 /* ValidationView.swift in Sources */,
-				10F6BA541D030DCF0007F3F3 /* PollPictureThumbnailView.swift in Sources */,
 				10B6D0281CDA3C9000E5128D /* CoreDataStackManager.swift in Sources */,
 				103630511CEA568E008CD72B /* ImagePickerViewController.swift in Sources */,
 				1046C2EA1CDF647800E995E7 /* Poll.swift in Sources */,

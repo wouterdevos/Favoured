@@ -443,12 +443,12 @@
                         <outlet property="emptyLabel" destination="wkO-sk-eGt" id="h1j-8y-Y4A"/>
                         <outlet property="segmentedControl" destination="Hax-57-Iy8" id="qN1-cw-V4y"/>
                         <outlet property="tableView" destination="mU1-NY-03z" id="lj0-W3-T7N"/>
-                        <segue destination="3T2-ZB-CJF" kind="show" identifier="VotePollSegue" id="duZ-jr-AIT"/>
+                        <segue destination="1As-Qk-74Y" kind="show" identifier="VotePollSegue" id="2JL-9G-ksO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1n-Bf-Kcn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2348" y="-64"/>
+            <point key="canvasLocation" x="2337" y="-132"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aPJ-4F-WOC">
@@ -600,55 +600,67 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3xU-2Y-a9e">
+                                <rect key="frame" x="168" y="112" width="264" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rzs-Wy-Eze">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="5eJ-Uk-f1Q"/>
+                                            <constraint firstAttribute="height" constant="60" id="wSN-xa-0R9"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="fhc-bF-5Lv"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXv-LJ-e6z">
+                                        <rect key="frame" x="68" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="DGN-C1-O0e"/>
+                                            <constraint firstAttribute="height" constant="60" id="tvB-8R-114"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="cbn-8D-q3H"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUp-pI-Oqq">
+                                        <rect key="frame" x="136" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="4IS-By-dnQ"/>
+                                            <constraint firstAttribute="width" constant="60" id="BRF-ch-TVr"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="Nz6-8v-xjg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xwl-i3-NVM">
+                                        <rect key="frame" x="204" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="AB9-lp-9NX"/>
+                                            <constraint firstAttribute="height" constant="60" id="Yzl-aV-uWe"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="rSr-yG-bIh"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN3-pT-pY2">
                                 <rect key="frame" x="0.0" y="180" width="600" height="420"/>
                             </scrollView>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PM7-DX-rSs">
-                                <rect key="frame" x="168" y="112" width="264" height="60"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cey-yw-VBU" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="QKk-JS-XeB"/>
-                                            <constraint firstAttribute="width" constant="60" id="VpA-P5-jnY"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKx-rp-W7u" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="68" y="0.0" width="60" height="60"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="dvG-4A-J3G"/>
-                                            <constraint firstAttribute="height" constant="60" id="qGZ-ie-O9v"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6M-iH-5mW" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="136" y="0.0" width="60" height="60"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="pnc-LV-iRc"/>
-                                            <constraint firstAttribute="width" constant="60" id="w20-vV-ApW"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAU-CG-DFZ" customClass="PollPictureThumbnailView" customModule="Favoured" customModuleProvider="target">
-                                        <rect key="frame" x="204" y="0.0" width="60" height="60"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="FSM-nV-y1u"/>
-                                            <constraint firstAttribute="width" constant="60" id="mHS-b1-zJy"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dN3-pT-pY2" firstAttribute="top" secondItem="PM7-DX-rSs" secondAttribute="bottom" constant="8" id="3uu-81-pqG"/>
+                            <constraint firstItem="3xU-2Y-a9e" firstAttribute="centerX" secondItem="I4S-1g-0m1" secondAttribute="centerX" id="4dq-Vt-1hU"/>
+                            <constraint firstItem="3xU-2Y-a9e" firstAttribute="top" secondItem="Ym8-wC-6yR" secondAttribute="bottom" constant="8" id="DAP-ym-IZP"/>
                             <constraint firstItem="QYY-Nk-Xhz" firstAttribute="top" secondItem="dN3-pT-pY2" secondAttribute="bottom" id="JT8-xU-Amk"/>
-                            <constraint firstItem="PM7-DX-rSs" firstAttribute="centerX" secondItem="I4S-1g-0m1" secondAttribute="centerX" id="JwD-lB-q1K"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="trailing" secondItem="I4S-1g-0m1" secondAttribute="trailingMargin" id="YfI-O1-oMR"/>
+                            <constraint firstItem="dN3-pT-pY2" firstAttribute="top" secondItem="3xU-2Y-a9e" secondAttribute="bottom" constant="8" id="ie9-Aq-Uvy"/>
                             <constraint firstItem="dN3-pT-pY2" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" constant="-20" id="jJl-8P-XyM"/>
-                            <constraint firstItem="PM7-DX-rSs" firstAttribute="top" secondItem="Ym8-wC-6yR" secondAttribute="bottom" constant="8" id="kkS-uX-oZ7"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="top" secondItem="n4s-4S-PFp" secondAttribute="bottom" id="ksJ-13-K9w"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dN3-pT-pY2" secondAttribute="trailing" constant="-20" id="sKI-or-qzW"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" id="uTv-oS-4F9"/>
@@ -657,7 +669,7 @@
                     <connections>
                         <outlet property="questionLabel" destination="Ym8-wC-6yR" id="0Gl-ga-qCk"/>
                         <outlet property="scrollView" destination="dN3-pT-pY2" id="e6c-bW-ul1"/>
-                        <outlet property="thumbnailsStackView" destination="PM7-DX-rSs" id="Ywj-gQ-fVR"/>
+                        <outlet property="thumbnailsStackView" destination="3xU-2Y-a9e" id="Ene-s1-rDN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="egB-41-DKm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -760,7 +772,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="What suit should I wear on Saturday night for my high school Prom?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omU-ne-Npd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What suit should I wear on Saturday night for my high school Prom?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omU-ne-Npd">
                                 <rect key="frame" x="20" y="64" width="560" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Zvf-AT-YIb"/>
@@ -769,17 +781,78 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EAX-pQ-Pex">
+                                <rect key="frame" x="168" y="112" width="264" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfK-bT-aOb">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="6h9-4P-59t"/>
+                                            <constraint firstAttribute="height" constant="60" id="f7f-TS-GLy"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="gzZ-RQ-cYU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyL-dh-2n2">
+                                        <rect key="frame" x="68" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="h8r-LV-7dC"/>
+                                            <constraint firstAttribute="height" constant="60" id="k3A-k5-Zlh"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="TsS-hS-95Y"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jf-49-wjv">
+                                        <rect key="frame" x="136" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="7Mc-FQ-H80"/>
+                                            <constraint firstAttribute="height" constant="60" id="yOc-kZ-y0l"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="Gfa-mA-z4V"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="onI-Lp-hvF">
+                                        <rect key="frame" x="204" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="7TO-d8-hBZ"/>
+                                            <constraint firstAttribute="height" constant="60" id="w5V-bE-UT4"/>
+                                        </constraints>
+                                        <state key="normal" image="PollPicture"/>
+                                        <connections>
+                                            <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="S5i-EP-Qqb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjP-yg-9yt">
+                                <rect key="frame" x="0.0" y="180" width="600" height="420"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="TjP-yg-9yt" secondAttribute="trailing" constant="-20" id="6B8-Qa-m1I"/>
                             <constraint firstAttribute="leadingMargin" secondItem="omU-ne-Npd" secondAttribute="leading" id="Rsh-nT-XzT"/>
+                            <constraint firstItem="YRg-AW-j1R" firstAttribute="top" secondItem="TjP-yg-9yt" secondAttribute="bottom" id="S83-9f-Ivr"/>
                             <constraint firstItem="omU-ne-Npd" firstAttribute="top" secondItem="bWZ-hS-z4S" secondAttribute="bottom" id="SZ1-V9-KKs"/>
+                            <constraint firstItem="TjP-yg-9yt" firstAttribute="leading" secondItem="Fam-RW-EVh" secondAttribute="leadingMargin" constant="-20" id="Vt6-c2-Szv"/>
+                            <constraint firstItem="TjP-yg-9yt" firstAttribute="top" secondItem="EAX-pQ-Pex" secondAttribute="bottom" constant="8" id="hzC-Vw-UeI"/>
+                            <constraint firstItem="EAX-pQ-Pex" firstAttribute="centerX" secondItem="Fam-RW-EVh" secondAttribute="centerX" id="jaa-6e-TTN"/>
+                            <constraint firstItem="EAX-pQ-Pex" firstAttribute="top" secondItem="omU-ne-Npd" secondAttribute="bottom" constant="8" id="rv4-sk-1P2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="omU-ne-Npd" secondAttribute="trailing" id="wg4-yG-6xU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Take Poll" id="qlN-T8-GKF"/>
                     <connections>
+                        <outlet property="pageViewControllerView" destination="TjP-yg-9yt" id="4UN-HH-oH6"/>
                         <outlet property="questionLabel" destination="omU-ne-Npd" id="Ide-TJ-jxR"/>
+                        <outlet property="thumbnailsStackView" destination="EAX-pQ-Pex" id="cxp-bC-Rbf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVH-mo-G4j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -808,7 +881,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePicture" translatesAutoresizingMaskIntoConstraints="NO" id="DwY-GA-XLr">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDj-o5-NeY">
                                 <rect key="frame" x="270" y="520" width="60" height="60"/>

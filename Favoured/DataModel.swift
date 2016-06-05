@@ -254,8 +254,9 @@ class DataModel: NSObject {
             var hasPhoto = false
             if photos?.count > 0 {
                 for photo in photos! {
-                    // Add thumbnail images to the array if they are stored locally.
-                    if pollOption.pollPictureThumbnailId == photo.id, let image = photo.image {
+                    // Add images to the array if they are stored locally.
+                    let photoId = isThumbnail ? pollOption.pollPictureThumbnailId : pollOption.pollPictureId
+                    if photoId == photo.id, let image = photo.image {
                         images.append(image)
                         hasPhoto = true
                         break
@@ -295,6 +296,7 @@ class DataModel: NSObject {
                 let image = UIImage(data: data!)
                 let photo = Photo(id: id, pollId: pollId, uploaded: true, isThumbnail: isThumbnail, image: image, context: context)
                 saveContext()
+                let savedPhoto = fetchPhotoById(id)
                 let userInfo = [NotificationData.Photo: photo,
                                 NotificationData.RowIndex: rowIndex!] as [String:AnyObject]
                 defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
