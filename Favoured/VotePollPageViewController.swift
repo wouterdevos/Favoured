@@ -8,11 +8,12 @@
 
 import UIKit
 
-class VotePollPageViewController: FavouredViewController, UIPageViewControllerDataSource {
+class VotePollPageViewController: FavouredViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     static let Identifier = "VotePollPageViewController"
     
     var poll: Poll!
+    var pollPictures: [UIImage?]!
     var pageViewController: UIPageViewController!
     var votePollViewControllers = [UIViewController]()
     
@@ -26,17 +27,11 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        poll = Poll(question: "", userId: "")
-//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
-//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
-//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
-//        poll.pollOptions.append(PollOption(pollPictureId: "", pollPictureThumbnailId: ""))
         questionLabel.text = poll.question
         initPageViewController()
     }
     
-    // MARK: - UIPageViewControllerDataSource methods.
+    // MARK: - UIPageViewControllerDataSource and UIPageViewControllerDelegate methods.
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         let votePollViewController = viewController as! VotePollViewController
@@ -52,27 +47,30 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         return viewControllerAtIndex(pageIndex)
     }
     
-//    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-//        return poll.pollOptions.count
-//    }
-//    
-//    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-//        return 0
-//    }
+    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+        let currentVotePollViewController = pageViewController.viewControllers?[0] as! VotePollViewController
+        let pendingVotePollViewController = pendingViewControllers[0] as! VotePollViewController
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        let votePollViewController = pageViewController.viewControllers?[0] as! VotePollViewController
+        print("votePollViewController pageIndex \(votePollViewController.pageIndex)")
+    }
     
     // MARK: - Initialisation methods.
     
     func initPageViewController() {
-        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
-        let navigationBarHeight = navigationController!.navigationBar.frame.size.height
-        let questionLabelTopMargin = CGFloat(8)
-        let questionLabelHeight = questionLabel.frame.size.height
-        
-        let heightOffset = statusBarHeight + navigationBarHeight + questionLabelTopMargin + questionLabelHeight
-        let firstVotePollViewController = viewControllerAtIndex(0)
+//        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+//        let navigationBarHeight = navigationController!.navigationBar.frame.size.height
+//        let questionLabelTopMargin = CGFloat(8)
+//        let questionLabelHeight = questionLabel.frame.size.height
+//        
+//        let heightOffset = statusBarHeight + navigationBarHeight + questionLabelTopMargin + questionLabelHeight
+        pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
         pageViewController = storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         pageViewController.dataSource = self
-        pageViewController.setViewControllers([firstVotePollViewController], direction: .Forward, animated: true, completion: nil)
+        pageViewController.delegate = self
+        pageViewController.setViewControllers([viewControllerAtIndex(0)], direction: .Forward, animated: true, completion: nil)
         pageViewController.view.frame = CGRect(x: 0, y: 0, width: pageViewControllerView.frame.width, height: pageViewControllerView.frame.height)
         
         addChildViewController(pageViewController)
@@ -81,18 +79,23 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     }
     
     func addObservers() {
-//        defaultCenter.addObserver(self, selector: "authUserCompleted:", name: NotificationNames.AuthUserCompleted, object: nil)
-//        defaultCenter.addObserver(self, selector: "resetPasswordForUserCompleted:", name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
+        defaultCenter.addObserver(self, selector: #selector(photoDownloadCompleted(_:)), name: NotificationNames.AuthUserCompleted, object: nil)
     }
     
     func removeObservers() {
-//        defaultCenter.removeObserver(self, name: NotificationNames.AuthUserCompleted, object: nil)
-//        defaultCenter.removeObserver(self, name: NotificationNames.ResetPasswordForUserCompleted, object: nil)
+        defaultCenter.removeObserver(self, name: NotificationNames.AuthUserCompleted, object: nil)
     }
     
     // MARK: - REST calls and response methods.
     
-    
+    func photoDownloadCompleted(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {
+            print(Error.UserInfoNoData)
+            return
+        }
+        
+        let rowIndex = userInfo[NotificationData.RowIndex] as! Int
+    }
     
     // MARK: - Convenience methods.
     
@@ -108,7 +111,8 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         
         let votePollViewController = storyboard?.instantiateViewControllerWithIdentifier(VotePollViewController.Identifier) as! VotePollViewController
         votePollViewController.pageIndex = currentIndex
-        votePollViewController.pollOption = pollOptions[currentIndex]
+        votePollViewController.pollPicture = UIImage(named: "PollPicture")
+        votePollViewController.hasVoted = false
         
         return votePollViewController
     }
