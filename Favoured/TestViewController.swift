@@ -13,6 +13,7 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     var poll: Poll!
     var pollPictureViews = [PollPictureView]()
     var currentPage = 0
+    var pollPictures: [UIImage?]!
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var thumbnailsStackView: UIStackView!
@@ -33,6 +34,7 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pollPictures = [UIImage(named: "Shoes")!, UIImage(named: "Shoes")!, UIImage(named: "Shoes")!]
         initPollPictureViews()
         initPollPictureButtons()
         
@@ -59,15 +61,19 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     // MARK: - Initialisation methods.
     
     func initPollPictureViews() {
-        let pollOptionsCount = CGFloat(poll.pollOptions.count)
+        let pollOptionsCount = CGFloat(pollPictures.count)//CGFloat(poll.pollOptions.count)
         scrollView.delegate = self
         scrollView.frame.size.width = view.frame.width
+        print("view width \(view.frame.width)")
+        print("scrollView width \(scrollView.frame.width)")
+        print("scrollView minX \(scrollView.frame.minX)")
         
         let colors = [UIColor.redColor(), UIColor.greenColor(), UIColor.blueColor(), UIColor.brownColor()]
         let scrollViewWidth = scrollView.frame.width
         let scrollViewHeight = scrollView.frame.height
-        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
+//        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
         for (index, pollPicture) in pollPictures.enumerate() {
+            print("pollPictureView x \(scrollViewWidth * CGFloat(index))")
             let frame = CGRectMake(scrollViewWidth * CGFloat(index), 0, scrollViewWidth, scrollViewHeight)
             let pollPictureView = PollPictureView(frame: frame)
             pollPictureView.view.backgroundColor = colors[index]
@@ -79,7 +85,7 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     }
     
     func initPollPictureButtons() {
-        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: nil)
+//        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: nil)
         for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
             // Check if there is an image for the current poll picture thumbnail
             let hasImage = index < pollPictures.count
