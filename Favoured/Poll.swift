@@ -23,7 +23,7 @@ class Poll {
     init(question: String, userId: String) {
         self.question = question
         self.userId = userId
-        self.creationDate = Utils.getTimeIntervalSince1970()
+        self.creationDate = -Utils.getTimeIntervalSince1970()
         self.closed = false
         self.photosUploaded = false
     }

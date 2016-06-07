@@ -43,8 +43,8 @@ class DataModel: NSObject {
     }
     
     class func authUser() {
-        if let _ = fireAuth.currentUser {
-            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
+        if let currentUser = fireAuth.currentUser {
+            getUserDetails(currentUser.uid)
         }
     }
     
@@ -54,9 +54,11 @@ class DataModel: NSObject {
             if let error = error {
                 userInfo = [String: String]()
                 userInfo![NotificationData.Message] = getAuthenticationError(error)
+                defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: userInfo)
+                return
+            } else {
+                getUserDetails(user!.uid)
             }
-            
-            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: userInfo)
         }
     }
     
@@ -106,6 +108,20 @@ class DataModel: NSObject {
                 uploadProfilePicture(userId, photo: photo)
             }
         }
+    }
+    
+    class func getUserDetails(userId: String) {
+        guard fetchUser() == nil else {
+            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
+            return
+        }
+        
+        let users = fireDatabase.child(FirebaseConstants.Users).child(userId)
+        users.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            let _ = User(snapshot: snapshot, context: context)
+            saveContext()
+            defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
+        })
     }
     
     class func addMyPollsListObserver() {
@@ -181,8 +197,8 @@ class DataModel: NSObject {
         
         // Create and save the poll.
         let poll = Poll(question: question, userId: DataModel.getUserId())
-        if let profilePicture = getProfilePicture() {
-            poll.profilePictureId = profilePicture.id
+        if let profilePictureId = fetchUser()?.profilePictureId {
+            poll.profilePictureId = profilePictureId
         }
         poll.pollOptions = pollOptions
         
@@ -236,7 +252,11 @@ class DataModel: NSObject {
     
     //MARK: - Firebase storage.
     
-    class func getProfilePicture(id: String, rowIndex: Int?) -> UIImage {
+    class func getProfilePicture(id: String?, rowIndex: Int?) -> UIImage {
+        guard let id = id else {
+            return UIImage(named: "ProfilePicture")!
+        }
+        
         let photo = fetchPhotoById(id)
         guard photo != nil, let image = photo!.image else {
             downloadProfilePicture(id, isThumbnail: true, rowIndex: rowIndex)
@@ -296,7 +316,7 @@ class DataModel: NSObject {
                 let image = UIImage(data: data!)
                 let photo = Photo(id: id, pollId: pollId, uploaded: true, isThumbnail: isThumbnail, image: image, context: context)
                 saveContext()
-                let savedPhoto = fetchPhotoById(id)
+                
                 let userInfo = [NotificationData.Photo: photo,
                                 NotificationData.RowIndex: rowIndex!] as [String:AnyObject]
                 defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
@@ -324,7 +344,6 @@ class DataModel: NSObject {
     private class func uploadPollPictures(photos: [Photo]) {
         let pollPicturesRef = fireStorage.child(FirebaseConstants.BucketPollPictures)
         
-//        var count = 0
         for photo in photos {
             let file = NSURL(fileURLWithPath: photo.path!)
             let pollPictureRef = pollPicturesRef.child(photo.id)
@@ -332,17 +351,25 @@ class DataModel: NSObject {
                 if error == nil {
                     photo.uploaded = true
                     saveContext()
-//                    count += 1
-//                    if count == photos.count {
-//                        let pollDetails = [FirebaseConstants.PhotosUploaded: true]
-//                        updatePollDetails(photo.pollId!, pollDetails: pollDetails)
-//                    }
                 }
             }
         }
     }
     
     // MARK: - Core data fetch requests.
+    
+    private class func fetchUser() -> User? {
+        let request = NSFetchRequest(entityName: User.EntityName)
+        
+        var users: [User]? = nil
+        do {
+            users = try context.executeFetchRequest(request) as? [User]
+        } catch let error as NSError {
+            print("Error in fetchUser \(error)")
+        }
+        
+        return users?.count > 0 ? users![0] : nil
+    }
     
     private class func fetchPhotoById(id: String) -> Photo? {
         let predicate = NSPredicate(format: "id == %@", id)
@@ -409,8 +436,8 @@ class DataModel: NSObject {
     }
     
     private class func getProfilePictureId() -> String {
-        let userId = getUserId()
-        return userId + ImageConstants.ProfilePictureJPEG
+        let user = fetchUser()!
+        return user.profilePictureId
     }
     
     private class func getProfilePicture() -> Photo? {

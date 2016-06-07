@@ -10,6 +10,12 @@ import UIKit
 
 class PollListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    enum TableViewState: Int {
+        case Loading = 0
+        case Empty = 1
+        case Populated = 2
+    }
+    
     enum PollsType: Int {
         case MyPolls = 0
         case AllPolls = 1
@@ -24,6 +30,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Interface builder outlets and actions.
     
     @IBOutlet weak var emptyLabel: UILabel!
+    @IBOutlet weak var tableViewActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
@@ -47,6 +54,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        updateTableViewState(TableViewState.Loading)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -89,7 +97,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     func configureCell(cell: PollTableViewCell, poll: Poll, rowIndex: Int) {
         cell.pollLabel.text = poll.question
         
-        let profilePicture = DataModel.getProfilePicture(poll.profilePictureId!, rowIndex: rowIndex)
+        let profilePicture = DataModel.getProfilePicture(poll.profilePictureId, rowIndex: rowIndex)
         let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: rowIndex)
         
         cell.profileImageView.image = profilePicture
@@ -132,6 +140,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         polls.removeAll()
         polls = userInfo[NotificationData.Polls] as! [Poll]
         tableView.reloadData()
+        updateTableViewState(polls.count > 0 ? TableViewState.Populated : TableViewState.Empty)
     }
     
     func photoDownloadCompleted(notification: NSNotification) {
@@ -147,4 +156,9 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Convenience methods.
     
+    func updateTableViewState(tableViewState: TableViewState) {
+        emptyLabel.hidden = TableViewState.Empty != tableViewState
+        tableViewActivityIndicator.hidden = TableViewState.Loading != tableViewState
+        TableViewState.Loading == tableViewState ? tableViewActivityIndicator.startAnimating() : tableViewActivityIndicator.stopAnimating()
+    }
 }

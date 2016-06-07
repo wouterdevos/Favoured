@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3T2-ZB-CJF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u93-0V-vaR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -319,12 +319,6 @@
                                     <action selector="segmentIndexChanged:" destination="QbN-vO-LtD" eventType="valueChanged" id="Q4S-2T-KrA"/>
                                 </connections>
                             </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkO-sk-eGt">
-                                <rect key="frame" x="8" y="301" width="584" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mU1-NY-03z">
                                 <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -412,19 +406,30 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No polls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkO-sk-eGt">
+                                <rect key="frame" x="20" y="290" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IFY-Gg-0HG">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Hax-57-Iy8" firstAttribute="top" secondItem="ZZ3-4p-vgP" secondAttribute="bottom" constant="8" id="3wZ-9V-cJT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wkO-sk-eGt" secondAttribute="trailing" constant="-12" id="CxD-fU-4e1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wkO-sk-eGt" secondAttribute="trailing" id="GYC-jQ-KV5"/>
                             <constraint firstItem="mU1-NY-03z" firstAttribute="leading" secondItem="2Hh-aX-jJh" secondAttribute="leadingMargin" constant="-20" id="Jku-or-Xyw"/>
                             <constraint firstItem="wkO-sk-eGt" firstAttribute="centerY" secondItem="2Hh-aX-jJh" secondAttribute="centerY" id="URv-fb-2RF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mU1-NY-03z" secondAttribute="trailing" constant="-20" id="XBa-Fw-sHP"/>
                             <constraint firstItem="dYl-ps-Ssd" firstAttribute="top" secondItem="mU1-NY-03z" secondAttribute="bottom" id="XZx-Zt-tRy"/>
                             <constraint firstItem="Hax-57-Iy8" firstAttribute="centerX" secondItem="2Hh-aX-jJh" secondAttribute="centerX" id="cSG-Or-jes"/>
                             <constraint firstItem="mU1-NY-03z" firstAttribute="top" secondItem="Hax-57-Iy8" secondAttribute="bottom" constant="8" id="eEq-07-JQg"/>
+                            <constraint firstItem="IFY-Gg-0HG" firstAttribute="centerX" secondItem="2Hh-aX-jJh" secondAttribute="centerX" id="faM-sp-eOG"/>
                             <constraint firstItem="wkO-sk-eGt" firstAttribute="centerX" secondItem="2Hh-aX-jJh" secondAttribute="centerX" id="hQa-b3-ST8"/>
-                            <constraint firstItem="wkO-sk-eGt" firstAttribute="leading" secondItem="2Hh-aX-jJh" secondAttribute="leadingMargin" constant="-12" id="zLx-pz-ceq"/>
+                            <constraint firstItem="IFY-Gg-0HG" firstAttribute="centerY" secondItem="2Hh-aX-jJh" secondAttribute="centerY" id="iqX-4R-86J"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="wkO-sk-eGt" secondAttribute="leading" id="r9u-iT-l5R"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favoured" id="PQi-zv-pdO">
@@ -443,6 +448,7 @@
                         <outlet property="emptyLabel" destination="wkO-sk-eGt" id="h1j-8y-Y4A"/>
                         <outlet property="segmentedControl" destination="Hax-57-Iy8" id="qN1-cw-V4y"/>
                         <outlet property="tableView" destination="mU1-NY-03z" id="lj0-W3-T7N"/>
+                        <outlet property="tableViewActivityIndicator" destination="IFY-Gg-0HG" id="xbe-ww-ASv"/>
                         <segue destination="3T2-ZB-CJF" kind="show" identifier="VotePollSegue" id="xHD-lW-oYh"/>
                     </connections>
                 </viewController>

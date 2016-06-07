@@ -6,7 +6,12 @@
         <attribute name="pollId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uploaded" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
+    <entity name="User" representedClassName=".User" syncable="YES">
+        <attribute name="profilePictureId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Photo" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="User" positionX="-54" positionY="18" width="128" height="75"/>
     </elements>
 </model>

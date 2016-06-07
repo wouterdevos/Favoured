@@ -136,6 +136,7 @@
 				10B6D0291CDA3DC000E5128D /* Photo.swift */,
 				1046C2E91CDF647800E995E7 /* Poll.swift */,
 				1046C2EB1CDF656700E995E7 /* PollOption.swift */,
+				10594FBD1CC82AF100C7A782 /* User.swift */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -158,7 +159,6 @@
 		10594FBC1CC82ADB00C7A782 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				10594FBD1CC82AF100C7A782 /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

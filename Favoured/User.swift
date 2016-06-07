@@ -6,15 +6,25 @@
 //  Copyright © 2016 Wouter. All rights reserved.
 //
 
-import Foundation
+import CoreData
+import Firebase
 
-class User: AnyObject {
+class User: NSManagedObject {
     
-    var username: String?
-    var profilePictureUrl: String?
+    static let EntityName = "User"
     
-    init(username: String?, profilePictureUrl: String?) {
-        self.username = username
-        self.profilePictureUrl = profilePictureUrl
+    @NSManaged var username: String
+    @NSManaged var profilePictureId: String
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(snapshot: FIRDataSnapshot, context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
+        self.username = snapshot.value!.objectForKey(FirebaseConstants.Username) as! String
+        self.profilePictureId = snapshot.value!.objectForKey(FirebaseConstants.ProfilePictureId) as! String
     }
 }

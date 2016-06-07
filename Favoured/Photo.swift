@@ -12,8 +12,6 @@ import UIKit
 class Photo: NSManagedObject {
     
     static let EntityName = "Photo"
-    static let KeyId = "id"
-    static let KeyPollId = "pollId"
     
     @NSManaged var id: String
     @NSManaged var pollId: String?
@@ -54,15 +52,4 @@ class Photo: NSManagedObject {
             return ImageCache.sharedInstance().pathForIdentifier(id)
         }
     }
-    
-//    class func getPhoto(id: String, pollId: String?, image: UIImage?, uploaded: Bool, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
-//        let photo = Photo(id: id, pollId: pollId, uploaded: uploaded, isThumbnail: isThumbnail, context: context)
-//        photo.image = image
-//        return photo
-//    }
-//    
-//    class func getPhoto(pollId: String, imageName: String, index: Int, image: UIImage?, isThumbnail: Bool, context: NSManagedObjectContext) -> Photo {
-//        let id = pollId + String(format: imageName, index)
-//        return getPhoto(id, pollId: pollId, image: image, uploaded: false, isThumbnail: isThumbnail, context: context)
-//    }
 }
