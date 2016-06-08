@@ -14,6 +14,7 @@ struct FirebaseConstants {
     static let Users = "users"
     static let Username = "username"
     static let ProfilePictureId = "profile_picture_id"
+    static let VotedPolls = "voted_polls"
     
     static let Polls = "polls"
     static let Question = "question"
@@ -40,6 +41,7 @@ struct NotificationNames {
     static let SetUserDetailsCompleted = "com.favoured.SetUserDetailsCompleted"
     static let GetPollsCompleted = "com.favoured.GetPollsCompleted"
     static let PhotoDownloadCompleted = "com.favoured.PhotoDownloadCompleted"
+    static let GetPollOptionIndexCompleted = "com.favoured.GetPollOptionIndexCompleted"
 }
 
 struct NotificationData {
@@ -48,6 +50,7 @@ struct NotificationData {
     static let Polls = "Polls"
     static let Photo = "Photo"
     static let RowIndex = "RowIndex"
+    static let PollOptionIndex = "PollOptionIndex"
 }
 
 struct Title {

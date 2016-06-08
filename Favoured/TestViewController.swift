@@ -8,12 +8,11 @@
 
 import UIKit
 
-class TestViewController: FavouredViewController, UIScrollViewDelegate {
+class TestViewController: FavouredViewController, UIScrollViewDelegate, PollPictureViewDelegate {
     
     var poll: Poll!
     var pollPictureViews = [PollPictureView]()
-    var currentPage = 0
-    var pollPictures: [UIImage?]!
+    var pollOptionIndex = 0
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var thumbnailsStackView: UIStackView!
@@ -22,7 +21,7 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     @IBAction func scrollToPollPicture(sender: UIButton) {
         sender.highlighted = true
         let tag = sender.tag
-        if tag == currentPage {
+        if tag == pollOptionIndex {
             return
         }
         
@@ -34,9 +33,6 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pollPictures = [UIImage(named: "Shoes")!, UIImage(named: "Shoes")!, UIImage(named: "Shoes")!]
-//        initPollPictureViews()
-//        initPollPictureButtons()
         
     }
     
@@ -60,38 +56,40 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        currentPage = Int(pageNumber)
+        pollOptionIndex = Int(pageNumber)
         updatePollPictureButtons()
+    }
+    
+    // MARK: - PollPictureViewDelegate methods.
+    
+    func pollPictureSelected() {
+        DataModel.voteOnPoll(poll, pollOptionIndex: pollOptionIndex)
     }
     
     // MARK: - Initialisation methods.
     
     func initPollPictureViews() {
-        let pollOptionsCount = CGFloat(pollPictures.count)//CGFloat(poll.pollOptions.count)
         scrollView.delegate = self
         scrollView.frame.size.width = view.frame.width
-        print("view width \(view.frame.width)")
-        print("scrollView width \(scrollView.frame.width)")
-        print("scrollView minX \(scrollView.frame.minX)")
         
-        let colors = [UIColor.redColor(), UIColor.greenColor(), UIColor.blueColor(), UIColor.brownColor()]
         let scrollViewWidth = scrollView.frame.width
         let scrollViewHeight = scrollView.frame.height
-//        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
+        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
+        
         for (index, pollPicture) in pollPictures.enumerate() {
-            print("pollPictureView x \(scrollViewWidth * CGFloat(index))")
             let frame = CGRectMake(scrollViewWidth * CGFloat(index), 0, scrollViewWidth, scrollViewHeight)
             let pollPictureView = PollPictureView(frame: frame)
-            pollPictureView.view.backgroundColor = colors[index]
             pollPictureView.setImage(pollPicture)
             pollPictureViews.append(pollPictureView)
             scrollView.addSubview(pollPictureView)
         }
+        
+        let pollOptionsCount = CGFloat(pollPictures.count)
         scrollView.contentSize = CGSizeMake(scrollView.frame.width * pollOptionsCount, scrollView.frame.height)
     }
     
     func initPollPictureButtons() {
-//        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: nil)
+        let pollPictures = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: nil)
         for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
             // Check if there is an image for the current poll picture thumbnail
             let hasImage = index < pollPictures.count
@@ -112,12 +110,6 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     func removeObservers() {
         defaultCenter.removeObserver(self, name: NotificationNames.PhotoDownloadCompleted, object: nil)
     }
-    
-    // To change while clicking on a page control
-//    func changePage(sender: AnyObject) -> () {
-//        let x = CGFloat(pageControl.currentPage) * scrollView.frame.size.width
-//        scrollView.setContentOffset(CGPointMake(x, 0), animated: true)
-//    }
     
     // MARK: - REST response methods.
     
@@ -152,7 +144,7 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     
     func updatePollPictureButtons() {
         for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
-            updatePollPictureButton(subview, image: nil, highlighted: index == currentPage)
+            updatePollPictureButton(subview, image: nil, highlighted: index == pollOptionIndex)
         }
     }
 }

@@ -205,6 +205,29 @@ class DataModel: NSObject {
         pollRef.setValue(poll.getPollData())
     }
     
+    class func voteOnPoll(poll: Poll, pollOptionIndex: Int) {
+        let voteCount = fireDatabase.child(FirebaseConstants.Polls).child(poll.id!).child(FirebaseConstants.PollOptions).child(String(pollOptionIndex)).child(FirebaseConstants.VoteCount)
+        voteCount.runTransactionBlock() { currentData in
+            let count = currentData.value as? Int ?? 0
+            currentData.value = count + 1
+            return FIRTransactionResult.successWithValue(currentData)
+        }
+        
+        let votedPolls = fireDatabase.child(FirebaseConstants.Users).child(getUserId()).child(FirebaseConstants.VotedPolls)
+        votedPolls.setValue(pollOptionIndex, forKey: poll.id!)
+    }
+    
+    class func getPollOptionIndex(poll: Poll) {
+        let pollOptionIndex = fireDatabase.child(FirebaseConstants.Users).child(getUserId()).child(FirebaseConstants.VotedPolls).child(poll.id!)
+        pollOptionIndex.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            var userInfo: [String: AnyObject]? = nil
+            if let index = snapshot.value as? NSNumber {
+                userInfo = [NotificationData.PollOptionIndex: Int(index)]
+            }
+            defaultCenter.postNotificationName(NotificationNames.GetPollOptionIndexCompleted, object: nil, userInfo: userInfo)
+        })
+    }
+    
     private class func updateUserDetails(uid: String, userDetails: [String: AnyObject]) {
         let users = fireDatabase.child(FirebaseConstants.Users).child(uid)
         users.updateChildValues(userDetails)

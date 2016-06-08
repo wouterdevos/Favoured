@@ -37,7 +37,6 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         dismissKeyboardOnTap()
         initValidationViews()
         initValidationRules()

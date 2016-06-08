@@ -8,14 +8,28 @@
 
 import UIKit
 
+protocol PollPictureViewDelegate {
+    func pollPictureSelected()
+}
+
 @IBDesignable
 class PollPictureView: UIView {
 
     let nibName = "PollPictureView"
+    var pollPictureSelected = false
     var view: UIView!
+    var delegate: PollPictureViewDelegate?
     
     @IBOutlet weak var pollPictureImageView: UIImageView!
     @IBOutlet weak var activityindicator: UIActivityIndicatorView!
+    
+    @IBAction func pollPictureSelected(sender: UIButton) {
+        pollPictureSelected = !pollPictureSelected
+        sender.selected = pollPictureSelected
+        if pollPictureSelected {
+            delegate?.pollPictureSelected()
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -28,9 +42,9 @@ class PollPictureView: UIView {
     }
 
     override func layoutSubviews() {
-//        pollPictureImageView.hidden = true
-//        activityindicator.hidden = false
-//        activityindicator.startAnimating()
+        pollPictureImageView.hidden = true
+        activityindicator.hidden = false
+        activityindicator.startAnimating()
     }
     
     func setup() {

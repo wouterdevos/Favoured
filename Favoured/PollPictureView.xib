@@ -29,6 +29,9 @@
                         <constraint firstAttribute="width" constant="75" id="bkZ-fo-gxp"/>
                     </constraints>
                     <state key="normal" image="TickNormal"/>
+                    <connections>
+                        <action selector="pollPictureSelected:" destination="-1" eventType="touchUpInside" id="LYJ-AQ-moy"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
