@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u93-0V-vaR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3T2-ZB-CJF">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -666,9 +666,9 @@
                             <constraint firstItem="QYY-Nk-Xhz" firstAttribute="top" secondItem="dN3-pT-pY2" secondAttribute="bottom" id="JT8-xU-Amk"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="trailing" secondItem="I4S-1g-0m1" secondAttribute="trailingMargin" id="YfI-O1-oMR"/>
                             <constraint firstItem="dN3-pT-pY2" firstAttribute="top" secondItem="3xU-2Y-a9e" secondAttribute="bottom" constant="8" id="ie9-Aq-Uvy"/>
-                            <constraint firstItem="dN3-pT-pY2" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" constant="-20" id="jJl-8P-XyM"/>
+                            <constraint firstItem="dN3-pT-pY2" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leading" id="jJl-8P-XyM"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="top" secondItem="n4s-4S-PFp" secondAttribute="bottom" id="ksJ-13-K9w"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dN3-pT-pY2" secondAttribute="trailing" constant="-20" id="sKI-or-qzW"/>
+                            <constraint firstAttribute="trailing" secondItem="dN3-pT-pY2" secondAttribute="trailing" id="sKI-or-qzW"/>
                             <constraint firstItem="Ym8-wC-6yR" firstAttribute="leading" secondItem="I4S-1g-0m1" secondAttribute="leadingMargin" id="uTv-oS-4F9"/>
                         </constraints>
                     </view>

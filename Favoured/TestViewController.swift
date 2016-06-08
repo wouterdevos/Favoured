@@ -35,14 +35,20 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         pollPictures = [UIImage(named: "Shoes")!, UIImage(named: "Shoes")!, UIImage(named: "Shoes")!]
-        initPollPictureViews()
-        initPollPictureButtons()
+//        initPollPictureViews()
+//        initPollPictureButtons()
         
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         addObservers()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        initPollPictureViews()
+        initPollPictureButtons()
     }
     
     override func viewWillDisappear(animated: Bool) {
