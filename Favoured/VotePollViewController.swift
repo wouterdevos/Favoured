@@ -38,8 +38,9 @@ class VotePollViewController: FavouredViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updatePollPicture()
         initVoteButton()
+        updatePollPicture()
+//        toggleView(true)
     }
     
     // MARK: - Initialisation methods.
@@ -50,12 +51,25 @@ class VotePollViewController: FavouredViewController {
         voteButton.setImage(UIImage(named:"TickSelected"), forState: .Highlighted)
         voteButton.selected = voteSelected
         voteButton.enabled = !hasVoted
+        voteButton.hidden = true
     }
     
-    // MARK: - Convenience methods.
+    // MARK: - Update methods.
     
     func updatePollPicture() {
         pollPicture == nil ? imageActivityIndicator.startAnimating() : imageActivityIndicator.stopAnimating()
         pollPictureImageView.image = pollPicture
+    }
+    
+    func updateVoteButton() {
+        
+    }
+    
+    // MARK: - Convenience methods.
+    
+    func toggleView(hidden: Bool) {
+        pollPictureImageView.hidden = hidden
+        imageActivityIndicator.hidden = hidden
+        voteButton.hidden = hidden
     }
 }

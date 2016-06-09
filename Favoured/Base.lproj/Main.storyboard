@@ -449,7 +449,7 @@
                         <outlet property="segmentedControl" destination="Hax-57-Iy8" id="qN1-cw-V4y"/>
                         <outlet property="tableView" destination="mU1-NY-03z" id="lj0-W3-T7N"/>
                         <outlet property="tableViewActivityIndicator" destination="IFY-Gg-0HG" id="xbe-ww-ASv"/>
-                        <segue destination="3T2-ZB-CJF" kind="show" identifier="VotePollSegue" id="xHD-lW-oYh"/>
+                        <segue destination="1As-Qk-74Y" kind="show" identifier="VotePollSegue" id="g55-r7-ZFB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1n-Bf-Kcn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -597,7 +597,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3xU-2Y-a9e">
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3xU-2Y-a9e">
                                 <rect key="frame" x="168" y="112" width="264" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rzs-Wy-Eze">
@@ -646,10 +646,10 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN3-pT-pY2">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN3-pT-pY2">
                                 <rect key="frame" x="0.0" y="180" width="600" height="420"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ym8-wC-6yR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ym8-wC-6yR">
                                 <rect key="frame" x="20" y="64" width="560" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="mTa-jM-m4v"/>
@@ -778,7 +778,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omU-ne-Npd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omU-ne-Npd">
                                 <rect key="frame" x="20" y="64" width="560" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Zvf-AT-YIb"/>
@@ -787,7 +787,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EAX-pQ-Pex">
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EAX-pQ-Pex">
                                 <rect key="frame" x="168" y="112" width="264" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfK-bT-aOb">
@@ -836,7 +836,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TjP-yg-9yt">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjP-yg-9yt">
                                 <rect key="frame" x="0.0" y="180" width="600" height="420"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -881,7 +881,7 @@
                         <viewControllerLayoutGuide type="top" id="JFX-ME-qZ1"/>
                         <viewControllerLayoutGuide type="bottom" id="eIz-Fu-n2l"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SLA-d4-mmQ">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="SLA-d4-mmQ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -899,18 +899,18 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NtZ-YQ-QgI">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DwY-GA-XLr">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DwY-GA-XLr">
+                                <rect key="frame" x="0.0" y="20" width="600" height="492"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="CDj-o5-NeY" firstAttribute="top" secondItem="DwY-GA-XLr" secondAttribute="bottom" constant="8" id="A22-sF-Rob"/>
                             <constraint firstItem="eIz-Fu-n2l" firstAttribute="top" secondItem="CDj-o5-NeY" secondAttribute="bottom" constant="20" id="BOP-mK-fRW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="DwY-GA-XLr" secondAttribute="trailing" constant="-20" id="Jkw-oq-75b"/>
-                            <constraint firstItem="DwY-GA-XLr" firstAttribute="leading" secondItem="SLA-d4-mmQ" secondAttribute="leadingMargin" constant="-20" id="dkF-zD-emE"/>
+                            <constraint firstAttribute="trailing" secondItem="DwY-GA-XLr" secondAttribute="trailing" id="Jkw-oq-75b"/>
+                            <constraint firstItem="DwY-GA-XLr" firstAttribute="leading" secondItem="SLA-d4-mmQ" secondAttribute="leading" id="dkF-zD-emE"/>
                             <constraint firstItem="NtZ-YQ-QgI" firstAttribute="centerX" secondItem="SLA-d4-mmQ" secondAttribute="centerX" id="gOc-F6-5HG"/>
                             <constraint firstItem="CDj-o5-NeY" firstAttribute="centerX" secondItem="SLA-d4-mmQ" secondAttribute="centerX" id="hhO-Ww-hw9"/>
-                            <constraint firstItem="eIz-Fu-n2l" firstAttribute="top" secondItem="DwY-GA-XLr" secondAttribute="bottom" id="otL-BA-JcI"/>
                             <constraint firstItem="NtZ-YQ-QgI" firstAttribute="centerY" secondItem="SLA-d4-mmQ" secondAttribute="centerY" id="wN9-xJ-1uB"/>
                             <constraint firstItem="DwY-GA-XLr" firstAttribute="top" secondItem="JFX-ME-qZ1" secondAttribute="bottom" id="x9J-MG-E1v"/>
                         </constraints>

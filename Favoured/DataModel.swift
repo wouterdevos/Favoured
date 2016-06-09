@@ -213,8 +213,8 @@ class DataModel: NSObject {
             return FIRTransactionResult.successWithValue(currentData)
         }
         
-        let votedPolls = fireDatabase.child(FirebaseConstants.Users).child(getUserId()).child(FirebaseConstants.VotedPolls)
-        votedPolls.setValue(pollOptionIndex, forKey: poll.id!)
+        let votedPolls = fireDatabase.child(FirebaseConstants.Users).child(getUserId()).child(FirebaseConstants.VotedPolls).child(poll.id!)
+        votedPolls.setValue(pollOptionIndex)
     }
     
     class func getPollOptionIndex(poll: Poll) {

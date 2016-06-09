@@ -69,7 +69,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == VotePollSegue {
-            let viewController = segue.destinationViewController as! TestViewController
+            let viewController = segue.destinationViewController as! VotePollPageViewController//TestViewController
             let poll = sender as! Poll
             viewController.poll = poll
         }

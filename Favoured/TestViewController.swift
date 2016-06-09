@@ -33,7 +33,8 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate, PollPict
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initPollPictureButtons()
+        initPollPictureViews()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -43,8 +44,7 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate, PollPict
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        initPollPictureViews()
-        initPollPictureButtons()
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -78,14 +78,35 @@ class TestViewController: FavouredViewController, UIScrollViewDelegate, PollPict
         
         for (index, pollPicture) in pollPictures.enumerate() {
             let frame = CGRectMake(scrollViewWidth * CGFloat(index), 0, scrollViewWidth, scrollViewHeight)
-            let pollPictureView = PollPictureView(frame: frame)
-            pollPictureView.setImage(pollPicture)
-            pollPictureViews.append(pollPictureView)
-            scrollView.addSubview(pollPictureView)
+            initPollPictureView(frame, pollPicture: pollPicture)
+//            let pollPictureView = PollPictureView(frame: frame)
+//            pollPictureView.setImage(pollPicture)
+//            pollPictureViews.append(pollPictureView)
+//            scrollView.addSubview(pollPictureView)
         }
         
         let pollOptionsCount = CGFloat(pollPictures.count)
         scrollView.contentSize = CGSizeMake(scrollView.frame.width * pollOptionsCount, scrollView.frame.height)
+    }
+    
+    func initPollPictureView(frame: CGRect, pollPicture: UIImage?) {
+        let pollPictureView = PollPictureView()
+        pollPictureView.setImage(pollPicture)
+        pollPictureView.translatesAutoresizingMaskIntoConstraints = false
+        pollPictureViews.append(pollPictureView)
+        scrollView.addSubview(pollPictureView)
+        
+        let leftLeadingConstraint = NSLayoutConstraint(item: pollPictureView, attribute: .Left, relatedBy: .Equal, toItem: scrollView, attribute: .Left, multiplier: 1, constant: 0)
+        scrollView.addConstraint(leftLeadingConstraint)
+        
+        let rightConstraint = NSLayoutConstraint(item: pollPictureView, attribute: .Right, relatedBy: .Equal, toItem: scrollView, attribute: .Right, multiplier: 1, constant: 0)
+        scrollView.addConstraint(rightConstraint)
+        
+        let topConstraint = NSLayoutConstraint(item: pollPictureView, attribute: .Top, relatedBy: .Equal, toItem: scrollView, attribute: .Top, multiplier: 1, constant: 0)
+        scrollView.addConstraint(topConstraint)
+        
+        let bottomConstraint = NSLayoutConstraint(item: pollPictureView, attribute: .Bottom, relatedBy: .Equal, toItem: scrollView, attribute: .Bottom, multiplier: 1, constant: 0)
+        scrollView.addConstraint(bottomConstraint)
     }
     
     func initPollPictureButtons() {
