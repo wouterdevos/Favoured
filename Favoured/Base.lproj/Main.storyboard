@@ -796,7 +796,10 @@
                                             <constraint firstAttribute="width" constant="60" id="6h9-4P-59t"/>
                                             <constraint firstAttribute="height" constant="60" id="f7f-TS-GLy"/>
                                         </constraints>
-                                        <state key="normal" image="PollPicture"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" backgroundImage="PollPicture">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="gzZ-RQ-cYU"/>
                                         </connections>
@@ -807,7 +810,8 @@
                                             <constraint firstAttribute="width" constant="60" id="h8r-LV-7dC"/>
                                             <constraint firstAttribute="height" constant="60" id="k3A-k5-Zlh"/>
                                         </constraints>
-                                        <state key="normal" image="PollPicture"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" backgroundImage="PollPicture"/>
                                         <connections>
                                             <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="TsS-hS-95Y"/>
                                         </connections>
@@ -818,7 +822,8 @@
                                             <constraint firstAttribute="width" constant="60" id="7Mc-FQ-H80"/>
                                             <constraint firstAttribute="height" constant="60" id="yOc-kZ-y0l"/>
                                         </constraints>
-                                        <state key="normal" image="PollPicture"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" backgroundImage="PollPicture"/>
                                         <connections>
                                             <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="Gfa-mA-z4V"/>
                                         </connections>
@@ -829,7 +834,8 @@
                                             <constraint firstAttribute="width" constant="60" id="7TO-d8-hBZ"/>
                                             <constraint firstAttribute="height" constant="60" id="w5V-bE-UT4"/>
                                         </constraints>
-                                        <state key="normal" image="PollPicture"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" backgroundImage="PollPicture"/>
                                         <connections>
                                             <action selector="scrollToPollPicture:" destination="3T2-ZB-CJF" eventType="touchUpInside" id="S5i-EP-Qqb"/>
                                         </connections>

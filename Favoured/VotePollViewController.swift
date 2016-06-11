@@ -20,6 +20,7 @@ class VotePollViewController: FavouredViewController {
     var pollPicture: UIImage?
     var hasVoted: Bool!
     var voteSelected = false
+    var votingDisabled = true
     var delegate: VotePollViewControllerDelegate?
     
     // MARK: - Interface builder outlets and actions.
@@ -40,7 +41,6 @@ class VotePollViewController: FavouredViewController {
         super.viewDidLoad()
         initVoteButton()
         updatePollPicture()
-//        toggleView(true)
     }
     
     // MARK: - Initialisation methods.
@@ -49,9 +49,7 @@ class VotePollViewController: FavouredViewController {
         voteButton.setImage(UIImage(named:"TickNormal"), forState: .Normal)
         voteButton.setImage(UIImage(named:"TickSelected"), forState: .Selected)
         voteButton.setImage(UIImage(named:"TickSelected"), forState: .Highlighted)
-        voteButton.selected = voteSelected
-        voteButton.enabled = !hasVoted
-        voteButton.hidden = true
+        updateVoteButton()
     }
     
     // MARK: - Update methods.
@@ -62,7 +60,9 @@ class VotePollViewController: FavouredViewController {
     }
     
     func updateVoteButton() {
-        
+        voteButton.selected = voteSelected
+        voteButton.enabled = !hasVoted
+        voteButton.hidden = votingDisabled
     }
     
     // MARK: - Convenience methods.

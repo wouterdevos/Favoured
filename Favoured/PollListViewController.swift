@@ -116,7 +116,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Initialisation methods.
     
     func addObservers() {
-        DataModel.addMyPollsListObserver()
+        segmentIndexChanged(segmentedControl)
         DataModel.addConnectionStateObserver()
         defaultCenter.addObserver(self, selector: #selector(getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
         defaultCenter.addObserver(self, selector: #selector(photoDownloadCompleted(_:)), name: NotificationNames.PhotoDownloadCompleted, object: nil)

@@ -45,7 +45,11 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         addObservers()
-        DataModel.authUser()
+        DataModel.authUser() { isCurrentUser in
+            if isCurrentUser {
+                self.toggleRequestProgress(true)
+            }
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

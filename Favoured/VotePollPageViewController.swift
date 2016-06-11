@@ -14,9 +14,11 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     var poll: Poll!
     var pollOptionIndex: Int?
+    
+    var pageViewController: UIPageViewController!
+    
     var pollPictureThumbnails:[UIImage?]!
     var pollPictures: [UIImage?]!
-    var pageViewController: UIPageViewController!
     var votePollViewControllers = [UIViewController]()
     
     // MARK: - Interface builder outlets and actions.
@@ -32,6 +34,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         questionLabel.text = poll.question
         initPollPictureButtons()
         initPageViewController()
+        initVoteState()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -104,6 +107,14 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         pageViewController.didMoveToParentViewController(self)
     }
     
+    func initVoteState() {
+        if DataModel.getUserId() != poll.userId {
+            DataModel.getPollOptionIndex(poll)
+        } else {
+            updatePollPictureButtonVotes()
+        }
+    }
+    
     func addObservers() {
         defaultCenter.addObserver(self, selector: #selector(photoDownloadCompleted(_:)), name: NotificationNames.PhotoDownloadCompleted, object: nil)
         defaultCenter.addObserver(self, selector: #selector(getPollOptionIndexCompleted(_:)), name: NotificationNames.GetPollOptionIndexCompleted, object: nil)
@@ -129,7 +140,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         if photo.isThumbnail {
             pollPictureThumbnails[pollPictureIndex] = photo.image
             let pollPictureButton = thumbnailsStackView.arrangedSubviews[pollPictureIndex] as! UIButton
-            pollPictureButton.setImage(photo.image, forState: .Normal)
+            pollPictureButton.setBackgroundImage(photo.image, forState: .Normal)
         } else {
             pollPictures[pollPictureIndex] = photo.image
             let pageIndex = currentVotePollViewController.pageIndex
@@ -142,10 +153,10 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     func getPollOptionIndexCompleted(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            pollOptionIndex = userInfo[NotificationData.PollOptionIndex] as! Int
+            pollOptionIndex = userInfo[NotificationData.PollOptionIndex] as? Int
+            updatePollPictureButtonVotes()
         }
-        
-        
+        updateVotePollViewController()
     }
 
     // MARK: - Update methods.
@@ -161,7 +172,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         pollPictureButton.highlighted = highlighted
         pollPictureButton.enabled = !highlighted
         if let image = image {
-            pollPictureButton.setImage(image, forState: .Normal)
+            pollPictureButton.setBackgroundImage(image, forState: .Normal)
         }
     }
     
@@ -170,13 +181,17 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
             let pollOption = poll.pollOptions[index]
             let pollPictureButton = subview as! UIButton
-            pollPictureButton.titleLabel?.text = getVotePercentage(pollOption.voteCount, voteCountTotal: voteCountTotal)
+            let title = getVotePercentage(pollOption.voteCount, voteCountTotal: voteCountTotal)
+            pollPictureButton.setTitle(title, forState: .Normal)
         }
     }
     
     func updateVotePollViewController() {
         let votePollViewController = pageViewController.viewControllers?[0] as! VotePollViewController
-        
+        votePollViewController.voteSelected = pollOptionIndex == votePollViewController.pageIndex
+        votePollViewController.hasVoted = pollOptionIndex != nil
+        votePollViewController.votingDisabled = false
+        votePollViewController.updateVoteButton()
     }
     
     // MARK: - Convenience methods.
@@ -194,7 +209,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         let votePollViewController = storyboard?.instantiateViewControllerWithIdentifier(VotePollViewController.Identifier) as! VotePollViewController
         votePollViewController.pageIndex = currentIndex
         votePollViewController.pollPicture = pollPictures[currentIndex]
-        votePollViewController.hasVoted = false
+        votePollViewController.hasVoted = pollOptionIndex != nil
         votePollViewController.delegate = self
         
         return votePollViewController
@@ -223,6 +238,6 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     func getVotePercentage(voteCount: Int, voteCountTotal: Int) -> String {
         let voteCountFraction = voteCountTotal > 0 ? Float(voteCount) * 100 / Float(voteCountTotal) : 0.0
-        return String(format: "%.0f", voteCountFraction)
+        return String(format: "%.0f", voteCountFraction) + "%"
     }
 }

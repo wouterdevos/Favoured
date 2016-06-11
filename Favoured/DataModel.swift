@@ -42,10 +42,10 @@ class DataModel: NSObject {
         return fireAuth.currentUser!.uid
     }
     
-    class func authUser() {
-        if let currentUser = fireAuth.currentUser {
-            getUserDetails(currentUser.uid)
-        }
+    class func authUser(authUserCallback: (isCurrentUser: Bool) -> Void) {
+        let currentUser = fireAuth.currentUser
+        authUserCallback(isCurrentUser: currentUser != nil)
+        getUserDetails(currentUser?.uid)
     }
     
     class func signInWithEmail(email: String, password: String) {
@@ -64,6 +64,12 @@ class DataModel: NSObject {
     
     class func signOut() {
         try! fireAuth.signOut()
+        
+        // Remove the existing user.
+        if let user = fetchUser() {
+            context.deleteObject(user)
+            saveContext()
+        }
     }
     
     class func sendPasswordResetWithEmail(email: String) {
@@ -110,12 +116,18 @@ class DataModel: NSObject {
         }
     }
     
-    class func getUserDetails(userId: String) {
+    class func getUserDetails(userId: String?) {
+        guard let userId = userId else {
+            return
+        }
+        
+        // If user details have already been saved then authorise the user.
         guard fetchUser() == nil else {
             defaultCenter.postNotificationName(NotificationNames.AuthUserCompleted, object: nil, userInfo: nil)
             return
         }
         
+        // Download the new user's details.
         let users = fireDatabase.child(FirebaseConstants.Users).child(userId)
         users.observeSingleEventOfType(.Value, withBlock: { snapshot in
             let _ = User(snapshot: snapshot, context: context)
@@ -127,15 +139,14 @@ class DataModel: NSObject {
     class func addMyPollsListObserver() {
         removePollListObserver()
         let myPolls = fireDatabase.child(FirebaseConstants.Polls)
-        let myPollsQuery = myPolls.queryOrderedByChild(FirebaseConstants.CreationDate)//.queryEqualToValue(FirebaseConstants.UserId, childKey: getUserId())
+        let myPollsQuery = myPolls.queryOrderedByChild(FirebaseConstants.UserId).queryEqualToValue(getUserId())
         observePollsList(myPollsQuery)
     }
     
     class func addAllPollsListObserver() {
         removePollListObserver()
         let allPolls = fireDatabase.child(FirebaseConstants.Polls)
-        let allPollsQuery = allPolls.queryOrderedByChild(FirebaseConstants.CreationDate)
-        observePollsList(allPollsQuery)
+        observePollsList(allPolls)
     }
     
     class func removePollListObserver() {
@@ -146,8 +157,8 @@ class DataModel: NSObject {
     class func observePollsList(query: FIRDatabaseQuery) {
         query.observeEventType(.Value, withBlock: { snapshot in
             var polls = [Poll]()
-            for snapshotItem in snapshot.children.allObjects as! [FIRDataSnapshot] {
-                let poll = Poll(snapshot: snapshotItem)
+            for snapshotItem in snapshot.children.allObjects.reverse() {
+                let poll = Poll(snapshot: snapshotItem as! FIRDataSnapshot)
                 polls.append(poll)
             }
             
@@ -160,10 +171,7 @@ class DataModel: NSObject {
         let connectedRef = FIRDatabase.database().referenceWithPath(FirebaseConstants.InfoConnected)
         connectedRef.observeEventType(.Value, withBlock: { snapshot in
             if let connected = snapshot.value as? Bool where connected {
-                print("Connected")
                 uploadLocalOnlyPhotos()
-            } else {
-                print("Not connected")
             }
         })
     }
@@ -260,15 +268,11 @@ class DataModel: NSObject {
     private class func uploadLocalOnlyPhotos() {
         // Upload the profile picture if it is only stored locally.
         if let profilePicture = getProfilePicture() where !profilePicture.uploaded {
-            print("profilePicture.uploaded \(profilePicture.uploaded)")
             uploadProfilePicture(getUserId(), photo: profilePicture)
         }
         
         // Uploaded poll pictures if they are only stored locally.
         if let photos = fetchLocalOnlyPhotos() where photos.count > 0 {
-            for photo in photos {
-                print("photo.uploaded \(photo.uploaded)")
-            }
             uploadPollPictures(photos)
         }
     }
