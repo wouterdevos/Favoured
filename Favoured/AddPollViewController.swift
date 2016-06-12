@@ -12,9 +12,10 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
 
     let PollPictureMax = 4
     let PollPictureMin = 2
+    let QuestionCharacterLimit = 100
     let AddPhoto = "Add Photo"
     let FullScreenImageSegue = "FullScreenImageSegue"
-    let DefaultQuestionText = "Question"
+    let DefaultQuestionText = "Question (100 character limit)"
     
     var selectedPictureIndex = 0
     var pollPictures = [UIImage?]()
@@ -138,6 +139,15 @@ class AddPollViewController: ImagePickerViewController, UICollectionViewDelegate
         if textView.text == "" {
             textView.text = DefaultQuestionText
         }
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        if textView.text.characters.count < QuestionCharacterLimit || text == ""{
+            return true
+        }
+        
+        return false
     }
     
     // MARK: - FullScreenImageViewControllerDelegate method.

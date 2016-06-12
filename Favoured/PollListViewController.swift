@@ -10,10 +10,10 @@ import UIKit
 
 class PollListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
-    
     let VotePollSegue = "VotePollSegue"
+    let SegmentedControlIndexKey = "SegmentedControlIndex"
     
+    let userDefaults = NSUserDefaults.standardUserDefaults()
     let defaultCenter = NSNotificationCenter.defaultCenter()
     var polls = [Poll]()
     var pollsType = PollsType.MyPolls
@@ -31,12 +31,7 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func segmentIndexChanged(sender: UISegmentedControl) {
-        switch segmentedControl.selectedSegmentIndex {
-        case PollsType.MyPolls.rawValue:
-            DataModel.addMyPollsListObserver()
-        default:
-            DataModel.addAllPollsListObserver()
-        }
+        addObserver(segmentedControl.selectedSegmentIndex)
     }
     
     // MARK: - Lifecycle methods.
@@ -107,7 +102,9 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Initialisation methods.
     
     func addObservers() {
-        segmentIndexChanged(segmentedControl)
+        let segmentedControlIndex = userDefaults.integerForKey(SegmentedControlIndexKey)
+        segmentedControl.selectedSegmentIndex = segmentedControlIndex
+        addObserver(segmentedControlIndex)
         DataModel.addConnectionStateObserver()
         defaultCenter.addObserver(self, selector: #selector(getPollsCompleted(_:)), name: NotificationNames.GetPollsCompleted, object: nil)
         defaultCenter.addObserver(self, selector: #selector(photoDownloadCompleted(_:)), name: NotificationNames.PhotoDownloadCompleted, object: nil)
@@ -151,5 +148,15 @@ class PollListViewController: UIViewController, UITableViewDelegate, UITableView
         emptyLabel.hidden = TableViewState.Empty != tableViewState
         tableViewActivityIndicator.hidden = TableViewState.Loading != tableViewState
         TableViewState.Loading == tableViewState ? tableViewActivityIndicator.startAnimating() : tableViewActivityIndicator.stopAnimating()
+    }
+    
+    func addObserver(index: Int) {
+        userDefaults.setInteger(index, forKey: SegmentedControlIndexKey)
+        switch index {
+        case PollsType.MyPolls.rawValue:
+            DataModel.addMyPollsListObserver()
+        default:
+            DataModel.addAllPollsListObserver()
+        }
     }
 }

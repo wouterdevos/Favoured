@@ -101,8 +101,6 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
     
     func validationFailed(errors: [UITextField : ValidationError]) {
         for (_, error) in errors {
-//            field.layer.borderColor = UIColor.redColor().CGColor
-//            field.layer.borderWidth = 1.0
             error.errorLabel?.text = error.errorMessage
             error.errorLabel?.hidden = false
         }
@@ -179,6 +177,7 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
             let message = userInfo[NotificationData.Message] as! String
             createAlertController(Title.Error, message: message)
         } else {
+            clearValidationViews()
             let mainNavigationController = navigationController!.storyboard!.instantiateViewControllerWithIdentifier("MainNavigationController")
             navigationController!.presentViewController(mainNavigationController, animated: true, completion: nil)
         }
@@ -197,6 +196,8 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
         createAlertController(title, message: message)
     }
     
+    // MARK: - Convenience methods.
+    
     func toggleRequestProgress(inProgress: Bool) {
         inProgress ? activityIndicatorUtils.showProgressView(view) : activityIndicatorUtils.hideProgressView()
         emailValidationView.enabled = !inProgress
@@ -204,6 +205,11 @@ class LoginViewController: FavouredViewController, UITextFieldDelegate, Validati
         registerBarButtonItem.enabled = !inProgress
         loginButton.enabled = !inProgress
         resetPasswordButton.enabled = !inProgress
+    }
+    
+    func clearValidationViews() {
+        emailValidationView.inputTextField.text = ""
+        passwordValidationView.inputTextField.text = ""
     }
 }
 
