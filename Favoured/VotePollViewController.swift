@@ -18,9 +18,8 @@ class VotePollViewController: FavouredViewController {
     
     var pageIndex: Int!
     var pollPicture: UIImage?
-    var hasVoted: Bool!
     var voteSelected = false
-    var votingDisabled = true
+    var voteState = VoteState.Disabled
     var delegate: VotePollViewControllerDelegate?
     
     // MARK: - Interface builder outlets and actions.
@@ -46,9 +45,9 @@ class VotePollViewController: FavouredViewController {
     // MARK: - Initialisation methods.
     
     func initVoteButton() {
-        voteButton.setImage(UIImage(named:"TickNormal"), forState: .Normal)
-        voteButton.setImage(UIImage(named:"TickSelected"), forState: .Selected)
-        voteButton.setImage(UIImage(named:"TickSelected"), forState: .Highlighted)
+        voteButton.setImage(UIImage(named: "TickNormal"), forState: .Normal)
+        voteButton.setImage(UIImage(named: "TickSelected"), forState: .Selected)
+        voteButton.setImage(UIImage(named: "TickSelected"), forState: .Highlighted)
         updateVoteButton()
     }
     
@@ -60,9 +59,23 @@ class VotePollViewController: FavouredViewController {
     }
     
     func updateVoteButton() {
+        switch voteState {
+        case VoteState.Disabled:
+            updateVoteButton(false, enabled: false, hidden: true)
+        case VoteState.Pending:
+            updateVoteButton(false, enabled: true, hidden: false)
+        case VoteState.Cast(let pollOptionIndex):
+            updateVoteButton(pageIndex == pollOptionIndex, enabled: false, hidden: false)
+        }
+    }
+    
+    func updateVoteButton(selected: Bool, enabled: Bool, hidden: Bool) {
+        voteSelected = selected
+        let normalImageNamed = voteSelected ? "TickSelected" : "TickNormal"
+        voteButton.setImage(UIImage(named: normalImageNamed), forState: .Normal)
         voteButton.selected = voteSelected
-        voteButton.enabled = !hasVoted
-        voteButton.hidden = votingDisabled
+        voteButton.enabled = enabled
+        voteButton.hidden = hidden
     }
     
     // MARK: - Convenience methods.

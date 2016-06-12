@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100E84A21D0CC06900A6FCA8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100E84A11D0CC06900A6FCA8 /* Enums.swift */; };
 		100FBD421CF7A4BF0086EFBC /* PollListTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100FBD411CF7A4BF0086EFBC /* PollListTableViewDataSource.swift */; };
 		10100A821CF3856B00FE3F91 /* PollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10100A811CF3856B00FE3F91 /* PollTableViewCell.swift */; };
 		1036304D1CEA50BC008CD72B /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		100E84A11D0CC06900A6FCA8 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		100FBD411CF7A4BF0086EFBC /* PollListTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollListTableViewDataSource.swift; sourceTree = "<group>"; };
 		10100A811CF3856B00FE3F91 /* PollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollTableViewCell.swift; sourceTree = "<group>"; };
 		1036304C1CEA50BC008CD72B /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				109814751CB306FF0042E06E /* ActivityIndicatorUtils.swift */,
 				109814771CB309FA0042E06E /* Constants.swift */,
 				10A222121CB6E87000D3BD1D /* Utils.swift */,
+				100E84A11D0CC06900A6FCA8 /* Enums.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				1083979E1CE87D7400C39C39 /* AddPollViewController.swift in Sources */,
 				1060FDC91D01DB1500AA7270 /* PollPictureView.swift in Sources */,
 				100FBD421CF7A4BF0086EFBC /* PollListTableViewDataSource.swift in Sources */,
+				100E84A21D0CC06900A6FCA8 /* Enums.swift in Sources */,
 				1046C2EE1CDF789A00E995E7 /* VotePollPageViewController.swift in Sources */,
 				10B6D0261CDA3C1600E5128D /* ImageCache.swift in Sources */,
 				10FE4BBE1CFF832C00216029 /* ThumbnailPageControl.swift in Sources */,

@@ -13,7 +13,8 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     static let Identifier = "VotePollPageViewController"
     
     var poll: Poll!
-    var pollOptionIndex: Int?
+//    var pollOptionIndex: Int?
+    var voteState = VoteState.Disabled
     
     var pageViewController: UIPageViewController!
     
@@ -153,8 +154,11 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     func getPollOptionIndexCompleted(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            pollOptionIndex = userInfo[NotificationData.PollOptionIndex] as? Int
+            let pollOptionIndex = userInfo[NotificationData.PollOptionIndex] as! Int
+            voteState = VoteState.Cast(pollOptionIndex)
             updatePollPictureButtonVotes()
+        } else {
+            voteState = VoteState.Pending
         }
         updateVotePollViewController()
     }
@@ -188,9 +192,10 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     func updateVotePollViewController() {
         let votePollViewController = pageViewController.viewControllers?[0] as! VotePollViewController
-        votePollViewController.voteSelected = pollOptionIndex == votePollViewController.pageIndex
-        votePollViewController.hasVoted = pollOptionIndex != nil
-        votePollViewController.votingDisabled = false
+//        votePollViewController.voteSelected = pollOptionIndex == votePollViewController.pageIndex
+//        votePollViewController.hasVoted = pollOptionIndex != nil
+//        votePollViewController.votingDisabled = false
+        votePollViewController.voteState = voteState
         votePollViewController.updateVoteButton()
     }
     
@@ -209,7 +214,8 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         let votePollViewController = storyboard?.instantiateViewControllerWithIdentifier(VotePollViewController.Identifier) as! VotePollViewController
         votePollViewController.pageIndex = currentIndex
         votePollViewController.pollPicture = pollPictures[currentIndex]
-        votePollViewController.hasVoted = pollOptionIndex != nil
+//        votePollViewController.hasVoted = pollOptionIndex != nil
+        votePollViewController.voteState = voteState
         votePollViewController.delegate = self
         
         return votePollViewController

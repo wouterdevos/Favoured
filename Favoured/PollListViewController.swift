@@ -10,16 +10,7 @@ import UIKit
 
 class PollListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    enum TableViewState: Int {
-        case Loading = 0
-        case Empty = 1
-        case Populated = 2
-    }
     
-    enum PollsType: Int {
-        case MyPolls = 0
-        case AllPolls = 1
-    }
     
     let VotePollSegue = "VotePollSegue"
     
