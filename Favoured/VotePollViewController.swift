@@ -19,6 +19,7 @@ class VotePollViewController: FavouredViewController {
     var pageIndex: Int!
     var pollPicture: UIImage?
     var voteSelected = false
+    var isError = false
     var voteState = VoteState.Disabled
     var delegate: VotePollViewControllerDelegate?
     
@@ -27,7 +28,7 @@ class VotePollViewController: FavouredViewController {
     @IBOutlet weak var pollPictureImageView: UIImageView!
     @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var voteButton: UIButton!
-    
+    @IBOutlet weak var imageUnavailableLabel: UILabel!
     @IBAction func vote(sender: UIButton) {
         voteSelected = !voteSelected
         voteButton.selected = voteSelected
@@ -54,7 +55,10 @@ class VotePollViewController: FavouredViewController {
     // MARK: - Update methods.
     
     func updatePollPicture() {
-        pollPicture == nil ? imageActivityIndicator.startAnimating() : imageActivityIndicator.stopAnimating()
+        let loading = pollPicture == nil && !isError
+        loading ? imageActivityIndicator.startAnimating() : imageActivityIndicator.stopAnimating()
+        imageActivityIndicator.hidden = !loading
+        imageUnavailableLabel.hidden = !isError
         pollPictureImageView.image = pollPicture
     }
     
@@ -75,14 +79,6 @@ class VotePollViewController: FavouredViewController {
         voteButton.setImage(UIImage(named: normalImageNamed), forState: .Normal)
         voteButton.selected = voteSelected
         voteButton.enabled = enabled
-        voteButton.hidden = hidden
-    }
-    
-    // MARK: - Convenience methods.
-    
-    func toggleView(hidden: Bool) {
-        pollPictureImageView.hidden = hidden
-        imageActivityIndicator.hidden = hidden
         voteButton.hidden = hidden
     }
 }

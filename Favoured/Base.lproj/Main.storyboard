@@ -908,21 +908,30 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DwY-GA-XLr">
                                 <rect key="frame" x="0.0" y="20" width="600" height="492"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image unavailable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tmz-cv-95B">
+                                <rect key="frame" x="232" y="289" width="137" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="CDj-o5-NeY" firstAttribute="top" secondItem="DwY-GA-XLr" secondAttribute="bottom" constant="8" id="A22-sF-Rob"/>
                             <constraint firstItem="eIz-Fu-n2l" firstAttribute="top" secondItem="CDj-o5-NeY" secondAttribute="bottom" constant="20" id="BOP-mK-fRW"/>
                             <constraint firstAttribute="trailing" secondItem="DwY-GA-XLr" secondAttribute="trailing" id="Jkw-oq-75b"/>
+                            <constraint firstItem="Tmz-cv-95B" firstAttribute="centerY" secondItem="SLA-d4-mmQ" secondAttribute="centerY" id="Stc-tY-iMK"/>
                             <constraint firstItem="DwY-GA-XLr" firstAttribute="leading" secondItem="SLA-d4-mmQ" secondAttribute="leading" id="dkF-zD-emE"/>
                             <constraint firstItem="NtZ-YQ-QgI" firstAttribute="centerX" secondItem="SLA-d4-mmQ" secondAttribute="centerX" id="gOc-F6-5HG"/>
                             <constraint firstItem="CDj-o5-NeY" firstAttribute="centerX" secondItem="SLA-d4-mmQ" secondAttribute="centerX" id="hhO-Ww-hw9"/>
+                            <constraint firstItem="Tmz-cv-95B" firstAttribute="centerX" secondItem="SLA-d4-mmQ" secondAttribute="centerX" id="twb-g9-7Aa"/>
                             <constraint firstItem="NtZ-YQ-QgI" firstAttribute="centerY" secondItem="SLA-d4-mmQ" secondAttribute="centerY" id="wN9-xJ-1uB"/>
                             <constraint firstItem="DwY-GA-XLr" firstAttribute="top" secondItem="JFX-ME-qZ1" secondAttribute="bottom" id="x9J-MG-E1v"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageActivityIndicator" destination="NtZ-YQ-QgI" id="NlN-xF-v3g"/>
+                        <outlet property="imageUnavailableLabel" destination="Tmz-cv-95B" id="FOA-79-D0x"/>
                         <outlet property="pollPictureImageView" destination="DwY-GA-XLr" id="nvX-R3-gFz"/>
                         <outlet property="voteButton" destination="CDj-o5-NeY" id="Vge-XJ-kES"/>
                     </connections>

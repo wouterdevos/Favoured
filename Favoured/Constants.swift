@@ -42,6 +42,7 @@ struct NotificationNames {
     static let GetPollsCompleted = "com.favoured.GetPollsCompleted"
     static let PhotoDownloadCompleted = "com.favoured.PhotoDownloadCompleted"
     static let GetPollOptionIndexCompleted = "com.favoured.GetPollOptionIndexCompleted"
+    static let NetworkDisconnected = "com.favoured.NetworkDisconnected"
 }
 
 struct NotificationData {
@@ -61,6 +62,7 @@ struct Title {
     static let AddPicture = "Add Picture"
     static let AddPollQuestion = "Add Question"
     static let AddPollPictures = "Add Pictures"
+    static let NetworkError = "Network Error"
 }
 
 struct Message {
@@ -84,6 +86,7 @@ struct Error {
     static let UnexpectedError = "An unexpected error occured. Please try again."
     static let UnableToUploadProfilePicture = "Unable to upload profile picture. Would you like to try again?"
     static let UserInfoNoData = "No data passsed to user info!"
+    static let NoInternetConnection = "There is no internet connection. Your data will be synchronised when connectivity resumes."
 }
 
 struct Button {

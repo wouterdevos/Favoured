@@ -12,6 +12,10 @@ import CoreData
 
 class DataModel: NSObject {
     
+    private static var isConnected = false
+    private static var hasConnected = false
+    private static var networkErrorMessageDisplayed = false
+    
     private class var fireAuth: FIRAuth {
         return FIRAuth.auth()!
     }
@@ -171,7 +175,16 @@ class DataModel: NSObject {
         let connectedRef = FIRDatabase.database().referenceWithPath(FirebaseConstants.InfoConnected)
         connectedRef.observeEventType(.Value, withBlock: { snapshot in
             if let connected = snapshot.value as? Bool where connected {
+                hasConnected = true
+                isConnected = true
+                networkErrorMessageDisplayed = false
                 uploadLocalOnlyPhotos()
+            } else {
+                isConnected = false
+                if hasConnected && !networkErrorMessageDisplayed {
+                    networkErrorMessageDisplayed = true
+                    defaultCenter.postNotificationName(NotificationNames.NetworkDisconnected, object: nil, userInfo: nil)
+                }
             }
         })
     }
@@ -339,15 +352,16 @@ class DataModel: NSObject {
     private class func downloadPollPicture(id: String, pollId: String, isThumbnail: Bool, rowIndex: Int?) {
         let pollPicturesRef = fireStorage.child(FirebaseConstants.BucketPollPictures).child(id)
         pollPicturesRef.dataWithMaxSize(1 * 8192 * 8192) { data, error in
+            var userInfo: [String: AnyObject]?
             if error == nil {
                 let image = UIImage(data: data!)
                 let photo = Photo(id: id, pollId: pollId, uploaded: true, isThumbnail: isThumbnail, image: image, context: context)
                 saveContext()
                 
-                let userInfo = [NotificationData.Photo: photo,
-                                NotificationData.RowIndex: rowIndex!] as [String:AnyObject]
-                defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
+                userInfo = [NotificationData.Photo: photo, NotificationData.RowIndex: rowIndex!] as [String:AnyObject]
             }
+            
+            defaultCenter.postNotificationName(NotificationNames.PhotoDownloadCompleted, object: nil, userInfo: userInfo)
         }
     }
     
@@ -413,8 +427,13 @@ class DataModel: NSObject {
     }
     
     private class func fetchLocalOnlyPhotos() -> [Photo]? {
-        let profilePictureId = getProfilePictureId()
-        let predicate = NSPredicate(format: "(id != %@) AND (uploaded == %@)", profilePictureId, false)
+        var predicate: NSPredicate
+        if let profilePictureId = getProfilePictureId() {
+            predicate = NSPredicate(format: "(id != %@) AND (uploaded == %@)", profilePictureId, false)
+        } else {
+            predicate = NSPredicate(format: "uploaded == %@", false)
+        }
+
         let photos = fetchPhotos(predicate)
         
         return photos
@@ -462,13 +481,17 @@ class DataModel: NSObject {
         return Photo(id: id, pollId: pollId, uploaded: false, isThumbnail: true, image: imageThumbnail, context: context)
     }
     
-    private class func getProfilePictureId() -> String {
+    private class func getProfilePictureId() -> String? {
         let user = fetchUser()!
         return user.profilePictureId
     }
     
     private class func getProfilePicture() -> Photo? {
-        let photo = fetchPhotoById(getProfilePictureId())
+        var photo: Photo?
+        if let profilePictureId = getProfilePictureId() {
+            photo = fetchPhotoById(profilePictureId)
+        }
+
         return photo
     }
 }

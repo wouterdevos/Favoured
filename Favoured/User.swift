@@ -14,7 +14,7 @@ class User: NSManagedObject {
     static let EntityName = "User"
     
     @NSManaged var username: String
-    @NSManaged var profilePictureId: String
+    @NSManaged var profilePictureId: String?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -25,6 +25,6 @@ class User: NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         self.username = snapshot.value!.objectForKey(FirebaseConstants.Username) as! String
-        self.profilePictureId = snapshot.value!.objectForKey(FirebaseConstants.ProfilePictureId) as! String
+        self.profilePictureId = snapshot.value!.objectForKey(FirebaseConstants.ProfilePictureId) as? String
     }
 }
