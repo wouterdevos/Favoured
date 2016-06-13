@@ -8,7 +8,7 @@
 
 import Foundation
 import Firebase
-import AWSS3
+import CoreData
 
 class DataModel: NSObject {
     
