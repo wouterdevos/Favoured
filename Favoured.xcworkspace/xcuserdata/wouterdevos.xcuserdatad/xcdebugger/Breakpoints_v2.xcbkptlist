@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "photoDownloadCompleted(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487543603.263677"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "photoDownloadCompleted(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "photoDownloadCompleted(_:)"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "getPollOptionIndexCompleted(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487619219.967956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "getPollOptionIndex(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,13 +90,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "updatePollPictureButtonVotes()"
-            landmarkType = "5">
+            startingLineNumber = "207"
+            endingLineNumber = "207"
+            landmarkName = "VotePollPageViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,13 +106,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "updatePollPictureButtonVotes()"
-            landmarkType = "5">
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "VotePollPageViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,13 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624466.487187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
-            landmarkName = "getVotePercentage(_:voteCountTotal:)"
-            landmarkType = "5">
+            startingLineNumber = "291"
+            endingLineNumber = "291">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,13 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624466.487187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "getVotePercentage(_:voteCountTotal:)"
-            landmarkType = "5">
+            startingLineNumber = "292"
+            endingLineNumber = "292">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -154,11 +150,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487619219.967956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
             landmarkName = "getUserDetails(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,11 +166,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487619219.967956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "getUserDetails(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,11 +182,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487619219.967956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "voteOnPoll(_:pollOptionIndex:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -234,11 +230,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487359048.532248"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "initVoteState()"
             landmarkType = "5">
          </BreakpointContent>
@@ -250,11 +246,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "getPollOptionIndexCompleted(_:)"
             landmarkType = "5">
             <Locations>
@@ -378,12 +374,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/DataModel.swift"
-            timestampString = "487551930.620106"
+            timestampString = "487619219.967956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "470"
-            endingLineNumber = "470"
-            landmarkName = "fetchLocalOnlyPhotos()"
+            startingLineNumber = "488"
+            endingLineNumber = "488"
+            landmarkName = "createProfilePicturePhoto(_:image:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -394,11 +390,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/VotePollPageViewController.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "photoDownloadCompleted(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -410,11 +406,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487619219.967956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "addConnectionStateObserver()"
             landmarkType = "5">
             <Locations>
@@ -458,11 +454,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
+            timestampString = "487619219.967956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
             landmarkName = "downloadPollPicture(_:pollId:isThumbnail:rowIndex:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -473,61 +469,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
+            filePath = "Favoured/VotePollPageViewController.swift"
+            timestampString = "487624230.720895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
-            landmarkName = "downloadPollPicture(_:pollId:isThumbnail:rowIndex:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Favoured.DataModel.(downloadPollPicture in _E5707D7AEC867BBACA03543AF79077A7) (Swift.String, pollId : Swift.String, isThumbnail : Swift.Bool, rowIndex : Swift.Optional&lt;Swift.Int&gt;) -&gt; ()"
-                  moduleName = "Favoured"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Developer/Projects/Xcode/Udacity%20iOS%20Nanodegree/Assignments/Favoured/Favoured/DataModel.swift"
-                  timestampString = "487544125.658293"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "351"
-                  endingLineNumber = "351"
-                  offsetFromSymbolStart = "66">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Favoured.DataModel.((downloadPollPicture in _E5707D7AEC867BBACA03543AF79077A7) (Swift.String, pollId : Swift.String, isThumbnail : Swift.Bool, rowIndex : Swift.Optional&lt;Swift.Int&gt;) -&gt; ()).(closure #1)"
-                  moduleName = "Favoured"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Developer/Projects/Xcode/Udacity%20iOS%20Nanodegree/Assignments/Favoured/Favoured/DataModel.swift"
-                  timestampString = "487544125.658546"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "353"
-                  endingLineNumber = "353"
-                  offsetFromSymbolStart = "163">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Favoured/DataModel.swift"
-            timestampString = "487545397.830715"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
-            landmarkName = "addConnectionStateObserver()"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "photoDownloadCompleted(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

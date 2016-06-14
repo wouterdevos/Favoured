@@ -12,9 +12,13 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     static let Identifier = "VotePollPageViewController"
     
+    let NetworkTimeout: NSTimeInterval = 30
+    
     var poll: Poll!
-//    var pollOptionIndex: Int?
     var voteState = VoteState.Disabled
+    
+    var networkTimer: NSTimer?
+    var isError = false
     
     var pageViewController: UIPageViewController!
     
@@ -46,6 +50,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         removeObservers()
+        networkTimer?.invalidate()
     }
     
     // MARK: - UIPageViewControllerDataSource and UIPageViewControllerDelegate methods.
@@ -82,6 +87,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     func initPollPictureButtons() {
         pollPictureThumbnails = DataModel.getPollPictures(poll, isThumbnail: true, rowIndex: nil)
+        startNetworkTimer(pollPictureThumbnails)
         for (index, subview) in thumbnailsStackView.arrangedSubviews.enumerate() {
             // Check if there is an image for the current poll picture thumbnail
             let hasImage = index < pollPictureThumbnails.count
@@ -97,6 +103,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     func initPageViewController() {
         pollPictures = DataModel.getPollPictures(poll, isThumbnail: false, rowIndex: 0)
+        startNetworkTimer(pollPictures)
         pageViewController = storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         pageViewController.dataSource = self
         pageViewController.delegate = self
@@ -134,6 +141,7 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
             return
         }
         
+        networkTimer?.invalidate()
         let photo = userInfo[NotificationData.Photo] as! Photo
         let currentVotePollViewController = pageViewController.viewControllers![0] as! VotePollViewController
         let pollPictureIndex = getPollPictureIndex(photo)
@@ -192,9 +200,6 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     
     func updateVotePollViewController() {
         let votePollViewController = pageViewController.viewControllers?[0] as! VotePollViewController
-//        votePollViewController.voteSelected = pollOptionIndex == votePollViewController.pageIndex
-//        votePollViewController.hasVoted = pollOptionIndex != nil
-//        votePollViewController.votingDisabled = false
         votePollViewController.voteState = voteState
         votePollViewController.updateVoteButton()
     }
@@ -214,8 +219,8 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
         let votePollViewController = storyboard?.instantiateViewControllerWithIdentifier(VotePollViewController.Identifier) as! VotePollViewController
         votePollViewController.pageIndex = currentIndex
         votePollViewController.pollPicture = pollPictures[currentIndex]
-//        votePollViewController.hasVoted = pollOptionIndex != nil
         votePollViewController.voteState = voteState
+        votePollViewController.isError = isError
         votePollViewController.delegate = self
         
         return votePollViewController
@@ -245,5 +250,35 @@ class VotePollPageViewController: FavouredViewController, UIPageViewControllerDa
     func getVotePercentage(voteCount: Int, voteCountTotal: Int) -> String {
         let voteCountFraction = voteCountTotal > 0 ? Float(voteCount) * 100 / Float(voteCountTotal) : 0.0
         return String(format: "%.0f", voteCountFraction) + "%"
+    }
+    
+    func startNetworkTimer(images: [UIImage?]) {
+        guard networkTimer == nil else {
+            return
+        }
+        
+        var imagesDownloading = false
+        for image in images {
+            if image == nil {
+                imagesDownloading = true
+                break
+            }
+        }
+        
+        guard imagesDownloading else {
+            return
+        }
+        
+        networkTimer = NSTimer.scheduledTimerWithTimeInterval(NetworkTimeout, target: self, selector: #selector(showNetworkAlertController), userInfo: nil, repeats: false)
+    }
+    
+    func showNetworkAlertController() {
+        if !isError {
+            isError = true
+            let currentVotePollViewController = pageViewController.viewControllers![0] as! VotePollViewController
+            currentVotePollViewController.isError = isError
+            currentVotePollViewController.updatePollPicture()
+            createAlertController(Title.NetworkError, message: Error.UnableToDownloadImage)
+        }
     }
 }

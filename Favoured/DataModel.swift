@@ -12,9 +12,7 @@ import CoreData
 
 class DataModel: NSObject {
     
-    private static var isConnected = false
-    private static var hasConnected = false
-    private static var networkErrorMessageDisplayed = false
+    static let MaxDownloadRetryTime: NSTimeInterval = 30
     
     private class var fireAuth: FIRAuth {
         return FIRAuth.auth()!
@@ -25,6 +23,7 @@ class DataModel: NSObject {
     }
     
     private class var fireStorage: FIRStorageReference {
+        FIRStorage.storage().maxDownloadRetryTime = MaxDownloadRetryTime
         return FIRStorage.storage().reference()
     }
     
@@ -175,16 +174,7 @@ class DataModel: NSObject {
         let connectedRef = FIRDatabase.database().referenceWithPath(FirebaseConstants.InfoConnected)
         connectedRef.observeEventType(.Value, withBlock: { snapshot in
             if let connected = snapshot.value as? Bool where connected {
-                hasConnected = true
-                isConnected = true
-                networkErrorMessageDisplayed = false
                 uploadLocalOnlyPhotos()
-            } else {
-                isConnected = false
-                if hasConnected && !networkErrorMessageDisplayed {
-                    networkErrorMessageDisplayed = true
-                    defaultCenter.postNotificationName(NotificationNames.NetworkDisconnected, object: nil, userInfo: nil)
-                }
             }
         })
     }
